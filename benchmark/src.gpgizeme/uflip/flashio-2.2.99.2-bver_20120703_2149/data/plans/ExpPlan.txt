@@ -1,0 +1,259 @@
+========================================= 1 GRANULARITY =========================================
+1
+IOS   			0 1 2 4 8 16 32 64 128 256 512 3 7 15 31 63
+Base			SR
+Bench        	1			=============== References
+Exp  			1
+Com    			GRA.SR
+
+2
+IOS   			0 1 2 4 8 16 32 64 128 256 512 3 7 15 31 63
+Base			RR
+Bench        	1			=============== References
+Exp  			2
+Com    			GRA.RR
+
+26
+IOS   			0 1 2 4 8 16 32 64 128 256 512 3 7 15 31 63
+Base			SW
+Bench        	1			=============== References
+Exp  			3
+Com    			GRA.SW
+
+16
+IOS   			0 1 2 4 8 16 32 64 128 256 512 3 7 15 31 63
+Base			RW
+Bench        	1			=============== References
+Exp  			4
+Com    			GRA.RW
+
+========================================= 2 ALIGNMENT =========================================
+3
+Shift			0 1 2 4 8 16 32 64
+Base 			SR
+Bench        	2			=============== References
+Exp  			1
+Com    			ALI.SR
+
+4
+Shift			0 1 2 4 8 16 32 64
+Base 			RR
+Bench        	2			=============== References
+Exp  			2
+Com    			ALI.RR
+
+27
+Shift			0 1 2 4 8 16 32 64
+Base			SW
+Bench        	2			=============== References
+Exp  			3
+Com    			ALI.SW
+
+17
+Shift			0 1 2 4 8 16 32 64
+Base			RW
+Bench        	2			=============== References
+Exp  			4
+Com    			ALI.RW
+
+========================================= 3 LOCALITY ==================================
+5
+TSize			0 1 2 4 8 16 32 64 128 256
+Base 			SR
+Bench        	3			=============== References
+Exp  			1
+Com    			LOC.SR
+
+6
+TSize			0 1 2 4 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768 65536
+Base 			RR
+Bench        	3			=============== References
+Exp  			2
+Com    			LOC.RR
+
+28
+TSize			0 1 2 4 8 16 32 64 128 256
+Base			SW
+Bench        	3			=============== References
+Exp  			3
+Com    			LOC.SW
+
+31
+TSize			0 1 2 4 8 16 32 64 128 256 512 1024 2048 4096 8192 16384 32768 65536
+Base			RW
+Bench        	3			=============== References
+Exp  			4
+Com    			LOC.RW
+
+
+========================================= 4 PARTITIONING =========================================
+7
+Part			0 1 2 4 8 16 32 64 128 256
+Base 			SR
+Bench        	4			=============== References
+Exp  			1
+Com    			PAT.R
+
+32
+Part			0 1 2 4 8 16 32 64 128 256
+Base			SW
+Bench        	4			=============== References
+Exp  			2
+Com    			PAT.W
+
+========================================= 5 ORDER =========================================
+8
+Order			0 -1 0 1 2 4 8 16 32 64 128 256
+Base 			SR
+Bench        	5			=============== References
+Exp  			1
+Com    			ORD.R
+
+34
+Order			0 -1 0 1 2 4 8 16 32 64 128 256
+Base			SW
+Bench        	5			=============== References
+Exp  			2
+Com    			ORD.W
+
+========================================= 6 PARALLELISM =========================================
+9
+ParDeg			0 1 2 4 8 16
+Base 			SR
+Bench        	6			=============== References
+Exp  			1
+Com    			PAR.SR
+
+10
+ParDeg			0 1 2 4 8 16
+Base 			RR
+Bench        	6			=============== References
+Exp  			2
+Com    			PAR.RR
+
+33
+ParDeg			0 1 2 4 8 16
+Base			SW
+Bench        	6			=============== References
+Exp  			3
+Com    			PAR.SW
+
+18
+ParDeg			0 1 2 4 8 16
+Base			RW
+Bench        	6			=============== References
+Exp  			4
+Com    			PAR.RW
+
+========================================= 7 MIX  =========================================
+11
+ratio			0 -64 -32 -16 -8 -4 -2 -1 0 1 2 4 8 16 32 64
+Base 			SR
+Base2 			RR
+Bench        	7			=============== References
+Exp  			1
+Com    			M.SR.RR
+
+19
+ratio			0 -64 -32 -16 -8 -4 -2 -1 0 1 2 4 8 16 32 64
+Base 			SR
+Base2			RW
+Bench        	7			=============== References
+Exp  			2
+Com    			M.SR.RW
+
+25
+ratio			0 -64 -32 -16 -8 -4 -2 -1 0 1 2 4 8 16 32 64
+Base 			SR
+Base2			SW
+Bench        	7			=============== References
+Exp  			3
+Com    			M.SR.SW
+
+23
+ratio			0 -64 -32 -16 -8 -4 -2 -1 0 1 2 4 8 16 32 64
+Base 			RR
+Base2			SW
+Bench        	7			=============== References
+Exp  			4
+Com    			M.RR.SW
+
+20
+ratio			0 -64 -32 -16 -8 -4 -2 -1 0 1 2 4 8 16 32 64
+Base 			RR
+Base2 			RW
+Bench        	7			=============== References
+Exp  			5
+Com    			M.RR.RW
+
+24
+ratio			0 -64 -32 -16 -8 -4 -2 -1 0 1 2 4 8 16 32 64
+Base 			SW
+Base2 			RW
+Bench        	7			=============== References
+Exp  			6
+Com    			M.SW.RW
+========================================= 8 PAUSE =========================================
+12
+PIO				0 0 100 200 400 800 1600 3200 6400 12800 25600
+Base 			SR
+Bench        	8			=============== References
+Exp  			1
+Com    			PIO.SR
+
+13
+PIO				0 0 100 200 400 800 1600 3200 6400 12800 25600
+Base 			RR
+Bench        	8			=============== References
+Exp  			2
+Com    			PIO.RR
+
+29
+PIO				0 0 100 200 400 800 1600 3200 6400 12800 25600
+Base			SW
+Bench        	8			=============== References
+Exp  			3
+Com    			PIO.SW
+
+21
+PIO				0 0 100 200 400 800 1600 3200 6400 12800 25600
+Base			RW
+Bench        	8			=============== References
+Exp  			4
+Com    			PIO.RW
+
+========================================= 9 PAUSE BURST =========================================
+
+14
+BurstIO			0 10 20 40 80 160 320 640
+PBurst			100000
+Base 			SR
+Bench        	9			=============== References
+Exp  			1
+Com    			PBU.SR
+
+15
+BurstIO			0 10 20 40 80 160 320 640
+PBurst			100000
+Base 			RR
+Bench        	9			=============== References
+Exp  			2
+Com    			PBU.RR
+
+30
+BurstIO			0 10 20 40 80 160 320 640
+PBurst			100000
+Base			SW
+Bench        	9			=============== References
+Exp  			3
+Com    			PBU.SW
+
+22
+BurstIO			0 10 20 40 80 160 320 640
+PBurst			100000
+Base			RW
+Bench        	9			=============== References
+Exp  			4
+Com    			PBU.RW
+
+

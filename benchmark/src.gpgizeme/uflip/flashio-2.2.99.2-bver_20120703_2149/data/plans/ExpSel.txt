@@ -1,0 +1,35 @@
+1.1 // Granularity   	Sequential Read
+1.2 // Granularity   	Random Read
+1.3 // Granularity   	Sequential Write
+1.4 // Granularity   	Random Write
+2.1 // Alignment   	Sequential Read
+2.2 // Alignment   	Random Read
+2.3 // Alignment   	Sequential Write
+2.4 // Alignment   	Random Write
+3.1 // Locality	   	Sequential Read
+3.2 // Locality   		Random Read
+3.3 // Locality	   	Sequential Write
+3.4 // Locality   		Random Write
+4.1 // Partitioning   	Read
+4.2 // Partitioning   	Write
+5.1 // Order   		Read
+5.2 // Order   		Write
+6.1 // Parallelism 	Sequential Read
+6.2 // Parallelism   	Random Read
+6.3 // Parallelism   	Sequential Write
+6.4 // Parallelism   	Random Write
+7.1 // Mix SR/RR		Mix of Sequential Reads and Random Reads
+7.2 // Mix SR/RW		Mix of Sequential Reads and Random Writes
+7.3 // Mix SR/SW		Mix of Sequential Reads and Sequential Writes
+7.4 // Mix RR/SW		Mix of Random Reads and Sequential Writes
+7.5 // Mix RR/RW		Mix of Random Reads and Random Writes
+7.6 // Mix SW/RW		Mix of Sequential Writes and Random Writes
+8.1 // Pause   		Sequential Read
+8.2 // Pause   		Random Read
+8.3 // Pause   		Sequential Write
+8.4 // Pause   		Random Write
+9.1 // Burst   		Sequential Read
+9.2 // Burst   		Random Read
+9.3 // Burst   		Sequential Write
+9.4 // Burst   		Random Write
+

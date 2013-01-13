@@ -1,0 +1,16 @@
+## 20121114_155456
+
+gnuplot> plot [-1000:1000] [0:20000]  "./ifreq__seek_d2d_c.log" using 1:3 with points
+gnuplot> plot [-1000:1000] [0:200]  "./ifreq__seek_d2d_c.log" using 1:3 with points
+gnuplot> plot [-1000:1000] [0:200]  "./ifreq__seek_d2d_c.log" using 1:3 with points
+gnuplot> set autoscale
+gnuplot> replot
+gnuplot> plot [-1000:1000] [0:200]  "./ifreq__seek_d2d_c.log" using 1:3 with points;
+gnuplot> set xtic auto
+gnuplot> set ytic auto
+gnuplot> plot [-1000:1000] [0:200]  "./ifreq__seek_d2d_c.log" using 1:3 with points;
+gnuplot> set title "Address Access Pattern"
+gnuplot> plot [-1000:1000] [0:200]  "./ifreq__seek_d2d_c.log" using 1:3 with points;
+gnuplot> set title "[ Address Access Pattern ]"
+gnuplot> 
+

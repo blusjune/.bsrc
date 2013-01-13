@@ -1,0 +1,3 @@
+_cachectrl_start="dmcache_ctrl_create.sh";
+_cachectrl_stop="dmcache_ctrl_remove.sh";
+_cachectrl_status="dmcache_ctrl_status.sh";

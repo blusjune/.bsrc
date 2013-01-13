@@ -1,0 +1,14 @@
+##tstamp: 20121116_143157
+
+items modified for new testbed architecture
+
+[o] 00.task_mgmt/
+[o] 10.test_log
+[?] 21.cache_sw/
+[?] 22.make_cache_dev/
+[?] 31.filebench/
+[o] 41.blktrace/
+[o] 42.iostat/
+[ ] 43.sar/
+[ ] 44.cache_stat/
+[ ] 51.trace_anal/

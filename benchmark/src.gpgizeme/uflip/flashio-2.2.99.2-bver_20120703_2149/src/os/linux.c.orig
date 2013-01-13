@@ -1,0 +1,362 @@
+/*
+ This file is part of the uFLIP software. See www.uflip.org
+
+ uFLIP is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ uFLIP is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with uFLIP.  If not, see <http://www.gnu.org/licenses/>.
+
+ uFLIP was initially developed based on SQLIO2 by Leonard Chung although
+ almost all SQLIO2 code have disappeared. (leonard@ssl.berkeley.edu - see
+ http://research.microsoft.com/en-us/um/siliconvalley/projects/sequentialio/ )
+ uFLIP also includes some lines from the pseudo random generator from Agner
+ Fog (see http://www.agner.org/random/)
+
+ © 2008-2010, Luc Bouganim <luc.bouganim@inria.fr>
+ © 2009-2010, Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+*/
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
+
+#if !defined(__linux) && !defined(linux)
+#error "__linux and _linux are not defined, aborting."
+#endif
+
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include <sys/ioctl.h>
+#include <sys/times.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <unistd.h>
+#include <linux/fs.h>
+#include <linux/hdreg.h>
+
+#include "functions.h"
+#include "output.h"
+#include "uflip_timer.h"
+
+struct _UflipDeviceData
+{
+  char *str;
+  int   fd;
+};
+
+/* useful to print whereabouts */
+#define DBG(out, msg) sprintf (out, "%s:%s:%d (%s)", __FILE__, __func__, __LINE__, msg)
+
+/* used when 'Dev foo' wasn't specified on the cli */
+#define DEFAULT_DEVICE_VALUE "/dev/sdb"
+
+/* io scheduler */
+#define IO_SCHED "noop"
+#define IO_SCHED_PATH_PREFIX "/sys/block"
+#define IO_SCHED_PATH_SUFFIX "queue/scheduler"
+
+/* large enough for HDIO_DRIVE_CMD */
+#define BUFFER_LENGTH (4+512)
+
+/* callbacks */
+static int         open_linux            (UflipDevice *device,
+                                          int          flags);
+static int         read_linux            (UflipDevice *device,
+                                          void        *buf,
+                                          size_t       count);
+static int         write_linux           (UflipDevice *device,
+                                          const void  *buf,
+                                          size_t       count);
+static int64_t     seek_linux            (UflipDevice *device,
+                                          int64_t      offset,
+                                          int          whence);
+static int         close_linux           (UflipDevice *device);
+static uint64_t   *get_geometry_linux    (UflipDevice *device);
+static int         get_erase_count_linux (UflipDevice *device,
+                                          int32_t      address);
+static const char *to_string_linux       (UflipDevice *device);
+static void        destroy_linux         (UflipDevice *device);
+
+int
+uflip_malloc_aligned (void **memptr,
+                      size_t size)
+{
+  return posix_memalign (memptr, 512, size);
+}
+
+
+
+void
+uflip_free_aligned (void *ptr)
+{
+  free (ptr);
+}
+
+
+
+int
+uflip_gethostname (char   *name,
+                   size_t  namelen)
+{
+  return (gethostname (name, namelen) != -1);
+}
+
+
+
+int
+get_last_error (void)
+{
+  return errno;
+}
+
+
+
+int
+uflip_device_populate (UflipDevice *device,
+                       const char  *desired_value)
+{
+  device->data = (UflipDeviceData *) malloc (sizeof (UflipDeviceData));
+  if (device->data == NULL)
+    return -1;
+
+  device->data->fd = -1;
+
+  if (desired_value == NULL)
+    {
+      device->data->str = strdup (DEFAULT_DEVICE_VALUE);
+    }
+  else
+    {
+      device->data->str = strdup (desired_value);
+    }
+
+  /* set callback functions */
+  device->open = open_linux;
+  device->read = read_linux;
+  device->write = write_linux;
+  device->seek = seek_linux;
+  device->close = close_linux;
+  device->get_geometry = get_geometry_linux;
+  device->get_erase_count = get_erase_count_linux;
+  device->to_string = to_string_linux;
+  device->destroy = destroy_linux;
+
+  return 0;
+}
+
+
+
+static int
+open_linux (UflipDevice *device,
+            int          flags)
+{
+  /* errno */
+  int err = 0;
+  /* err msg */
+  char context [100];
+  /* does the user want to use system cache ? */
+  int buf = (flags & NO_SYSTEM_BUFFER) ? O_DIRECT : 0;
+
+  /* changes IO scheduler? */
+  if (buf != 0)
+    {
+      char path [100];
+
+      sprintf (path, "%s/%s/%s", IO_SCHED_PATH_PREFIX, device->data->str + 5, IO_SCHED_PATH_SUFFIX);
+      FILE *elevator = fopen(path, "w");
+      err = errno;
+      if (elevator == NULL)
+        {
+          DBG (context, "fopen");
+          HandleError (context, strerror (err), err, ERR_SUCCESS);
+        }
+      else
+        {
+          if (fwrite (IO_SCHED, sizeof (char), strlen (IO_SCHED), elevator) < strlen (IO_SCHED))
+            {
+              err = errno;
+              DBG (context, "fwrite");
+              HandleError (context, strerror (err), err, ERR_SUCCESS);
+            }
+
+          if (fclose (elevator) == EOF)
+            {
+              err = errno;
+              DBG (context, "fclose");
+              HandleError (context, strerror (err), err, ERR_SUCCESS);
+            }
+        }
+    }
+
+  /* synchronized read/write on the device by default */
+  int fflags = O_RDWR | O_RSYNC | O_DSYNC | O_SYNC | buf;
+
+  device->data->fd = open (device->data->str, fflags);
+  if (device->data->fd == -1)
+    return -1;
+
+  /* set hd cache values */
+  const unsigned long arg = (flags & NO_HD_CACHE) ? 0 : 1;
+  unsigned char args [4] = { WIN_SETFEATURES, 0, 0, 0 };
+  args [2] = (flags & NO_HD_CACHE) ? 0x82 : 0x02;
+
+  if (ioctl (device->data->fd, BLKRASET, &arg) == -1)
+    {
+      err = errno;
+      DBG (context, "BLKRASET");
+      HandleError (context, strerror (err), err, ERR_SUCCESS);
+    }
+  if (ioctl (device->data->fd, HDIO_SET_WCACHE, &arg) == -1)
+    {
+    if (ioctl (device->data->fd, HDIO_DRIVE_CMD, &args) == -1)
+      {
+        err = errno;
+        DBG (context, "HDIO_DRIVE_CMD(setcache)");
+        HandleError (context, strerror (err), err, ERR_SUCCESS);
+      }
+    }
+  return device->data->fd;
+}
+
+
+
+static int
+read_linux (UflipDevice *device,
+            void        *buf,
+            size_t       count)
+{
+  return read (device->data->fd, buf, count);
+}
+
+
+
+static int
+write_linux (UflipDevice *device,
+             const void  *buf,
+             size_t       count)
+{
+  return write (device->data->fd, buf, count);
+}
+
+
+
+static int64_t
+seek_linux (UflipDevice *device,
+            int64_t      offset,
+            int          whence)
+{
+  return lseek (device->data->fd, offset, whence);
+}
+
+
+
+static int
+close_linux (UflipDevice *device)
+{
+  return close (device->data->fd);
+}
+
+
+
+static uint64_t
+*get_geometry_linux (UflipDevice *device)
+{
+  int                fd;
+  int                ret;
+  struct hd_geometry geom;
+  uint64_t          *dg;
+
+  dg = (uint64_t *) calloc (4, sizeof (uint64_t));
+
+  if (dg == NULL)
+    return NULL;
+
+  fd = open (device->data->str, O_NONBLOCK | O_LARGEFILE);
+  if (fd == -1)
+    {
+      free (dg);
+      return NULL;
+    }
+
+  ret = ioctl (fd, HDIO_GETGEO, &geom);
+  close (fd);
+  if (ret == -1)
+    {
+      free (dg);
+      return NULL;
+    }
+
+  dg [0] = geom.cylinders;
+  dg [1] = geom.heads;
+  dg [2] = geom.sectors;
+  dg [3] = 512;
+
+  return (dg);
+}
+
+
+
+static int
+get_erase_count_linux (UflipDevice *device,
+                       int32_t      address)
+{
+  int           ret;
+  unsigned char args [BUFFER_LENGTH];
+
+  /* clear out the buffer */
+  memset (args, 0, BUFFER_LENGTH);
+  args [0] = WIN_SMART;
+  args [2] = SMART_READ_VALUES;
+  args [3] = 1;
+
+  ret = ioctl (device->data->fd, HDIO_DRIVE_CMD, args);
+
+  if (!ret)
+    return (*((int *) &(args [4+address])));
+
+  return 0;
+}
+
+
+
+static const char
+*to_string_linux (UflipDevice *device)
+{
+  return device->data->str;
+}
+
+
+
+static void
+destroy_linux (UflipDevice *device)
+{
+  if (device->data->fd != -1)
+    {
+      close_linux (device);
+      device->data->fd = -1;
+      free (device->data->str);
+      device->data->str = NULL;
+    }
+
+  /* prevent further access */
+  device->open = NULL;
+  device->read = NULL;
+  device->write = NULL;
+  device->seek = NULL;
+  device->close = NULL;
+  device->get_geometry = NULL;
+  device->get_erase_count = NULL;
+  device->to_string = NULL;
+  device->destroy = NULL;
+}

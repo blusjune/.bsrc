@@ -1,0 +1,2 @@
+0 1024 linear /dev/sdb1 0
+1024 1024 linear /dev/sdc1 0

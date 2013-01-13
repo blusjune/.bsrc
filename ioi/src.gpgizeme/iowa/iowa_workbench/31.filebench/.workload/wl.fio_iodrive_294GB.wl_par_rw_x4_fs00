@@ -1,0 +1,163 @@
+#
+# CDDL HEADER START
+#
+# The contents of this file are subject to the terms of the
+# Common Development and Distribution License (the "License").
+# You may not use this file except in compliance with the License.
+#
+# You can obtain a copy of the license at usr/src/OPENSOLARIS.LICENSE
+# or http://www.opensolaris.org/os/licensing.
+# See the License for the specific language governing permissions
+# and limitations under the License.
+#
+# When distributing Covered Code, include this CDDL HEADER in each
+# file and include the License file at usr/src/OPENSOLARIS.LICENSE.
+# If applicable, add the following below this CDDL HEADER, with the
+# fields enclosed by brackets "[]" replaced with your own identifying
+# information: Portions Copyright [yyyy] [name of copyright owner]
+#
+# CDDL HEADER END
+#
+#
+# Copyright 2009 Sun Microsystems, Inc.  All rights reserved.
+# Use is subject to license terms.
+#
+
+
+
+
+##
+## { Brian M. JUNG // 20120727_113433
+##
+
+
+## SSD ID		: 1K-blocks		: Available
+## ---------------------+-----------------------+------------
+## Fusion IO		: 307,591,508KB (294GB)	: 291771276k
+## OCZ Agility 3	: 115,377,640KB (111GB)	: 109324612k
+## Samsung 830		: 123,071,896KB (118GB)	: 116628148k
+## Intel 320		: 115,377,640KB (111GB)	: 109324612k
+
+
+## [ FusionIO ioDrive 294GB case ]
+## 291771276k (space available)
+##
+## echo 291771276 / 1 | bc
+## echo 291771276 / 2 | bc
+## echo 291771276 / 4 | bc
+## echo 291771276 / 8 | bc
+## echo 291771276 / 16 | bc
+#set $filesize=291771276k
+#set $filesize=145885638k
+#set $filesize=72942819k
+#set $filesize=36471409k
+#set $filesize=18235704k
+
+
+## [ OCZ Agility 3 111GB case ]
+## 109324612k (space available)
+##
+## echo 109324612 / 1 | bc
+## echo 109324612 / 2 | bc
+## echo 109324612 / 4 | bc
+## echo 109324612 / 8 | bc
+## echo 109324612 / 16 | bc
+#set $filesize=109324612k
+#set $filesize=54662306k
+#set $filesize=27331153k
+#set $filesize=13665576k
+#set $filesize=6832788k
+
+
+## [ Samsung 830 118GB case ]
+## 116628148k (space available)
+##
+## echo 116628148 / 1 | bc
+## echo 116628148 / 2 | bc
+## echo 116628148 / 4 | bc
+## echo 116628148 / 8 | bc
+## echo 116628148 / 16 | bc
+#set $filesize=116628148k
+#set $filesize=58314074k
+#set $filesize=29157037k
+#set $filesize=14578518k
+#set $filesize=7289259k
+
+
+## [ Intel 320 111GB case ]
+## 109324612k (space available)
+##
+## echo 109324612 / 1 | bc
+## echo 109324612 / 2 | bc
+## echo 109324612 / 4 | bc
+## echo 109324612 / 8 | bc
+## echo 109324612 / 16 | bc
+#set $filesize=109324612k
+#set $filesize=54662306k
+#set $filesize=27331153k
+#set $filesize=13665576k
+#set $filesize=6832788k
+
+
+##
+## } Brian M. JUNG
+##
+
+
+#set $dir=/mnt/sdb1
+set $dir=/mnt/fioa1
+
+## [ FusionIO ioDrive 294GB case ]
+## 291771276k (space available)
+#set $filesize=291771276k
+#set $filesize=145885638k
+set $filesize=72942819k
+#set $filesize=36471409k
+#set $filesize=18235704k
+
+#set $iosize=8k
+set $iosize=4k
+set $nthreads=1
+set $workingset=0
+set $directio=1
+
+define file name=tdat_01_1,path=$dir,size=$filesize,prealloc,reuse,paralloc
+define file name=tdat_01_2,path=$dir,size=$filesize,prealloc,reuse,paralloc
+define file name=tdat_01_3,path=$dir,size=$filesize,prealloc,reuse,paralloc
+define file name=tdat_01_4,path=$dir,size=$filesize,prealloc,reuse,paralloc
+
+define process name=rand-write,instances=1
+{
+  thread name=rand-thread1,memsize=10m,instances=$nthreads
+  {
+    flowop write name=rand-write1,filename=tdat_01_1,iosize=$iosize,random,workingset=$workingset,directio=$directio
+  }
+  thread name=rand-thread2,memsize=10m,instances=$nthreads
+  {
+    flowop write name=rand-write2,filename=tdat_01_2,iosize=$iosize,random,workingset=$workingset,directio=$directio
+  }
+  thread name=rand-thread3,memsize=10m,instances=$nthreads
+  {
+    flowop write name=rand-write3,filename=tdat_01_3,iosize=$iosize,random,workingset=$workingset,directio=$directio
+  }
+  thread name=rand-thread4,memsize=10m,instances=$nthreads
+  {
+    flowop write name=rand-write4,filename=tdat_01_4,iosize=$iosize,random,workingset=$workingset,directio=$directio
+  }
+}
+
+#echo "Random Write Version 3.0 personality successfully loaded"
+#usage "Usage: set \$dir=<dir>         defaults to $dir"
+#usage "       set \$filesize=<size>   defaults to $filesize"
+#usage "       set \$iosize=<value>    defaults to $iosize"
+#usage "       set \$nthreads=<value>  defaults to $nthreads"
+#usage "       set \$workingset=<value>  defaults to $workingset"
+#usage "       set \$directio=<bool>   defaults to $directio"
+#usage "       run runtime (e.g. run 60)"
+
+#stats command "./block_trace/d03/btrace.sh"
+#stats command "echo 'please execute the I/O tracing tools'"
+sleep 10
+
+#run 60
+

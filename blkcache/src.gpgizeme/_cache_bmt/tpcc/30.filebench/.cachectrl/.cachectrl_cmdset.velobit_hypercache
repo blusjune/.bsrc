@@ -1,0 +1,3 @@
+_cachectrl_start="velobit start";
+_cachectrl_stop="velobit stop";
+_cachectrl_status="velobit status";

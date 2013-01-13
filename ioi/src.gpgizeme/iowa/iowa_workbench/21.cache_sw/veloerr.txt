@@ -1,0 +1,59 @@
+VeloBit HyperCache License Registration Utility
+Copyright (c) 2012, VeloBit Inc.
+
+Main Menu
+------------------------------------
+1. Register a new license
+2. Register a new trial installation
+3. Upgrade VeloBit HyperCache
+4. De-activate this server
+5. Quit
+
+Enter a selection: 4
+Deactivating the VeloBit License on this machine.
+You will need your VeloBit customer login information to continue.
+
+Username: brian.m.jung@samsung.com
+Password: 
+The following data has been collected about your system and will
+be transmitted to VeloBit:
+
+ssdCapacity         : NOTFOUND
+productSerialNumber : 0123456789
+cpuThreadCount      : 8
+cpuCoreCount        : 4
+totalMemory         : 24734192 kB
+currentTime         : 1350292590
+cpuCount            : 1
+ssdManufacturer     : NOTFOUND
+productName         : X8SIU
+ssdModel            : NOTFOUND
+cpuManufacturer     : GenuineIntel
+cpuFamily           : Intel(R) Xeon(R) CPU           X3470  @ 2.93GHz
+productVersion      : 0123456789
+cpuMaxSpeed         : 1200.000
+systemUUID          : 534D4349-0002-6490-2500-64902500297E
+manufacturer        : Supermicro
+Press ENTER to continue, ESCAPE to abort.
+An error ocurred during registration:
+UUID: 534D4349-0002-6490-2500-64902500297E
+action: deregisterInstall
+An error occurred:
+Evaluation installs cannot be deregistered.
+
+root@n13-velo-srvr:[10.cache_sw] # velobit start
+
+VeloBit v1.1 Build2406 20120604-1040
+Copyright (c) 2010-2012 VeloBit, Inc.
+
+Loading velobit_delta.ko .....[ OK ]
+
+Loading velobit.ko ...........[ OK ]
+
+Failed to initialize velobit.
+
+Unloading velobit.ko .........[ OK ]
+
+Unloading velobit_delta.ko ...[ OK ]
+
+

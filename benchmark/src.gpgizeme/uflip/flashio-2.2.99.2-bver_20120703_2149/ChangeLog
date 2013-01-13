@@ -1,0 +1,3463 @@
+commit afcdc6d3b137d9c29a07af3188489928a20397e6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed May 26 11:07:58 2010 +0200
+
+    Add more info
+
+commit e0d16066007fdbc463b34bd978190ad0dd6e1d87
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed May 26 11:07:11 2010 +0200
+
+    Drop unused var
+
+commit 8302c865229b7047a76bb130d2a38216cc78b883
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed May 26 10:44:35 2010 +0200
+
+    Rename posix to dummy
+    
+    I don't know any "independent" way of getting the device geometry, so rename
+    this variant to dummy.c. It's useful to let the benchmark build, and will use a
+    fake device of 1G (like the CoolDrive1G device on the uFLIP website), so it
+    should even let the bench run.
+
+commit b8b638b2d0c157464e73951a6cfb493ca11a65ba
+Author: Lionel Le Folgoc <mrpouit@gmail.com>
+Date:   Tue May 25 23:00:11 2010 +0200
+
+    Fix build with the "posix" variant.
+
+commit ea6fa77575d8661a55759345871425ae899d61e1
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 17:56:27 2010 +0200
+
+    Fix autoreconf
+
+commit 309fcd2ccb671c9028dbb9ccf0b9cd5d60242857
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 17:51:49 2010 +0200
+
+    Initial "minimal" posix support
+
+commit 2201bed1a983f7cab10aa833b11e94ffff166bde
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 17:18:27 2010 +0200
+
+    Sigh, tabs and not spaces
+
+commit 541b7cb72396aafe64d1661ae05989de874de409
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 17:16:49 2010 +0200
+
+    More info in the README
+
+commit 36783cfc3ff67e66d3d98c7a4268b3473eb50e53
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 17:16:18 2010 +0200
+
+    Build changelog from git
+
+commit ef2b89f8da18a3ae3bb40f386c1a50f643eedf66
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 17:06:26 2010 +0200
+
+    Improve logging, and try harder to disable the disk write cache.
+
+commit 3d1197326ba616206ac02e4d8bed1fdb0c069910
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 17:04:36 2010 +0200
+
+    Fix typo
+
+commit 879d7019f135f58a3af49513e9f0ad72d317e34e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 17:01:49 2010 +0200
+
+    Woops, bit forgotten in the previous commit.
+
+commit 0d01c9296cce644ac1d1d0f2face0a0fbe411fe9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 14:13:03 2010 +0200
+
+    Oops, forgot changelog.
+
+commit 74956912e41343e2fd23f912f65a0f82c3ae54c3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 14:11:06 2010 +0200
+
+    Merge branch 'simplification', remote branch 'origin'
+
+commit 70da3c8b8e8aa1def2f9974929235a0f3bc4971e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 14:08:22 2010 +0200
+
+    Make the generated scripts work out of the box on linux too.
+
+commit c3ced1cb96620d598e4a1b76115d41f60cc06635
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue May 25 14:07:27 2010 +0200
+
+    Nitpick, use calloc.
+
+commit 813df91d45361800dc0313171bea01b96fe5241c
+Author: Lionel Le Folgoc <mrpouit@gmail.com>
+Date:   Tue May 25 07:10:13 2010 +0200
+
+    Pre-release version bump.
+
+commit c0d44b736fe239cd92d5f2b369a741650847e757
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 23 12:28:48 2010 +0100
+
+    Hmpf stupid typo
+
+commit f17dfef7d3a25b3bce4edd735684036227b34491
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 23 12:22:48 2010 +0100
+
+    Improve docs.
+
+commit 057e4a2e97309b5055555dbdc8d43f4a0ecb5411
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 22 12:56:40 2010 +0100
+
+    Small fix for doxygen
+
+commit 80af8e3dfba4d3e91b4d8f1dec25b81affb27f3c
+Merge: 29526bb 0571e53
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 22 12:35:06 2010 +0100
+
+    Merge branch 'simplification' of ssh://lefolgoc.net/home/mrpouit/code_private/c99-port into simplification
+
+commit 29526bbc5d42236b19bbaf21da9c964e3a05badd
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 22 12:33:26 2010 +0100
+
+    cflags fix.
+
+commit bd0c8a480a168b1fd415dc12d4dcad44e872058a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 22 12:26:49 2010 +0100
+
+    Cast correctly.
+
+commit 0571e533d13351c8a683211f4b6da31de1a6db0c
+Author: Lionel Le Folgoc <mrpouit@ubuntu.com>
+Date:   Sat Mar 20 03:13:33 2010 +0100
+
+    Use %zu to print size_t since we're c99.
+
+commit 8655c8ad49d1dcd1c4d60c6155aefb132e75b75e
+Author: Lionel Le Folgoc <mrpouit@ubuntu.com>
+Date:   Sat Mar 20 03:13:00 2010 +0100
+
+    Rework function to clear warnings.
+
+commit d7008426ec7c797108979c70d49e67dcada284e2
+Author: Lionel Le Folgoc <mrpouit@ubuntu.com>
+Date:   Sat Mar 20 03:12:34 2010 +0100
+
+    Fix build on linux.
+
+commit 1e158f5d7e579a7fd65497887d3b9fc0fe4d3859
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 19 17:02:46 2010 +0100
+
+    Doc/help/comment fixes.
+
+commit 79483e90eaa80a7fd9260dea4c0ca1e5e1858c15
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 19 16:39:07 2010 +0100
+
+    Fix parsing bug.
+    
+    Previous file was relying on the behavior of atoi() that returns 0 if the string
+    cannot be parsed as an integer. Now that we switched to sscanf() and have
+    stricter format checking, this doesn't work anymore, so replace all occurrences
+    of 'VARYING' with '0' to restore the existing behavior.
+
+commit 5dc341846e85c2f6e0ff0a40c16b1481a1fc425a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 19 12:09:39 2010 +0100
+
+    Refactor enum parsing.
+
+commit bf93d512adb5fd451c9c570fa5369c8811e05506
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 17:11:05 2010 +0100
+
+    Use switch/case.
+
+commit 126d9a8189491a78d2fbac9c201dedcaa3634e80
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 15:41:12 2010 +0100
+
+    No need to use dynamically allocated strings.
+
+commit bc6c5ce1072fa86015c08d69a59c8084394b985a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 15:40:46 2010 +0100
+
+    Fix bug introduced in the previous commit.
+
+commit adb40374148ca36ac03e4149d3a97b23d66fd860
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 15:30:18 2010 +0100
+
+    Really plug the memleak.
+
+commit 355346e485581d58d28213d0edb6263c47159eb7
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 15:02:50 2010 +0100
+
+    Revert "Plug memleaks."
+    
+    This reverts commit b3cc0e7e0e0259d80eb5d24728f36e5334afa87f.
+
+commit b3cc0e7e0e0259d80eb5d24728f36e5334afa87f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 14:39:16 2010 +0100
+
+    Plug memleaks.
+
+commit cf9ea9b16334716c3a7633a2dec1ee32febcd9b6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 12:47:48 2010 +0100
+
+    Slight optim.
+
+commit 46b34e9267595025c16ec53a7f3e2323f2ece9cf
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 12:09:38 2010 +0100
+
+    Add comment.
+
+commit f2273cdfc22cc1e9af195c50c5d462b7908e89ff
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 12:09:10 2010 +0100
+
+    Drop hardening options, was stupid.
+
+commit cd60fa64f1d64887d370986a681775aa8adf60a4
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 11:45:36 2010 +0100
+
+    Remove old reference to hg.
+
+commit e7147fdfae49da616cd428dc491190af0a679f50
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 11:37:00 2010 +0100
+
+    Fix script generation on win32.
+
+commit c74a2c7d9b5b98a7d70f89ebddbe564a68b9bc13
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 11:27:43 2010 +0100
+
+    Get rid of atoi.
+
+commit 199e9c8db3420404bccb0acb2a85cece59009c22
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 18 11:24:32 2010 +0100
+
+    Add more checks when creating the device.
+
+commit eea264d404a8e0b2a2dfa8f0b101efb22f47d32d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 17 15:45:01 2010 +0100
+
+    Style, done.
+
+commit dc82a5799b55c39356d55f1df7f04ea55bebf4ee
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 17 12:36:57 2010 +0100
+
+    Style, almost finished (only one remaining).
+
+commit a61e7c0620316d5fe353fc4bf778b65635a73bee
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 17 11:34:47 2010 +0100
+
+    Style again.
+
+commit 291e288a4742d48fb89b1f14cb77f17b81c06af5
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 17 11:12:43 2010 +0100
+
+    Strip trailing spaces.
+
+commit c651d5a7662c1111ec5be639c5c0c5497f633a02
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 17 11:01:48 2010 +0100
+
+    Style.
+
+commit e22c787f92dbba09ed9bd8fd68a111a289a0d7ec
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 16 16:25:29 2010 +0100
+
+    tabs -> space
+
+commit 8815bb6730e62eedcbae6f02e0863c9434e34710
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 16 16:09:34 2010 +0100
+
+    Style.
+
+commit 8eda3446a38481755a77cc7aa19daf982012b763
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 16 15:52:23 2010 +0100
+
+    Drop useless comments.
+
+commit bdfe772a90d01444b0cf30f3a210c3be043fbcbc
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 16 15:44:06 2010 +0100
+
+    Nitpick
+
+commit bb38dd96c2f3ce1b2eed554de7d8a63010762193
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 16 14:15:29 2010 +0100
+
+    Use arrays to store functions/options.
+
+commit 70e9542dab9fbbc05028b5295f2ae23cfa57f5aa
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 16 12:10:30 2010 +0100
+
+    Fix build.
+
+commit 420c2eb0566b81ccf32c95f3622036c5c9f7e69c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 16 11:11:05 2010 +0100
+
+    Style again.
+
+commit 696ba0db17293a4bd4584db57288364c01a8f40e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 16 09:51:20 2010 +0100
+
+    Rewrite again.
+
+commit 58ceca22a3af96bdc6f5fda7737b4a63c001e8f7
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 15 14:49:10 2010 +0100
+
+    Port os dependant code.
+
+commit b75e2fc8e86c5bf748e083d72df3db3c2edb8ad9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 15 12:25:24 2010 +0100
+
+    Last uflip_* bits.
+
+commit 112010c6d79adc5a621485b55e85d56982f42201
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 15 11:59:12 2010 +0100
+
+    Port UflipTimer.
+
+commit 93c9630ce75c3df8e4636ada5013953b7d880256
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 15 11:48:58 2010 +0100
+
+    Nitpick
+
+commit 0483f81519e87597d8bc9a05dae38e6fc4270883
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 15 11:46:28 2010 +0100
+
+    Style.
+
+commit 7f0cb89c0cb873afbf1e7fe2199ef33c2793fa89
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 15 11:44:21 2010 +0100
+
+    Rewrite going on.
+
+commit 88c1c28800f2819d936dec5e319babbef32f58e3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 15 11:32:33 2010 +0100
+
+    Simplify code.
+
+commit 405a7859d796fe5e23259c30e346a4d1a19d18ce
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 15 11:27:24 2010 +0100
+
+    Start rewriting in GLib style.
+
+commit cd58e27581f854ddc92181a6829f5ab41e36e65d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 10 17:25:16 2010 +0100
+
+    Multiplatform fix.
+
+commit 2f3cebf0942647e5bbe836c4356f393b41982c2f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 10 17:24:58 2010 +0100
+
+    Migrate to git.
+
+commit 5370a8ec352cabbc3df6468b0fa957e5012ab525
+Author: inria <>
+Date:   Thu Jan 1 00:00:00 1970 +0000
+
+    Drop redundant include.
+
+commit 2f6e5aa9ef5b520d52a1d6808824c6829dd4729a
+Author: inria <>
+Date:   Thu Jan 1 00:00:00 1970 +0000
+
+    Update to doxygen 1.6.3.
+
+commit 6ac74af4d236711878ac406f7a8390e30b337884
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Nov 2 15:42:26 2009 +0100
+
+    Okay, that was a typo.
+
+commit 488a22605d80ce7311b91f49672b86bda42b0afe
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Nov 2 15:35:30 2009 +0100
+
+    More release preparation, again.
+
+commit bea33cac62be5f0a9384bd2140c6c3a8d8d8a4b2
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Nov 2 15:11:16 2009 +0100
+
+    Prepare for release, again.
+
+commit 05bdf18d709852f79cfa125672ce123c282c8783
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Nov 2 11:21:50 2009 +0100
+
+    Small improvements
+
+commit 100c30cf6842e5ef74c659559459e8428f80512b
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Nov 2 11:12:27 2009 +0100
+
+    Bump devel version
+
+commit 233df1e6e0ecd2bd64dc5f5e43f71112266e8f2b
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Nov 2 11:00:21 2009 +0100
+
+    Put some 'private' functions static
+
+commit e676dc4050b54b2c10cc3a5724de519648b69677
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Oct 14 15:27:38 2009 +0200
+
+    Use silent build rules if available.
+
+commit fe3ca3adcc870859a1ca15f40b7fe1f7ec906c9f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Sep 11 12:09:34 2009 +0200
+
+    more infos for windows
+
+commit 51f27cc521157a412b242e24c4dbcdffe7075155
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Sep 11 11:52:10 2009 +0200
+
+    Some more polishing, again
+
+commit 25e0732e188ec6ff83439d3b85e1623f08faf3db
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Sep 9 11:11:59 2009 +0200
+
+    oops
+
+commit 0c4d7b80a6b9effb816151d4f616d43bb91fd3df
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Sep 9 11:09:14 2009 +0200
+
+    New rule to create a tarball
+
+commit 5218fdc5f6aedb1f841cb82b91da041734ee24df
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 25 23:59:45 2009 +0200
+
+    Update doxyfile to 1.6.1.
+
+commit a4a4bea6772e56117facb3ebdb11c38f82ea302e
+Merge: 7928c0a 204f966
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 19 15:05:10 2009 +0200
+
+    merge
+
+commit 7928c0a298ab22e82e034becdb8501e6654ead75
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 19 15:03:59 2009 +0200
+
+    Fix bug introduced in 414:81fe64ea8cc0.
+
+commit 204f9662a5ee49d6dd702761a5fe22470730ab5a
+Merge: a43089f 598c5ee
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 19 14:56:08 2009 +0200
+
+    merge
+
+commit a43089fc9c9de4b7feed1f27855ae030201ea9cf
+Merge: a389825 56c09fa
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 19 14:54:16 2009 +0200
+
+    merge
+
+commit 56c09fa5e2468577500669c76c4416489530536d
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 19 14:46:48 2009 +0200
+
+    Fix segfault when argc isn't even.
+
+commit 598c5ee6c487b5a65616955f8dd9d043ebd149f7
+Merge: a389825 03ad76a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 19 10:47:36 2009 +0200
+
+    merge
+
+commit a3898257b05f5e179f9e4f2514bc46b125a97d2c
+Merge: 08ea600 4e6c08c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 19 10:40:21 2009 +0200
+
+    merge
+
+commit 08ea600103cd934dd9385ca0b41b71e9881ee4eb
+Merge: c8f8c4f 73dc007
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 19 10:38:56 2009 +0200
+
+    merge
+
+commit 73dc0070b7b72de3f012c487721dc2d30c03b2bc
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Aug 19 10:15:35 2009 +0200
+
+    New option for GenPrepare: FormatType. It lets people disable the random format if needed.
+
+commit 03ad76ac494d514b60afddc7ab46ecfff7ea5d3c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 17 12:03:54 2009 +0200
+
+    remove outdated stuff
+
+commit d69df58ec20eb14099e475c556dd4095ac3c7a79
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Aug 14 12:50:05 2009 +0200
+
+    improve error checks
+
+commit 727e5b7949a5f3b2ce91b2b3882d5e1d446a0897
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Aug 13 15:01:45 2009 +0200
+
+    correctly check return values of io functions, and fclose after use.
+
+commit daf8b9420a2e727837b8ed90beaa04106d60faf2
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Aug 13 14:12:04 2009 +0200
+
+    fix weird gcc warning (-1 returned as unsigned int).
+
+commit e0bfc1c7a3dab12abdff08d610abb3ce328ff26a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Aug 13 14:11:09 2009 +0200
+
+    rework large_integer handling code
+
+commit 2dcbdee5091e39a7fb5a1bed894d1dbe9c628366
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Aug 13 14:01:43 2009 +0200
+
+    Use int for these ones, a fixed-width type isn't required.
+
+commit 38115f9e618fcb6cdfc96122ea07b77f6e45fe0e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Aug 13 14:01:08 2009 +0200
+
+    Reorg.
+
+commit 26cabee136b9a17f76cd21e3c48c20ad280d54ff
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Aug 13 12:23:10 2009 +0200
+
+    fix typo
+
+commit 4bea114ad68d466e79af7d966a683d3bff5eb739
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Aug 13 12:22:36 2009 +0200
+
+    do not use macros, it's broken when using something like i++.
+
+commit 2f75ad5896767e6d340b54f9ddf9fec1eb2eb6a2
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 12 10:46:42 2009 +0200
+
+    test user defined cflags as well
+
+commit 10f6191b5e556ff7cc9c7edab9f98c672717d105
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 11 17:41:12 2009 +0200
+
+    use a size_t, again
+
+commit 9b64e4b3653751b7dc5b531bf9183e8eeb148f49
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 11 16:53:01 2009 +0200
+
+    use int instead of int32_t, fixed size not needed.
+
+commit 931629ff632b0adb443c822ebd76729a876d40ef
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 11 16:22:05 2009 +0200
+
+    use int instead of int32_t, fixed size not needed.
+
+commit 4f5cee9b6c12e0c38684fb397f809272a50b8f24
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 11 15:59:31 2009 +0200
+
+    remove unneeded includes
+
+commit ed9b78fd75b6afb626661189ab09e12547ef6e1a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 11 15:40:49 2009 +0200
+
+    check return value of fwrite()
+
+commit 31bdb06f0ec341d68b6457811bfafd46e581aa0f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 11 15:21:08 2009 +0200
+
+    remove some redundant cflags
+
+commit 6b706b26aa1831d44d9137a9e6c860643ef88f71
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 11 14:33:19 2009 +0200
+
+    use size_t with gethostname().
+
+commit ceb861c35ad41bea4bf39bca1abdde3d5edc3003
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 11 12:31:34 2009 +0200
+
+    better comparison function
+
+commit 7e8d5b8bb4010704b7284f6e1d912139063ce49e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 10 16:23:06 2009 +0200
+
+    small fixes
+
+commit 68043875cfda211341e0ff4265d30ab4df32d657
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 10 12:20:32 2009 +0200
+
+    small fixes for the doc.
+
+commit 3e2adfe37c3582e78e13c651fb8c68060c94a5e9
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Aug 6 16:33:20 2009 +0200
+
+    Generate Doxyfile as well.
+
+commit 4085097be75bbbf333b9d2342f7face7f53d6c4e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 5 16:50:27 2009 +0200
+
+    update todo
+
+commit 6965e4f6c47e7d112ed9bc48e5a592d437cfea5b
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 5 14:19:44 2009 +0200
+
+    small fixes
+
+commit 932bbeda86dfde3b5fe58ea0542834c42338a32d
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 5 14:16:07 2009 +0200
+
+    script improvement, again again
+
+commit 35a5eadd25d8ec09d12a4c5a0de855c8dfc79a9f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 5 14:09:14 2009 +0200
+
+    script improvement, again
+
+commit 42d081880fc5f061e1cdfceba4fc58e6c13e10e4
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 5 14:04:00 2009 +0200
+
+    optimizes script clean.py
+
+commit 7d63cca1b155e03271a7b44e03c070d39e4d9134
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 5 12:50:48 2009 +0200
+
+    ship Doxfile.
+
+commit e9eff2e70a21bb1593ee65ee617d624155e7021e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Aug 5 09:59:38 2009 +0200
+
+    uses 'noop' elevator
+
+commit e834505c3851d8484c20fdaa2681baed27cb9b5f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 4 16:41:08 2009 +0200
+
+    update todo
+
+commit b5f0c407534babb34b5dc3b1ac8f810afff4ab7e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 4 15:06:18 2009 +0200
+
+    fix progress display on systems with buffered STDOUT.
+
+commit d5b7682963942af63fc53964e7304382ef534bd7
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 4 13:06:15 2009 +0200
+
+    Revert 'ea087d849ff5' and '586e84fde4cc'.
+    The new approach was better on Linux since HDIO_GET_GEO returns obsolete infos, but created typecast issues too complicated to debug?
+
+commit cab5ceda1549f37bb1c42c11e08bdf800df2225c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 4 11:47:52 2009 +0200
+
+    fix some typos.
+
+commit 19fc3043a521ce1ad4a018f17c85e00110fe84bb
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 4 11:31:32 2009 +0200
+
+    no need to get the drive geometry, use its size instead.
+
+commit 482af641b92ead01f6d45a8276ba6dcf5124bc83
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 4 10:35:03 2009 +0200
+
+    non blocking mode for _get_geom
+
+commit e16ef1e37c47e4dc9dd54329085c418c403a168d
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 4 10:32:25 2009 +0200
+
+    Disable read-ahead cache on Linux also, and outputs a more informative msg if the feature is unsupported by the drive.
+
+commit 96bd62450636341a9161073b1fc7312ed0f6410f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Aug 4 09:23:32 2009 +0200
+
+    separate libs
+
+commit 50c3b3cd3d59e6c129449d3ef05bc552585da33f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 23:19:16 2009 +0200
+
+    this is implementation, don't include it
+
+commit e5faea89bf001d1772947c577e0621f315381281
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 23:09:32 2009 +0200
+
+    Add a space =]
+
+commit f1d98794bdcec28caf8ce5ec276d5f1c016fac47
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 23:09:17 2009 +0200
+
+    Update headers & funcs checks.
+
+commit 88ac300ac33ee50ef7de29c1770193726ef719b4
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 23:08:43 2009 +0200
+
+    add missing include (fix missing protos)
+
+commit 6e7bda49e84670548c9a908a52bcc048f8710e76
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 23:08:11 2009 +0200
+
+    Improve linux time functions, and move them to a posix file.
+
+commit 497b2a261800e37d501256561a6965cae21777cb
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 23:07:02 2009 +0200
+
+    Add doxygen rule.
+
+commit 612a6fc66140c7c32da11cb0fe58b108a360194e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 14:23:08 2009 +0200
+
+    unignore Makefile?
+
+commit 03d2c0c38d2036052a646be146d0ff41fa09057d
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 13:15:14 2009 +0200
+
+    use package* macros
+
+commit 2c8282fe570e9ecceb1320948cfd1b83ef7d483f
+Merge: e256dc7 a13a40f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Aug 3 12:03:21 2009 +0200
+
+    merge
+
+commit a13a40f84dcd707b5dd94d0c88662062e2d8d23b
+Merge: 8595305 4e6c08c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Aug 3 12:02:01 2009 +0200
+
+    merge
+
+commit 4e6c08c491d57b086d16b293e718b5726122412d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Aug 3 11:59:09 2009 +0200
+
+    add a space before "pause" to keep existing behavior
+
+commit e256dc76686f7f66393f4942a4d958add5d6cd62
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 11:47:33 2009 +0200
+
+    correctly test cflags and ldflags
+
+commit f6dd1abab2ae71499d12547ce66a97f26cc8332b
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Aug 3 10:55:44 2009 +0200
+
+    better win32 detection
+
+commit ea864792949f1374c258699d23ea372b644e63da
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sun Aug 2 23:03:10 2009 +0200
+
+    Better conditional checks
+
+commit 859530554cc0414a580e17224d87d778599919a6
+Merge: bfad69a c6d225b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 31 17:18:09 2009 +0200
+
+    merge
+
+commit c6d225bd785d2faa1bc85a2a1df93be7116e264d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 31 17:17:20 2009 +0200
+
+    parse all directories
+
+commit bfad69a19283e23e987f4b8aa05a127db1956c93
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 31 17:16:42 2009 +0200
+
+    fix filenames for doxygen.
+
+commit 0c3b2d8f836fcdec4e40249dd140497eb8aa313a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 31 16:54:17 2009 +0200
+
+    Move os-dependant files to os/
+    Create a (only static at the moment) lib.
+
+commit bf0a2e0b2a3e0f122fd075ee3c66e34461e2544b
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 31 15:34:08 2009 +0200
+
+    Drop these files, I don't care of msvc++.
+
+commit 2ffd1a70ecef19673861d703242f0f5d531218e4
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 31 15:33:46 2009 +0200
+
+    ship scripts
+
+commit 417c0153efe2171e8a54387a2750e79a2398a20a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 31 15:27:48 2009 +0200
+
+    remove uneeded fies
+
+commit 09686d62e606cbcf8703df9cc5a0844a54a01b6a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 31 15:21:27 2009 +0200
+
+    re-add debug and hardening options
+
+commit 056a8d6b0f4a3b0453141d5875dd322d1fd1a41f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 31 14:47:39 2009 +0200
+
+    fix build
+
+commit df9efe7a7cf2fc5305d0f4050f16e911f9fffec9
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Jul 30 23:05:08 2009 +0200
+
+    detect __func__
+
+commit 4bf03cb32aa2f72f69f4c8fdfe54ef0568836b8e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Jul 30 22:54:06 2009 +0200
+
+    Initial autotools support.
+
+commit e1c1ceecb221ff5fc09cda04a83ad470171dad0c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Jul 30 22:14:06 2009 +0200
+
+    fix some casts
+
+commit eacf0f66e6f9c78c87b2c7e6b40abd65ba1571ef
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Jul 30 21:54:00 2009 +0200
+
+    do it another way
+
+commit 4e3f036c1a4711cda0322071ad7c082e66bc4fe8
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Jul 30 21:33:01 2009 +0200
+
+    fix lots of warnings.
+
+commit 9c3a2a1c6442bc0138d3bc47a85f3cf0db030a08
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 30 17:42:55 2009 +0200
+
+    Port to C99 \o/
+
+commit 1d37ee40b3c1950ff7b902ccf4899680f1bcc634
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 30 14:36:00 2009 +0200
+
+    fix possible bug
+    refresh deps
+
+commit 35485e26b1b17a144d25ab6f5b0f0bb5ee34cf9d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 30 14:18:55 2009 +0200
+
+    port the random number generator to C.
+
+commit 85b53af0093af269a1951cf8bb9f5e1f41f31fbc
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 30 12:37:41 2009 +0200
+
+    use c99 __func__ for the function name
+
+commit c8f8c4f25183e74cfc57f664beab3e31a2c73727
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Jul 29 15:16:06 2009 +0200
+
+    update news
+
+commit 14d9394006353fa498333b166bcca1156bf6c88c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Jul 29 13:01:43 2009 +0200
+
+    more hint for msvc
+
+commit 64eb50aefc99c6761d4baf0bac7fdf257b5db17d
+Merge: 1e2ac57 e9ee6f4
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Jul 29 12:45:40 2009 +0200
+
+    merge
+
+commit e9ee6f477a605bf041b68ef83116f869f67aef71
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Jul 29 12:44:11 2009 +0200
+
+    fix build with msvc++
+
+commit 1e2ac575f884b2bb19fc56ec2a301a83c1d7374e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Jul 29 12:42:26 2009 +0200
+
+    tabVal is int32_t, so no need to get a long long (atoll, les opticiens).
+
+commit 056e1c42b57cfbec6f05b50af58b7fbadfb24b5f
+Merge: 30d12d0 c042837
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 16:56:14 2009 +0200
+
+    merge
+
+commit 30d12d06ac9f34c70a407e47a7b2303aa5cf293e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 16:54:55 2009 +0200
+
+    update howto for msvc++.
+
+commit c0428378da3e2922867a840e03c51e2103f65ddc
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 16:47:35 2009 +0200
+
+    compile fixes for msvc++
+
+commit 23eacda027bf23ebd1d31b04a0a1225d4318e5a0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 16:36:36 2009 +0200
+
+    only for msvc++
+
+commit 695e566666199bb464c77895e8794e74a8a0e44b
+Merge: acceb1f b0f0092
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 16:07:45 2009 +0200
+
+    merge
+
+commit acceb1f0c1f8624f2c3acf87064c24e7c0d1fa5d
+Merge: 5ef2253 1678cf1
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 16:05:16 2009 +0200
+
+    merge
+
+commit 1678cf1e94ff758c5402aad068c0906ccbab070c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 16:00:33 2009 +0200
+
+    don't free before exiting forcefully, useless
+
+commit b0f00929532a168c5cfd4de99f4a812afc251316
+Merge: 5ef2253 320d90e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 15:55:17 2009 +0200
+
+    merge
+
+commit 5ef2253ef66c8e00b30eec2eaa4f5be7f5412386
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 15:49:19 2009 +0200
+
+    no need to forcefully free(3), only close fds to be sure.
+
+commit 320d90eb7684097eb92dff9c38f40b478c9bd730
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 15:38:56 2009 +0200
+
+    remove call to itself.
+
+commit ff17aea996f30da1ad5c6c05a4db71a8771c0b2d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 14:47:45 2009 +0200
+
+    revert to an improved version of r394.
+
+commit 78ff1bf60eebd9ef746180f0edc4a6c47894ff78
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 13:03:34 2009 +0200
+
+    fix typo from previous commit
+
+commit f1c5527fb72eb1bc76fa00b46e239998b817202f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 11:12:24 2009 +0200
+
+    should fix infinte recursion.
+
+commit 4df4d9878099f93dbc6af43a0097a01482056baa
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 28 10:50:17 2009 +0200
+
+    only close the device before quitting, more isn't necessary
+
+commit 4346d272e63f44b90705fbb98b5f980efd5e708d
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Jul 27 22:31:35 2009 +0200
+
+    done
+
+commit 8ac6215f19b2b4acd5d6026dc6325c7f8084eec9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 17:49:05 2009 +0200
+
+    better error handling.
+
+commit f6dc4ab560b27c0820f7d3a78584cb9248829f0a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 17:05:32 2009 +0200
+
+    Check return value of uflip_get_elapsed_time(), update TODO.
+
+commit 3db8453f3f170fd30606daf89e3fcfe9b312fa62
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 15:02:57 2009 +0200
+
+    same bug, fix docstrings
+
+commit 1f3a56728bbb67fc089f7de7d73461d44735a8be
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 14:18:07 2009 +0200
+
+    fix doc generation
+
+commit 2a20bc960b8ae7a594b7743a8248d7802a88612b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 13:11:04 2009 +0200
+
+    better error handling, again
+
+commit d7ae505330fc78308ad24ec26d5fa728e54ac1b1
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 12:52:37 2009 +0200
+
+    again, delay the error reporting (this timef or GetValues()).
+
+commit c5f54a5cf148a8763f1098a504e1c15fe9925d65
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 12:41:39 2009 +0200
+
+    again, delay the error reporting
+
+commit 03a0a8cf616a066a92c647b85e6a34391c45c520
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 12:23:58 2009 +0200
+
+    fix memleak
+
+commit 33d176d4deeb8d25bae7c6ca1deaac59a397ec33
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 12:07:38 2009 +0200
+
+    refresh deps, remove uflip_sleep(); not used enough
+
+commit c792978c2c363d1ea753720345697de3bf5e82c0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 11:53:27 2009 +0200
+
+    Adds an uflip_timer_destroy() method, as the timer structure is not known to the caller.
+
+commit de7486b2281f3765c6b945f08b23d7e4fe640f49
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 11:17:23 2009 +0200
+
+    move the error handling outside of uflip_wait_microsec().
+
+commit dce610bd53d546b97a580e455bd7bc1602365e7d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 27 10:22:16 2009 +0200
+
+    use calloc() for some arrays.
+
+commit e33b768e1eacea24ad95b4c5168ff0fd65ee5c82
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sun Jul 26 17:41:02 2009 +0200
+
+    remove unneeded include
+
+commit 7a72871fb5952b891c539ba9f7045d4991806397
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sun Jul 26 17:39:02 2009 +0200
+
+    same for uflip_timer_get_elapsed_time(), update TODO.
+
+commit 2f0cd5e1e6ad6912748b12939b46430198e002ec
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sun Jul 26 17:35:20 2009 +0200
+
+    Don't exit in uflip_timer_start, but returns -1 on failure.
+
+commit 1532b40f7a86a0b3500a29ae0441857edf085f9c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 21:05:32 2009 +0200
+
+    clean includes, again.
+
+commit 017bfb93ac01941d5328b61a5dc461deb6c42918
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 20:56:17 2009 +0200
+
+    update todo
+
+commit 4df65cfd755696029855b75a90c7ea3005d5b38a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 20:44:40 2009 +0200
+
+    move some defines, again.
+
+commit 032fc4b732f47516cbfd217191b45b98f4cd0402
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 19:58:04 2009 +0200
+
+    fix typo
+
+commit 0be02b347dd3b12ab32c38edda5c49720faacc4e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 19:54:43 2009 +0200
+
+    remove unneeded includes.
+
+commit d5bd0da7ccc01d641a8c9f6441a9cc5f712d9778
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 19:45:03 2009 +0200
+
+    Port from sParams to uflip_params.
+
+commit 3649a4d5979b1f3c9afa5e6f6331e1615158e957
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 19:44:44 2009 +0200
+
+    mmh, don't set to NULL a parameter?
+
+commit 7d825cc827fd63366c2cd53d8eff329936ada094
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 19:43:33 2009 +0200
+
+    Move sParams to its own file.
+
+commit 6da544f4e7ea7fa1e67cf2cc30fe1f1e5f191927
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 19:42:35 2009 +0200
+
+    hint the correct function name
+
+commit d9fbca8711e46ea56a4f6cf7ba52068ed9eb37b4
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Fri Jul 24 18:23:47 2009 +0200
+
+    fix build on linux
+
+commit f8b778e2238c455cb0dccbe89511b42381c6270e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 16:32:07 2009 +0200
+
+    refresh deps for the new file
+
+commit 07e77ca67000bb3079b76dd87b170d143c8efa23
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 16:28:48 2009 +0200
+
+    Move sResults in its own file, to ease free().
+
+commit 8525133b22eea9cc608a944caff420ca801f8ac9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 15:09:29 2009 +0200
+
+    use directly SEEK_* from stdio.h
+
+commit e1bf1da3e24b093b1993cfecb456c749fc832580
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 13:10:51 2009 +0200
+
+    fclose() calls fflush()
+
+commit cfd95661e7bb18797efa37ee3e5f682cec7f4b25
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 12:03:51 2009 +0200
+
+    more clarity
+
+commit 1f6a0854b2d4efa847f6f2b62935107ba0b28742
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 11:28:38 2009 +0200
+
+    already included in platform.h
+
+commit ddd8ddb72f22001a4bf1372d3a653d91d08b0e74
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 11:16:40 2009 +0200
+
+    Update & simplify deps
+
+commit afa1e6e68782c97c0763a73d803bf5c39c8f17d6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 11:16:18 2009 +0200
+
+    Re-check all includes to drop unneeded ones.
+
+commit 3953ab47923400ad4e6245f9166de2d056fcd912
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 24 10:10:57 2009 +0200
+
+    Move functions & decls to more adequate files (OutputLine, HandleError -> output.cpp/h; WaitMicroSec ->uflip_timer.cpp/h).
+    Drop utility.cpp/h.
+
+commit f9f872ac59b1b888e3a90951e4410fddbf2d943e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Jul 23 23:28:08 2009 +0200
+
+    include directly stdint.h
+
+commit 43cbe3dcfb7dcc1804e5232c1fce591cd1ac8cec
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Jul 23 23:06:54 2009 +0200
+
+    Harmonize copyright/license headers.
+
+commit 90c7729f4145a679fe733e98131c7c4d16be3196
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Thu Jul 23 23:06:31 2009 +0200
+
+    fix forgotten comment
+
+commit b51aaa635987cf168620bd0cd0f28cdfe6b24171
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 17:54:20 2009 +0200
+
+    small precision
+
+commit c5344c094acdfa0ed732b8e8380a23be4fc23f04
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 17:50:52 2009 +0200
+
+    refresh deps
+
+commit 2a323e232a4ea648d5a78f9bc6c1d8ee12e145d9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 17:48:10 2009 +0200
+
+    Use platform-specific device data.
+
+commit af5f8b0f69c1577328cd763cff1af9b1df9b1e56
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 17:46:31 2009 +0200
+
+    - don't use windows booleans
+    - move aligned malloc/free to their own function
+
+commit fe1bafb6a511b7b4339e38d347958609f17d557e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 15:56:15 2009 +0200
+
+    drop unneeded stdint
+
+commit b2ff55bd41271282daf5c7407cd028365460dacf
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 15:55:59 2009 +0200
+
+    Include now missing platform.h
+
+commit 1888f19282bb106b05912b3fdeb8962a401fc042
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 15:55:31 2009 +0200
+
+    Move some stuff into uflip_device, update declarations consequently.
+
+commit 88c70b70761db4ed621d47a6870f12c86e52a676
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 15:19:20 2009 +0200
+
+    Refresh deps
+
+commit 3e33c5d2bb5803fc0080b95a303c89c06535dfbb
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 15:19:12 2009 +0200
+
+    some cleanup
+
+commit 4e79ee031d75a10fdb8d6f7265a305ca8642d5a7
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 15:18:55 2009 +0200
+
+    Use a pointer to a timer, and add an uflip_timer_new() function to handle it.
+
+commit 7c46966b2c6078e4b17df664e8c605c9c4e103d2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 15:16:43 2009 +0200
+
+    fixup structs and typedefs
+
+commit 5cf274c02cca47fa5702cbc7dfa13990b0bcb69f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 15:16:06 2009 +0200
+
+    Simplify headers' dependencies by using forward declarations.
+
+commit 3a95216aef86a80548fea00d9fc68fc9156fc0c7
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 11:17:24 2009 +0200
+
+    fix return code check
+
+commit 3b7ba2a86b8e6d7a4216df9022fd7fb668947e1a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 11:17:14 2009 +0200
+
+    disable hardening by default, too painful to debug (especially on windows)
+
+commit 50e18a624047562ea1ce3c45e8cbc39d085c738e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 10:00:09 2009 +0200
+
+    use min()
+
+commit 1deb210e5aacd7937d73e67cc0765ca9be144f64
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 09:59:56 2009 +0200
+
+    don't bother with uint8_t, use simple int instead.
+
+commit 94e86f6a1767874a1fca063afb008831dfc52788
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 09:59:00 2009 +0200
+
+    Fix wrong formatter.
+
+commit 8156015034522a4f0d45e9e12ff231e107e0115c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Jul 23 09:58:45 2009 +0200
+
+    PI{E,C} is non-sense on Windows.
+
+commit 2d0ae0fe35de0a944ef926980182ebdbcdd425f9
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 15:58:37 2009 +0200
+
+    fix typo
+
+commit 4e7ad80f0b055b9d8c1c21a2595eb2913b53c231
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 15:50:54 2009 +0200
+
+    Add missing doc
+
+commit 941fa479898870fd83e9dba92be1d638136ce320
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 15:50:47 2009 +0200
+
+    fix wrong return code
+
+commit c766c9a3103f2168262adb7e5788d69f2018029e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 15:01:45 2009 +0200
+
+    Get rid of LARGE_INTEGER
+
+commit 6b705cfa42833c4332fdaaecf64505dd94f62eae
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 14:30:10 2009 +0200
+
+    fix error codes & checks.
+
+commit c509cf0be61e6bcd32c7d3eb698737d5a3e23afd
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 12:42:24 2009 +0200
+
+    remove unused include
+
+commit 3dc16863f369e73dc4f54ee3a84b11e8db0538ce
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 12:31:51 2009 +0200
+
+    uflip_timer is private.
+
+commit 8d2ee7aa57ab9e83344f683b3b2271f50d827b5e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 12:16:56 2009 +0200
+
+    Simplify _open().
+
+commit 8f503baf5fd8a21c6b91437325a8becdc747fe58
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 11:59:35 2009 +0200
+
+    Fix _open() on Linux.
+
+commit 5cbf54c3a95b2357cd42f88f52cdae3f60a484e1
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 11:36:21 2009 +0200
+
+    save errno immediately.
+
+commit 6096458b4818e1eb7e240adb205167e6a3b1cf31
+Merge: 31bcd4d e9ace2a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 10:59:35 2009 +0200
+
+    merge
+
+commit 31bcd4d20dfff38cef57ea9e4b1ccce4c67a3b38
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 10:58:48 2009 +0200
+
+    fix calls of fwrite
+
+commit 718b7dcbba5d730b3cfa09d401797bb8833c6c86
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 10:58:30 2009 +0200
+
+    update TODO
+
+commit ab2f81719698132709f1004696c9ac84c3c44b3f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 10:57:53 2009 +0200
+
+    Add missing shebangs for scripts.
+
+commit 5d8b9c2a4cf3966127ef93220b55bfd812325b29
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 10:46:24 2009 +0200
+
+    remove BOOL, that was stupid?
+
+commit e9ace2ad8cb2d825159c03d5cf45cc9c06dfe51a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Jul 22 10:37:17 2009 +0200
+
+    typo
+
+commit 0b5510c4b0a2cd6d7f9060fb8540cb39d68abe77
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 10:34:52 2009 +0200
+
+    Small change for the drive geometry, no need for a dedicated struct.
+
+commit cc0d7f523720ef6b6bceb1d271720df2705c709e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 09:36:30 2009 +0200
+
+    Move the timer into uflip_private
+
+commit 1b179be63bb263a92931b325bc3c972c801853c3
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Jul 22 09:35:56 2009 +0200
+
+    Fix type.
+
+commit 7a05fecac5255fbf15cb58774102830592b432cf
+Merge: 7dda659 edcabbc
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 18:40:13 2009 +0200
+
+    merg
+
+commit 7dda659c1d302e23c64967ccab03b5aab9ee0e90
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 17:14:11 2009 +0200
+
+    typoooooo
+
+commit 735cb14ea534146c305690c0ffe5e6ce58f83950
+Merge: 4cd23cb 2f1fc92
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 17:02:02 2009 +0200
+
+    merge
+
+commit 2f1fc920a828c8799288736cbceb5ccb7160a758
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 17:00:27 2009 +0200
+
+    remove cruft
+
+commit 4c29205d35340b5ad235ce5e3d914d34a39dd38a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 16:38:08 2009 +0200
+
+    Rferesh Makefile.
+
+commit ee38742fce804d10ddb450e080f71aaf25eda054
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 16:36:06 2009 +0200
+
+    Update doxyfile
+
+commit edcabbc8e7da1f65f397fee312d5ec8fb2647273
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 16:27:34 2009 +0200
+
+    remove old doxyfile
+
+commit ce499a6f8783eb1f9b14f8f59836963b31858649
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 16:27:09 2009 +0200
+
+    refresh Makefile
+
+commit 4cd23cbf0f5a59c4e7105f9c6b8d8a12fb04d9a3
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 15:52:35 2009 +0200
+
+    cleanup
+
+commit fe9199ccb83cea73579e091d6fa9dc8f89acb171
+Merge: 5bcf4f4 b634484
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 15:37:13 2009 +0200
+
+    merge
+
+commit b6344842552246be0858488abca99cf936e97bc0
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 15:36:46 2009 +0200
+
+    clock_t might be too small, use double instead.
+
+commit 5bcf4f4a3a1e1d838dfec784c755b11d6a594374
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 15:28:35 2009 +0200
+
+    fix typo
+
+commit 1a215a4b574fadc6c9e2dd975c0beaafacb6d64c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 15:26:34 2009 +0200
+
+    try again
+
+commit e692df02233627cb280c65e427abc84d3eec0b3e
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 15:24:11 2009 +0200
+
+    small fixes
+
+commit 4c6d9d4370b181ad98083603fe8db5e74c0ffeb0
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 15:15:10 2009 +0200
+
+    no quadpart in clock_t
+
+commit d0dc7f425566d8aeb0852bf31769d7ba940b13be
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 15:13:55 2009 +0200
+
+    fix include
+
+commit 00e468529a0748597d62ab0a477a30afc33be1d9
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 15:10:51 2009 +0200
+
+    Port win32 to the new timer api as well.
+
+commit 64d4c812dec9b316bb17a0f8fb846b5bc8b0d9a0
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 15:09:21 2009 +0200
+
+    doc
+
+commit bf413195dd1899000205da8a11c7fbbcaf3cdfbf
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 14:49:19 2009 +0200
+
+    cleanup
+
+commit c9e33ff835125c99cdee2d9242744bf21380c158
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 14:48:21 2009 +0200
+
+    New uflip_timer.
+
+commit bd0dda71ef22ea6862c9a2df2f7dea2f53d26cef
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 12:44:19 2009 +0200
+
+    get_last_error() is a wrapper around errno/GetLastError(), because win32 uses GetLastError() for its functions?
+    Keep errno for C-only functions.
+
+commit c81ba5a6f436845365bd0d60542208182fa9842d
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 12:30:03 2009 +0200
+
+    Drop unused defines.
+
+commit d28d380a7d03b37779f42befb0ebcc42424ad8b6
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 12:01:48 2009 +0200
+
+    Update headers
+
+commit 46749519fe58a49f23e2c83ab0a645baf7fa2cad
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 11:48:10 2009 +0200
+
+    Better abstraction layer for a device geometry.
+
+commit e709360fcee0ed6e81c7db5376131b1b760e60cb
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 10:36:39 2009 +0200
+
+    cleanup
+
+commit a79b3b3fcba3e9729216be6835b5d4854665ab02
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 10:35:05 2009 +0200
+
+    fix wrapper for hostname
+
+commit 7f6702d6e5d2256bc2bd1aa20ba8c4e3d458f10f
+Merge: 20bbfae 25cd338
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 10:17:27 2009 +0200
+
+    merge
+
+commit 20bbfaec0d00cc1f9841fd3aac6ba64a7c28177c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 10:17:01 2009 +0200
+
+    Revert 282:6118b32d4556
+
+commit 25cd338a6c0fad9ecff526cc9d21bb415fea4b57
+Merge: 06c8abd b03e7d2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 10:15:58 2009 +0200
+
+    merge
+
+commit 06c8abd9f34f7869a96c68d04a7f488c71728373
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 10:13:57 2009 +0200
+
+    Stupid win32 api!
+
+commit b03e7d2ef4ea72c3a73e201be0b4476557dca8b2
+Merge: f5dd6d1 9d3dab0
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 10:11:04 2009 +0200
+
+    merge
+
+commit f5dd6d198bcd78d4afd200a519c0a1629b27f2de
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 10:10:07 2009 +0200
+
+    Try to fix build for windows as well.
+
+commit 9d3dab00c0f6f9bbce7e5fcdd93e60ecb2d65a9a
+Merge: 3c864b2 dd6869f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 10:08:51 2009 +0200
+
+    merge
+
+commit 3c864b21265d111bc49faa297c7c247161fca0f0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 10:08:02 2009 +0200
+
+    Don't use a
+
+commit dd6869f7ca927526d05da4226b70917f2e3f7a61
+Merge: c5e5aea 5b2fdd1
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 09:52:43 2009 +0200
+
+    merge
+
+commit 5b2fdd16322f76811214ab38cb24f20a455912e0
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 09:52:28 2009 +0200
+
+    Fixes build, and probably breaks on win32.
+
+commit 8882a696e0ed8bbcb5a173bd3b0b04c489de7eb5
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 09:52:11 2009 +0200
+
+    Fix typos.
+
+commit 57d1a08940fc5c20e408717945e978d7290d88c3
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Jul 21 09:51:37 2009 +0200
+
+    Fix dependencies.
+
+commit c5e5aea4e1ba003ebbeed1535243debeb5ecba5e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 09:41:48 2009 +0200
+
+    errno has to be redefined for MSVC++ only.
+
+commit dd96d3cb47c46c9b32a3384dfe3508d1b8f87252
+Merge: 03db879 69cb096
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 09:35:52 2009 +0200
+
+    merge
+
+commit 03db879d6c51201129b6e3a7579ce0b115d76b8c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 09:31:31 2009 +0200
+
+    Port to the new API:
+    - don't overwrite newly-created devices...
+
+commit c842d216aa9e77cf4db9029a197e2bfb122f5dde
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 09:22:14 2009 +0200
+
+    Port to the new api (needs work in InitParams(), which has a memleak as it overwrites a valid uflip_device).
+
+commit 88fbdfcce1bde4d44660cee8de6e8ad5345eaa2e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 09:08:16 2009 +0200
+
+    don't use open()/close() but fopen()/fclose().
+    Update to use errno.
+
+commit b04fb71e178effe6dd9971484851a005e89f0ad9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 09:02:46 2009 +0200
+
+    Remove unused functions (replaced by #define)
+
+commit 19d18cfd93313509ff73ac5cc0093a2d81b78cad
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 09:02:22 2009 +0200
+
+    Port microbenchs to the new API.
+
+commit 48eb0c0cddd20baa38c0b6a52fc1578fefd36f9b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Jul 21 08:59:33 2009 +0200
+
+    Port formats to the new API.
+
+commit 69cb096fbab6cdde79c8a07d77ba551a0be94082
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Jul 20 23:41:26 2009 +0200
+
+    Minor cleanup, and fix some typos.
+
+commit c9d3b82494341f1f121a3ef7cde258ca046e30ee
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Jul 20 23:33:07 2009 +0200
+
+    Port the linux version to the new API.
+
+commit 259c6799869bc6d46a7f1eed3557ac26d44e4c76
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Jul 20 23:09:57 2009 +0200
+
+    Stupid cpp comment
+
+commit 72c4865f24e2d4b5d4646ee6febfa0c046230651
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Mon Jul 20 23:06:57 2009 +0200
+
+    Ident fix
+
+commit ea117e21ebcc350dbaebc8051857266860fa0c0f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 17:08:27 2009 +0200
+
+    Drop DevCpy() (replaced by uflip_device_copy()).
+    Small fix for sleep().
+    Remove old os-generic.h includes
+
+commit 3fb6dbbb205a8bbe76deb0fa20d459b937abf547
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 17:06:25 2009 +0200
+
+    Port the main file to the new API.
+
+commit 607f8ddce22b9635443db3353f7237ede1931f85
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 17:05:26 2009 +0200
+
+    Small updates
+
+commit 0959099a92dd8ae97a0120e696176aca9c58cf72
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 17:03:09 2009 +0200
+
+    Port to the new API (windows only).
+
+commit e92b82ed09b1cbbf50cad44c919f0e387f225510
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 17:02:14 2009 +0200
+
+    Update for new files
+
+commit a1e65ec2e7bfe05edc342a10af9ab8cb4ea0a18a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 16:48:39 2009 +0200
+
+    New API using function pointers for a device.
+
+commit 9620df56643bf3690fd26d679cc183ffef6dac6f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 12:17:40 2009 +0200
+
+    remove stupid hack
+
+commit 151b1d959288a370fbaa511b530d489905117242
+Merge: 6f4c2a6 10a9514
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 11:26:36 2009 +0200
+
+    merge
+
+commit 6f4c2a67cb9b7e5dab42a66b6729eaabd6a9b68d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 11:25:04 2009 +0200
+
+    Don't forget to set to null after use
+
+commit 10a951427ec2bf68439734d5b14c5bf231a924a2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 09:57:59 2009 +0200
+
+    set dbg to NULL to prevent any unwanted reuse
+
+commit 04d11a999a32d255f9701a971213e0c8b4367d9a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Jul 20 09:57:34 2009 +0200
+
+    missing comma
+
+commit 6949e714d3eee6a58a0a41365d8023af6c1008ec
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 17 16:50:38 2009 +0200
+
+    common doc :(
+
+commit 21477e87a3533570aec1b26c8d285708354255d6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 17 14:56:57 2009 +0200
+
+    generate different docs for linux/windows
+
+commit 64bae8660a00ff447d70aaa430bfe11e3452a5f3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 17 14:56:40 2009 +0200
+
+    Better platform detection
+
+commit 71aa11fc06b4d95503fcfdb04755011f0d39dc4a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 17 14:55:40 2009 +0200
+
+    rename os_open to os_open_dev
+
+commit f8dac60c28da51087a2059bdd57d4aa638d8ac4f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 17 12:51:51 2009 +0200
+
+    try to drop functions calling itselves
+
+commit 24431d6183737c9444fa419757510ef2e8700dba
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 17 12:51:15 2009 +0200
+
+    more doc, again
+
+commit 9ee8ae578265ee618f01c71438498cc45166b732
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Jul 17 11:21:00 2009 +0200
+
+    more doc
+
+commit cc53719e27e6e60815fe1bb77daae581de4d0748
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Jul 15 17:10:40 2009 +0200
+
+    tiny fixes (better os detection, update todo file, add some doc strings)
+
+commit e5d3707da001c58ffc8fe757d1cb167b959dfd61
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Jul 15 15:39:43 2009 +0200
+
+    fix scope
+
+commit 82d8604c406acfea397e5f4159c7d55153ed5bb2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed May 6 15:35:10 2009 +0200
+
+    Fix typo from previous merge.
+
+commit 56b7682627dc5ed1359ff6202726c155fd0109c1
+Merge: 55a96b3 9ed4715
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Apr 22 11:30:45 2009 +0200
+
+    merge
+
+commit 9ed4715289c04305c62dc364f20ae43ea284f241
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Apr 22 11:23:43 2009 +0200
+
+    Change scope of some variables.
+
+commit 55a96b3097d329569eedfeb53f7b9e5816c71729
+Merge: e1fd709 056f323
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Apr 22 10:50:55 2009 +0200
+
+    merge with uFLIP_windows branch.
+
+commit e1fd709a3ae5ffb04cd876d1765195f3381488d6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Apr 20 16:08:58 2009 +0200
+
+    Add this empty file to warn that the port isn't ready, yet...
+
+commit 056f3230d9f7df123bd4096fa36ecb62db5e59af
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 27 16:55:48 2009 +0100
+
+    Better calculation
+
+commit eae1c677fc60f07256ec610119c0544baaaac27a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 27 16:45:59 2009 +0100
+
+    some polishing
+
+commit 033fcd35ad30ece7042790ae646ded711994fab3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 27 11:17:07 2009 +0100
+
+    Improve lists display.
+
+commit 218f4509a0a1c2115c87dc4ff18dbd7797258bc9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 27 09:52:16 2009 +0100
+
+    Update NEWS
+
+commit 710213756789fdea75554d4f101a25141fba135b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 27 09:50:20 2009 +0100
+
+    Create a debug file to store some data on IOs every 1500 IOs.
+
+commit 3472205693e60c0c1d298d02b22b12d9112f92d0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 26 16:57:40 2009 +0100
+
+    Create a debug file to store some data on IOs every 200 IOs.
+
+commit bef6bf840afc313a51bd7d060f10f7c0bf821e60
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 26 15:26:21 2009 +0100
+
+    Add missing doc
+
+commit 26d71ecc4ebaabecbfca3a2f0ec31a90d67871b6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 26 15:00:52 2009 +0100
+
+    stupid typo
+
+commit efc8a60d27758e9b55786cb30ec710974daf5b3d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 26 14:45:00 2009 +0100
+
+    Mark a possible bug
+
+commit e010793311cee784585e9e41fc611599af1f655e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 26 14:44:44 2009 +0100
+
+    Update options.
+
+commit d4920f25a9bbdad6a6ad9245ce66445059916a6e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 26 14:44:18 2009 +0100
+
+    Revert 85:732496a497d1.
+
+commit f2f635474ad805dfd22a9d3be66acda98938f812
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 26 11:42:26 2009 +0100
+
+    Clean headers dependencies.
+
+commit 74a839404436256641baf9f0db909cd062464043
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 26 10:26:14 2009 +0100
+
+    Add missing include
+
+commit 306a724397f201b330a4d169091020fffc6469aa
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 16:21:52 2009 +0100
+
+    fix segfault
+
+commit 05b621100dc7d878b5b8c1ec9bd7c89fc498a081
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 15:48:50 2009 +0100
+
+    Unnedeed extra precision, so call Sleep() instead of WaitMicroSec()
+
+commit bdad190f94ea4052c623787579c0d14623c7a4f1
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 15:21:34 2009 +0100
+
+    Not a bug
+
+commit 461acaf76e00edf5b071af98926d74ca28f1b547
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 15:20:03 2009 +0100
+
+    Drop this fallback part, stack overflow
+
+commit c416c84128528ae8dc6afb108902095a14791a21
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 15:19:27 2009 +0100
+
+    Missing include
+
+commit ac221fbbe3e38d59a7f0d80b382ce1e6630079ee
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 15:18:04 2009 +0100
+
+    Gnerate graphes
+
+commit 63dfb7f3d299c1ec7bb067e83eb222f06ea9c0d2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 14:57:48 2009 +0100
+
+    Improve doc
+
+commit bec9e1139dedc9204e4d41cf495ceedebb75d9c6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 14:47:50 2009 +0100
+
+    doxy?
+
+commit 5d9edbd9a8b7ba2d1369961a1188b2e32681290a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 14:19:54 2009 +0100
+
+    doxy?
+
+commit f741636d7737566ba96d79fe90ae1e2910d4bbd5
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 13:53:42 2009 +0100
+
+    doxy
+
+commit e91f6092bf9a03b46a2808eac36e0bc274fd39e1
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 13:52:20 2009 +0100
+
+    Enable dot
+
+commit a8d63009bab5d66881a6293ba1e5a161bb97ddd4
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 13:11:28 2009 +0100
+
+    Describe what module does.
+
+commit 264b8e3a91a32f82f2cda954fe3c9d40f15a6163
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 13:07:32 2009 +0100
+
+    Improve doc
+
+commit daed2ddd28d7aa65ccb06ce91f7559d92db11e54
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 11:46:47 2009 +0100
+
+    Improve desc
+
+commit 0922310d2bc64f868693909dbe5d7ba6c84c4723
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 11:16:25 2009 +0100
+
+    Use isdigit()
+
+commit f533d8367b075461331f3db2d486701616670dd7
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 10:54:27 2009 +0100
+
+    Doxydoxydoxygen
+
+commit 444d0e8448baf9321dadd141f8b402b1b49d9659
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 10:54:08 2009 +0100
+
+    Use c-style comments, + reoder functions for linkage
+
+commit 704ace2e1c182eea8f65f6409c1f441c19aa5161
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 10:51:43 2009 +0100
+
+    Drop unused include
+
+commit 91311fe802f1d0128b02520250b527696b78c982
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 09:57:26 2009 +0100
+
+    Use c-style comments
+
+commit 54531ed71a0075e49be6373392a40c6f28a24897
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 09:55:46 2009 +0100
+
+    Doxydoxydoxygen
+
+commit 90f7c49370a43c44af902a51c3679a9fc9a17699
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 09:54:46 2009 +0100
+
+    Add explanatory comment
+
+commit a731b1d5ba71adeb21ff6e24349f89f005b58009
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 25 09:54:31 2009 +0100
+
+    That's c code anyway
+
+commit 0bc3eb5564d7f69f5322ee5fd62e55798d16f02e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:53:42 2009 +0100
+
+    use c comments
+
+commit 6ee948b6916c5c5a8d15cf734fa95202b3a12f85
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:53:16 2009 +0100
+
+    Doxygenize headers
+
+commit 56f74d31bb1b53c05f8200de6d56ae5d8f8ade8f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:52:33 2009 +0100
+
+    Rewrite
+
+commit 809b5be83b9ee154011cc3452739d962fd20fa3f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:52:16 2009 +0100
+
+    Do not parse cpp file with doxygen, that was a bad idea
+
+commit 3207fff9446e9692c34900313b631115b6d4a711
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:17:46 2009 +0100
+
+    Add desc
+
+commit de2372b744fb6dd495a36fa7c6d5206a863e523f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:17:38 2009 +0100
+
+    Don't doxygenize these ones, they come from an external project.
+
+commit a945da025444666afbea78527cb35d0070225819
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:10:25 2009 +0100
+
+    Doxy
+
+commit 904c37c9e741e95f90e3424f757be15dd7c93979
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:10:19 2009 +0100
+
+    C comments
+
+commit f6d7f2f4ca053a2b0e00cb78652fa670966275c5
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 16:09:42 2009 +0100
+
+    Replace some #define with some enums (better semantically).
+
+commit 2d925656adb4f408f563dbaf013bf0e2a637f432
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 15:13:27 2009 +0100
+
+    Doxygen fixes, again
+
+commit fc518ac76c0c6f940e378f5d44e744b75291739c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 15:01:48 2009 +0100
+
+    Add @file everywhere
+
+commit 48e9ac4a77c884ee5720e67b7fc43589e74df74e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 12:13:15 2009 +0100
+
+    Convert to doxygen
+
+commit 71e87806effa72f37fe923efec39d92ea8430a83
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 12:12:57 2009 +0100
+
+    Typo
+
+commit 437a0d5ddbcaf74ae5f746df2bf5d96af33ba9d0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 11:50:04 2009 +0100
+
+    Ignore auto-generated doc directory.
+
+commit 6140ed62cc4f9fcc1b1ed15e0a3ab2655d6234e0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 11:48:23 2009 +0100
+
+    Switch to c-style comment and start using doxygen.
+
+commit 47dba2a78fb99dd7dde7ff9d11fa94c16f980a22
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 11:46:08 2009 +0100
+
+    You're gonna love UTF-8.
+
+commit 9c3ab26d44cbac3022c349ce7954b7b01e81e34f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 24 09:10:16 2009 +0100
+
+    Correctly remove references to deleted elements.
+
+commit b1e0b306bacd85a13c78dbf1339fb1ef722b2ab8
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 17:12:08 2009 +0100
+
+    Some doxygen tags.
+
+commit b3b4784992c69df5e27d8f8052cc19b4439b1e9e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 15:58:01 2009 +0100
+
+    Re-add missing option.
+
+commit 3a3fea8ef770a03f5cbb1f59cbabb6ee6e2957a7
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 15:49:01 2009 +0100
+
+    Remove code duplication.
+
+commit f229e09f5e859227381ff735073a501584a2a03e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 14:16:31 2009 +0100
+
+    Use memset instead of a for loop.
+
+commit 898fbd2b10a9cdb1137092c77db4503bc8931839
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 11:59:12 2009 +0100
+
+    Fix build with -DWIN32_LEAN_AND_MEAN.
+
+commit d476773cb75239e2dd7a74f4a9e5bb36a94ea26b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 10:57:40 2009 +0100
+
+    Indent style (end, I probably broke everything).
+
+commit 3cda9068c694b6ec1916bae83912f299c3069024
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 10:56:29 2009 +0100
+
+    Indent style (6, this one is a bit tricky too).
+
+commit 37bbad61eb0d9c9901d7961be9317c55e139bb28
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 10:54:17 2009 +0100
+
+    Indent style (5, this one is a bit tricky).
+
+commit eb026015d5cff71c3736a7636b2b54eed668b8ee
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 10:51:57 2009 +0100
+
+    Indent style (4).
+
+commit da5a898e55996f84433a888501be66447468a2ab
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 10:50:21 2009 +0100
+
+    Indent style (3).
+
+commit 27c3aaa584e8bcd7e511f0484e8f8d3db84cd46d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 10:48:59 2009 +0100
+
+    Indent style (2).
+
+commit 017a142875634af5ac157c6e3b17fe53dd0486d6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 23 10:48:15 2009 +0100
+
+    Indent style (1).
+
+commit dbb6f32437d0c4e8497574324dcb78254aea12b8
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 20 16:07:25 2009 +0100
+
+    typo
+
+commit b2172c24546f785f3285787ba00558d0dc70b101
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 20 16:04:26 2009 +0100
+
+    Add a sequentialFormat option.
+
+commit 56a3efe71ebed16fc1d5680f4bd77b1a9a760b4e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 18 16:58:35 2009 +0100
+
+    Update version.
+
+commit de557ff390bc06056cba29830a4501d16d4f48a6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 18 16:40:53 2009 +0100
+
+    Handle crlf files on unix and lf files on windows.
+
+commit 4347d59d34110fd8f5fe2e1e0cc118a1e2aa9629
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 18 16:39:23 2009 +0100
+
+    crlf -> cr... (last one)
+
+commit bb7b59a0d6142fee1ad0a0aea2e15dba9c0b952a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 18 16:36:26 2009 +0100
+
+    crlf -> cr...
+
+commit 6e7c788da21b5b537d9643383cc3edd24e8d9d36
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 18 16:35:18 2009 +0100
+
+    crlf -> cr...
+
+commit 12cfdc8bd135531b885ee5702f35026eca73c36f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 18 09:24:02 2009 +0100
+
+    Stupid case insensitive windows fs.
+
+commit 4c96cd871e7ebfb28f8bdf6ccff8e2863d94e73a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 17:04:25 2009 +0100
+
+    Define a mask (yeah, that's still ugly).
+
+commit 43f86a80f18627058f1e1053bb0742e440008372
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 16:45:27 2009 +0100
+
+    I'M NOT VERY PROUD OF THAT
+
+commit 06fdb0a6b1d7442bc7b6f0ee1b04ab1353a13be9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 15:59:30 2009 +0100
+
+    Added tag v2.2 for changeset bf57d4400ee1
+
+commit bd68d932978cbd847774d6da9041995aaad58deb
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 15:58:11 2009 +0100
+
+    Release 2.2
+
+commit 099c08cdb05b5b5fceda99869787e14e641bff31
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 13:47:10 2009 +0100
+
+    enable more warnings
+
+commit 53f0e10ac2657ff5a0c8fa93b064c2a8ef2b4788
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 12:08:54 2009 +0100
+
+    reorg cflags
+
+commit d6425b44e0b4ff42ee1aa21c0989976dde9786f2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 12:03:23 2009 +0100
+
+    Correctly free aligned memory (backport from FlashIO windows).
+
+commit 72211a3f8d3f00946656778976d4d6f72758085b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 10:23:24 2009 +0100
+
+    update news.
+
+commit 4f6dcd6f1fbe32e06d019d8d8d7bdc7e0730fc43
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 10:20:33 2009 +0100
+
+    Add GPL Full text.
+
+commit 2a6a9a982971a63e79df54c736dca9a78b0598ec
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 10:07:55 2009 +0100
+
+    Typo
+
+commit 3ddac1dd401c1a0fea0e52999637e317200eee7c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 09:56:10 2009 +0100
+
+    Add NEWS file.
+
+commit 865171e864a8d79b4cb428aa757b9b08a81256bc
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 17 09:55:13 2009 +0100
+
+    Correctly align data buffers.
+
+commit 08e316f6c2dc63ac626d3c6a01e3c9832556de06
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 16 09:31:02 2009 +0100
+
+    Oh noes, not cpp.
+
+commit c29c9547b5fc3ab9de60b09aa5ec6799cf888c95
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 16 09:22:35 2009 +0100
+
+    Fix some memory and resource leaks (backported from multiarch_port plus some extra leaks spotted).
+
+commit 225d7eaffa44327606e70261f63840cde3d72f35
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 16 09:21:42 2009 +0100
+
+    Fix some resource leaks (backported from FlashIO).
+
+commit d5e6f67beefca0ae1660cb64e094dc4650914971
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 13 17:06:29 2009 +0100
+
+    Backport a memleak fix from multiarch_port.
+
+commit 83fb86b9fd91d5ab1ba9f6424177a82389a6427d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 13 17:00:32 2009 +0100
+
+    Revert some extra changes that were mistakenly added in the previous commit.
+
+commit 678ef6b3b8330cba081f8f7524ce94381b3e55e0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 13 16:57:28 2009 +0100
+
+    Fix memory leaks (again).
+
+commit 157d62e64815c2ba6b69909fe38e5af7e53ee537
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 13 16:56:42 2009 +0100
+
+    Fix memory leaks.
+
+commit 554d616e52af149e40b2ae101c27a1c3c19a7f1f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 13 10:33:15 2009 +0100
+
+    Port fix from FlashIO windows only branch: fix stack buffer overflow.
+
+commit f1401b93a15416fde3afaa60cf21d4daa0ba2fb8
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 13 10:32:20 2009 +0100
+
+    Fix stack buffer overflow.
+
+commit 8ad5c79830aad7a2135edbf3870dadc62cc9889e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 12 13:08:28 2009 +0100
+
+    Fix rndFormat with "Fake True".
+
+commit 664d2f4d2f66ef853e87d6348c101b49f2dce36b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 11 11:57:47 2009 +0100
+
+    Do not use FILE_FLAG_SEQUENTIAL_SCAN.
+
+commit ac36a85f72f14bdc9b637bfe5e3c1ba9edc46468
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 11 11:32:29 2009 +0100
+
+    Do not use sprintf with overlapping buffers (behavior undefined...).
+
+commit 6af7e6fee2ec20650208878fac3cf99d0dc0bd40
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 11 09:45:11 2009 +0100
+
+    Ignore them as well.
+
+commit c2147d7fbdd093799aacf9b05e5ee8260bbf1650
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 11 09:43:43 2009 +0100
+
+    Do not version project files, it's a pain when transfering between machines.
+
+commit 17395a69f7427a5b97bccb74539b9c486aec7962
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 11 09:07:33 2009 +0100
+
+    Update TODO list.
+
+commit a98dafbf18fcfb11df7554c0647fdfacefeff6d8
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 17:20:52 2009 +0100
+
+    Fix resource leak.
+
+commit 1501d6b60a6ddfb8f3b8e9ce14e3d21e1c432ee3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 17:17:01 2009 +0100
+
+    Fix memory leak.
+
+commit df41dc744fa76919e448033ec9ed0bec89dda708
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 17:14:48 2009 +0100
+
+    Fix formatter.
+
+commit 99d5735288ad5124be6a8ed155dd5e1b0c2a9551
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 17:11:07 2009 +0100
+
+    Use modulo.
+
+commit 0c4a870d25fdb022836ec57f5bc649ce1907dba4
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 17:06:37 2009 +0100
+
+    Variable shadowing is bad.
+
+commit 5b152e0bbc2e591e2b7d86b7f7937804c948936d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 17:04:12 2009 +0100
+
+    Fix some tiny warnings, again.
+
+commit 9192f3fffc4b09fce75db5419ea25f5511e97505
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:47:19 2009 +0100
+
+    Use a BOOL when the function returns one.
+
+commit 7f42691bcc5bc9df006192cfaf433b8fd4b0f8d1
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:41:47 2009 +0100
+
+    Use '&' instead of '&&' (binary and between two flags, not logical and).
+
+commit afe84320ffe649f8526e90b7b8d2e70913001b21
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:39:10 2009 +0100
+
+    Fix a bunch of warnings (char * -> const char *).
+
+commit c69a7f45c77470a09c692d2b9ca2a03f1c3a6623
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:30:44 2009 +0100
+
+    Revert this one, not needed (only big IOs in microbench.cpp and rndFormat.cpp will fail wtihout SetFilePointeEx()).
+
+commit 430192f7edef0da900629bd456a2b83aaa194765
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:27:18 2009 +0100
+
+    Add missing bit from previous previous commit.
+
+commit 91e36975d5504f577bb538cca0e6af7b3415fa26
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:25:58 2009 +0100
+
+    Add missing bit from previous commit.
+
+commit e76e58ff77b893ea83e656d2a3d897df7e56a0a2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:24:06 2009 +0100
+
+    SetFilePointer() is broken by design, use SetFilePointerEx() instead.
+
+commit 33310c6dc7e7fd376ed36a991a0d93105f319447
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:20:29 2009 +0100
+
+    Fix alignment.
+
+commit 5fd4b5734b64128af292cddebb7c26b4ce9183a7
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:18:45 2009 +0100
+
+    Ignore linkable objects and binaries.
+
+commit 225af38c45ddac40bfa35a6fef8a22dcc6515949
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:16:12 2009 +0100
+
+    Fix build (unneeded commas).
+
+commit 190fd68f6d2aefb1c19062cba71c43fb435b7569
+Author: lefolgoc <devnull@localhost>
+Date:   Tue Mar 10 16:12:29 2009 +0100
+
+    Add a Makefile to build more easily.
+
+commit fe55af7513eada41058b1d0f3b20c635a966fa16
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:02:01 2009 +0100
+
+    Add Eclipse 3.4 project files.
+
+commit 5157536e9c090acdcb750c01ed41c9b1d2c24c88
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 16:01:46 2009 +0100
+
+    Initial import of FlashIO release 2.1.
+
+commit 2979ea1e12620dcfe03b06c6f60246067c61fe2c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 15:38:31 2009 +0100
+
+    Interesting overflow.
+
+commit 0e49f6fb357e0323838d55f4fe708ea74db7edb3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 10 11:27:53 2009 +0100
+
+    Use dependencies generated by gcc -M.
+
+commit cff24c85475184d197803a0b5c8c0c0974819909
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 9 16:40:21 2009 +0100
+
+    Correct dependencies.
+
+commit cdaf9b8585d943c58f0e7007195f9e91b68035b6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 9 16:39:58 2009 +0100
+
+    Update TODO.
+
+commit fbca3064ea48cd81670d3d9b1d18fa8eacc8acc3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 9 11:14:39 2009 +0100
+
+    Fix memleak.
+
+commit 3640621f7582a92ab2b079bcda84640c8b536ccb
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 9 10:26:45 2009 +0100
+
+    Free created device.
+
+commit db5ef7ad1d5c716ed6b649d2711e3ec397b3934b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 9 10:14:06 2009 +0100
+
+    Fix debug build parameters.
+
+commit 3e470d210ffe406c2da8cd2724027c30910c4e24
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 9 10:13:48 2009 +0100
+
+    Fix segfault.
+
+commit 6efefefd41c0bf7e4cd3568674877907b5f78315
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 16:32:53 2009 +0100
+
+    Fix *THE* bug.
+
+commit 2207f6592311682a12b9b0f43a126ec9ce3c8630
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 15:35:41 2009 +0100
+
+    "Pause" doesn't exist in bash.
+
+commit 6bed025d06955489f47dc04e4b75f964bee77e9e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 14:43:48 2009 +0100
+
+    typo.
+
+commit b1412299b670407b329e75d14fa94151c905bf86
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 14:37:11 2009 +0100
+
+    Rebase with release 2.1 (again).
+
+commit 2dbceba1f4bc54ebbd21d96e082fadd89dd55a1b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 14:28:39 2009 +0100
+
+    Rebase with release 2.1 (and fixes a bug).
+
+commit d47541f7b576423b39a7d4f08910386a3201a85c
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 14:03:12 2009 +0100
+
+    Small consistency check.
+
+commit c016e1afd19f3c94a36a5969ad42c5811e5a9e7e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 13:59:41 2009 +0100
+
+    Rebase with release 2.1 (again).
+
+commit 8bc794dc2a225491548741762a6082d30c8fd0e8
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 13:54:06 2009 +0100
+
+    Rebase with release 2.1 (again).
+
+commit 05382e08c174402dfe839272f9528586f81b4374
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 13:42:40 2009 +0100
+
+    Rebase with release 2.1 (and fixes a bug).
+
+commit a3cc8d8100e06a89721ccdbdb096ab696d69969a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 13:41:59 2009 +0100
+
+    Rebase with release 2.1.
+
+commit 2b81bb7421016705f89bfa488129f07aa996e687
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 12:01:53 2009 +0100
+
+    Correctly init and free.
+
+commit 4d58920bf80da837ef8a8b28ec7f4d82942a0d4a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 11:59:39 2009 +0100
+
+    Completely revert r94, it created memory leaks...
+
+commit 3289ea95ef5dd0c6803ef93ccb371c780f392f66
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 10:46:52 2009 +0100
+
+    Revert partially [94:d0290dbf2cd5] for cpTime (otherwise it's leaking memory).
+
+commit 304f407636c394a92605b1c08ac2fe964b8d3844
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Mar 6 09:42:46 2009 +0100
+
+    Generate scripts with the correct extension.
+
+commit 0ce968480ee12e7db6171b4be01557896bc327c1
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 5 15:55:07 2009 +0100
+
+    Fix build.
+
+commit 865a742d37c58e5db82982cf1c5ebf4f5f07ffe8
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 5 15:37:05 2009 +0100
+
+    Windows, we love you!
+
+commit e06b96857e5f119d74c8f233ce7c2da0d8a6e368
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 5 15:19:06 2009 +0100
+
+    Improve helper scripts.
+
+commit 875f627e702fc435bcdaef12e616770d4b6f1666
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 5 12:51:09 2009 +0100
+
+    Alloc aligned memory on Windows as well.
+
+commit 6128de2e897bb2b3639b1fc4695aea71286658f1
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 5 12:14:37 2009 +0100
+
+    Add COPYING.
+
+commit 8e583a7af7d707f1439f5111a384caa705297b99
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 5 12:14:29 2009 +0100
+
+    Add python scripts to prepare the arborescence, etc.
+
+commit 496b0a644ca28f6dc7d8c4308cb09977c1e4c972
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 5 10:36:28 2009 +0100
+
+    I SUCK (fix a bug introduced in [67:79ee8e2d31e6]).
+
+commit 325b16ffb5f9b9ea43273c2b07247312c1034ca0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Mar 5 10:06:41 2009 +0100
+
+    Try to detect the platform.
+
+commit 7062f9565a22603fe84585a9cee44d6ddd982a6e
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 4 12:06:39 2009 +0100
+
+    Some cleanup with files.
+
+commit c3d5ee92ffa7e9c23c4b56c195c0a7b19f79f648
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 4 12:06:03 2009 +0100
+
+    Use (char*) instead of (char[]) when possible, and strdup() instead of strcpy(): it limits the risk of doing an overflow by mistake.
+
+commit 6574a57082bb86ec3e9c01dbbb98bc689a29d54f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Wed Mar 4 12:02:55 2009 +0100
+
+    Detect the OS at compile time, do not rely on the Makefile.
+
+commit e30ba1e9cf71446e4238512d2583bf235d3ce69d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 16:46:51 2009 +0100
+
+    Some alignment & various fixes.
+
+commit b437e95f11cfc3403784017d0f964ef32dc045b7
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 14:23:45 2009 +0100
+
+    I love this one. Why did I write such an insanity?
+
+commit 57290ad5f8edfa25e10e75c30d95233f2d042125
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 13:07:17 2009 +0100
+
+    typo.
+
+commit ac250ae3f7ffe57b0bde7c8dd62e9cf031ed5710
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 12:54:39 2009 +0100
+
+    Yes, I'm perfectionist...
+
+commit ab4603bec23ed95677482dbc3e584fcf18f1b3a6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 12:49:15 2009 +0100
+
+    Repair and improve os_seek().
+
+commit c500a1fda7c4100a0869b40538dc7c5314d6a614
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 11:35:27 2009 +0100
+
+    Missing const.
+
+commit 37f1e394b1bc2435eb80b1626f9d006e5f171f8f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 11:30:26 2009 +0100
+
+    Fix this DEVICE stuff.
+
+commit 7b20fe42f17b1b251ae6c95187854c659b78b88b
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 10:30:40 2009 +0100
+
+    Bah, typo (fix windows build).
+
+commit 132b7f8c2410a0b49548508e303d3c89ef7157f5
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 10:24:13 2009 +0100
+
+    Better os_{read,write}() API.
+
+commit 988cf44bdfc1053e5e80a7efd964250cd7b53238
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Tue Mar 3 10:02:19 2009 +0100
+
+    Finally refactor this broken os_open() API. :)
+
+commit ea1810924a93fa161dc43adec6b9faf53b16fbd6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 17:27:16 2009 +0100
+
+    Missing include.
+
+commit d489c9bdcd3472491aa587710f85abd25fd91572
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 17:20:41 2009 +0100
+
+    Explanation for MSVC++.
+
+commit 966fbcaa1571c1bcf251db6baa82fa29865e2d1d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 17:05:37 2009 +0100
+
+    Stupid typo.
+
+commit 059148f31d5e7b7b6ab8e70bd8d717b9a8577358
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 17:02:31 2009 +0100
+
+    Never run with scissors (i.e., don't rely on an undefined behavior of the libc);
+
+commit 5167aef6fccc6ae43468cd90449b46094f5be30d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 16:38:52 2009 +0100
+
+    ISO-c9x compliant compilers FTW.
+
+commit 2d9d5c21eb1632a2410729b4222ae9a6841a3fc3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 16:37:17 2009 +0100
+
+    Fix build on Linux.
+
+commit b712de0c2d77ea58a37edda6b77a86c2f208bf23
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 13:01:07 2009 +0100
+
+    Fix build with MinGW, finally.
+
+commit 6679973d83e0c0150ab63761317f37b1825be40f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 12:51:38 2009 +0100
+
+    Correctly check a file not found error on all platforms.
+
+commit ec63616f807b743642f871c8a46735e6e65724e2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 12:50:38 2009 +0100
+
+    Fix read method on windows.
+
+commit 3c5db5f0cdbffdc8b46d10f5695cbd16a1c9fa2d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 12:49:54 2009 +0100
+
+    Switch to a LARGE_INTEGER on windows, on Linux this is still an int64_t.
+
+commit 31f1b9485755262d5f3a1eda9b3ed7b25256894f
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 12:46:02 2009 +0100
+
+    Fix build with all compilers.
+
+commit 3da11d58b9f658ee01893078a0a3e4e0f9d006f2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 12:01:05 2009 +0100
+
+    Os-agnostic dir separator.
+
+commit 4c667a7094072343a7f8d90c1fb9f1e760904a48
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 11:51:11 2009 +0100
+
+    Improve portability.
+
+commit 702508cc75cb874d477076d786912036e1e626be
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 11:21:45 2009 +0100
+
+    This API really sucks.
+
+commit 35db66e458c2e9a7951836a3ffb7fbe7cb12a135
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 11:17:02 2009 +0100
+
+    portability, maybe...
+
+commit 2464857feaff8d0ce317a87cd6470f5ad903e415
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 11:16:13 2009 +0100
+
+    Use correct formatter to print 64bit-integers.
+
+commit a6bf24d19c2ab1abf5bb7532667684c208d8f164
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 11:14:16 2009 +0100
+
+    Correctly set LDFLAGS.
+
+commit d343dba9522817816613f1d4dbfb78e78c52c2d9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 10:37:36 2009 +0100
+
+    Use special inttypes.h and stdint.h for MS compilers.
+
+commit 39a89074a24e2c04c01ab8cc0bf10aa765c8af8a
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 10:01:01 2009 +0100
+
+    Don't run ioctl() here.
+
+commit c58fe6438dd568b37efebf83a44aeed656f126a2
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 10:00:43 2009 +0100
+
+    HDIO_SET_WCACHE seems to always fail on USB keys.
+
+commit f8783d2599c5b9530e909a6cf93b7d3a6b4f92c5
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Mon Mar 2 10:00:08 2009 +0100
+
+    This API is very bad, I need to change it...
+
+commit f9e5dc1b1a2a40a5df1fcd699caa1f1ad3ef3baa
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sun Mar 1 00:53:57 2009 +0100
+
+    refresh TODO.
+
+commit 165e98599cd2761908a582064203d0b32bbe126f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sun Mar 1 00:53:42 2009 +0100
+
+    Continue merging, again.
+
+commit 51d9bc1e0a82ee8d95cc5f3fed57cbce597f24e0
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 23:54:10 2009 +0100
+
+    Add windows-specific functions.
+
+commit 7ec088b0320e170c1dffb2c3ae7a7433091b841f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 23:53:54 2009 +0100
+
+    Improve portability.
+
+commit 03cbdacb174bdb6880e5b39118b71cee3698ca7d
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 22:49:15 2009 +0100
+
+    Update TODO.
+
+commit 630afb221a8725755600060c27ff2ef553d30568
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 22:48:44 2009 +0100
+
+    This one is provate and should not be exported.
+
+commit 5cd25fd4a5a209b6ef0c1998a34ed5575fd688cb
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 22:48:23 2009 +0100
+
+    Start merging windows version.
+
+commit 0b3f770166b47b9bb070e0ffb2907340b92bacb8
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 22:48:04 2009 +0100
+
+    Use a custom DEVICE structure.
+
+commit 6e258ee8f6af9ef4904b1124e94374e7f213641f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:45:03 2009 +0100
+
+    Update TODO.
+
+commit 76c5e3648a3edf21a9043398af5927c1965f077c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:44:42 2009 +0100
+
+    Moved to os-*.{cpp,h}.
+
+commit 284d909b6e769d5680844fe1517e48ef0cbe9a14
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:44:10 2009 +0100
+
+    Remove unused includes.
+
+commit b0a165873e5e6e6c72db9a2cf95cbc41ab70d771
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:43:36 2009 +0100
+
+    Don't use errno directly, Windows doesn't know it.
+
+commit db51c9d5527ab4fc146e7ff1e0a04a940e87935f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:41:17 2009 +0100
+
+    Switch to the new os-agnostic functions.
+
+commit e96a184a6cb182484d84fe14c10c66ae510d166b
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:38:04 2009 +0100
+
+    Prepare the merge with the windows branch: move all os-specific functions in a single file.
+
+commit f7fa7ea89bf122d1f6077a92b699a9f704419e02
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:37:02 2009 +0100
+
+    Don't use tabs in copyright headers.
+
+commit 0bdfe4a208a47fb0f9fb1bdfd9896125de0228fa
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:32:07 2009 +0100
+
+    Add a TODO list.
+
+commit 4a769740c979fceeea9ea54e9f17db66ee5daa3c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 17:31:39 2009 +0100
+
+    Be smart.
+
+commit 82e852d4e6625c5e76157e7d4e6733f8af4ef39a
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 13:35:16 2009 +0100
+
+    Use LINUX instead of POSIX for the moment (_GNU_SOURCE isn't POSIX).
+
+commit 204f8849699de0f805b57bca0acb332b8a27b789
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 13:33:37 2009 +0100
+
+    Multi-platform Makefile.
+
+commit 8d1622d759d8b9809dc636df29a0397e1bbb89e4
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 13:22:07 2009 +0100
+
+    Fix build with -D_FORTIFY_SOURCE=2.
+
+commit 4a33b4498d0a3ee737f068b960a75bc06549a761
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 13:21:31 2009 +0100
+
+    Fix warnings with -Wformat -Wformat-security.
+
+commit 19dc3a388a03bc536b056d3c3a09751121b50644
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 13:20:35 2009 +0100
+
+    sysconf() returns a long.
+
+commit 0b66965845331bf9b7423dc6fb3072a5ebaab448
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Sat Feb 28 13:19:19 2009 +0100
+
+    Add new security flags.
+
+commit 41f857000813e0ed7d7c476cafac29d86b789fd0
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 14:36:08 2009 +0100
+
+    Create it if it doesn't exist...
+
+commit 25cd061d2534ec07ecc0a87b6dfbd449a8acb1eb
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 14:35:45 2009 +0100
+
+    cast to ssize_t; no harm.
+
+commit d0626039c31970f6b342b0725e05ba6dc86090c6
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 14:22:22 2009 +0100
+
+    Init timer, as we need TickPerSecond.
+
+commit ce61601428f54d051b4b33035a5b08a9dbec09f9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 13:28:41 2009 +0100
+
+    Correct dir separator.
+
+commit eea198cf4e725fea69aeddc5d479fe473ffb7aaa
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 13:01:59 2009 +0100
+
+    Everything should've been ported now.
+
+commit 141208646499e3759e969074a70aad8c0c2c5452
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 12:59:03 2009 +0100
+
+    Fixes for the device name.
+
+commit c8146e06a6699a1c8132c39c11af979260a84df9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 11:40:57 2009 +0100
+
+    Port deviceNum (int -> char).
+
+commit 4ed999f9a2a6e4f5ae7f1c40dd6458adaab397a3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 10:42:01 2009 +0100
+
+    Start porting timing stuff.
+
+commit 9f0c3a41fb3375ae5275e769b959104dfbe18e3d
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 10:10:44 2009 +0100
+
+    Fix build (too many parameters).
+
+commit 7dba16397686bbaf2154168cc2dbae3da81d40a3
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 10:09:28 2009 +0100
+
+    Fix binary name.
+
+commit d8aee622384f427501c574f86ff61f97f36d9e30
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Fri Feb 27 10:08:59 2009 +0100
+
+    Add missing offset.
+
+commit 23e180290835b606b61dced733525b04e830fdf9
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 17:13:23 2009 +0100
+
+    Minor fixes.
+
+commit 75f4b6d08ce3f42b30fba64312d11a28dd3cf7bb
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 16:57:12 2009 +0100
+
+    Drop unused structs on Linux.
+
+commit fc0eccc563ba7fec057c304a065fdd2e0a826560
+Author: Lionel Le Folgoc <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 16:50:47 2009 +0100
+
+    All IOCTLs are now ported.
+
+commit 393ed7b5577fda19d13b3c8e9a3bdafd4861026c
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 14:26:57 2009 +0100
+
+    Port GetDriveGeometry().
+
+commit 0927b81fbadc0e47f051e0352d31e1194d01698b
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 14:23:06 2009 +0100
+
+    Fix parenthesis.
+
+commit 3ea8a4661837a327c875cd5ca62dee6dfae235b6
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 12:28:54 2009 +0100
+
+    I tell you, an integer, really.
+
+commit d452885a84f12a84baa1e3b87a113a7653476f55
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 12:24:50 2009 +0100
+
+    read/write/open return int, not bool, long, or whatever.
+
+commit b4f57d45f88fef537cf1e8fc8433719bdfe3e48e
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 11:45:27 2009 +0100
+
+    Add missing include file.
+
+commit cf7f9840f642b7b66162caaf15df4e41fd98fb4b
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 11:32:14 2009 +0100
+
+    WACHE -> WCACHE (sigh, stupid typo).
+
+commit 31b6b1e28bf446e3a4f092d57021a97d7e16c423
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 11:31:22 2009 +0100
+
+    Disable disk's write-cache features before starting the random format.
+
+commit 02ba2d610ffe3c1f22c716c132867f4b43ec4396
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 11:26:17 2009 +0100
+
+    Re-add option to disable caches.
+
+commit a700d011ef8bb83a27220c43021b6572aee5e55d
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 11:23:16 2009 +0100
+
+    Fix indentation, again.
+
+commit 46cc59b6086c83bf7f62cc021dc0b2c04308b7c3
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 11:06:23 2009 +0100
+
+    Remove old and now unused types.h.
+
+commit 7586d3d3cc48118020f3e628e0f4b6e642cb88f0
+Author: lionel.le_folgoc@inria.fr <lionel.le_folgoc@inria.fr>
+Date:   Thu Feb 26 11:06:03 2009 +0100
+
+    Define _GNU_SOURCE to have O_DIRECT.
+
+commit a31346494570a0a01e40103be81967270add5a68
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Feb 25 22:15:38 2009 +0100
+
+    small fix
+
+commit 48fb459cdcd06c5a79f3559d43b4d78af19d4bf2
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Feb 25 22:05:00 2009 +0100
+
+    Some massive fixes, again.
+
+commit 08b0689e3f5f3c6c860231728281d2c5ab20b14f
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Wed Feb 25 22:01:49 2009 +0100
+
+    Resync with changes made this week.
+
+commit 2c74596e8edea5c6fed4ed89b7abd19ffcbf0b17
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 13:42:10 2009 +0100
+
+    add U_LARGE_INTEGER
+
+commit 0c466e48f1a17f30df6586d93987d7cf212279bb
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 13:41:49 2009 +0100
+
+    DWORD -> uint32
+
+commit 5c62170e5c3f879f973256662b83238796cefe87
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 13:39:04 2009 +0100
+
+    fix build
+
+commit e4c9db85d853e23f64b81547061f70859681d5d1
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 13:38:15 2009 +0100
+
+    Add missing includes and #ifdef windows-specific ones.
+
+commit 9f9a81d037e748acaa5b2bd90aabde7cb8442ca2
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 13:13:26 2009 +0100
+
+    windows-specific includes.
+
+commit 7829d6d5c45f6e0a7704f29b34743c297a9ed5b1
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 13:13:01 2009 +0100
+
+    Use more custom types (boolean -> bool, DWORD -> uint8).
+
+commit fb7d51c62ad5b0900ad99f9db45ac436d2ac7d44
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 13:12:10 2009 +0100
+
+    Reproduce some windows types
+
+commit e75d8c67d662d6e4945dd93562b41c51c33cbf8d
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 13:11:36 2009 +0100
+
+    boolean -> bool
+
+commit 29b7a427adf231fc11375599184db8faefbdb97c
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 12:57:38 2009 +0100
+
+    Use defined uint8 instead of BYTE.
+
+commit b780eca2553280a4e54427d82d9ac5b62b0b7a1b
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 12:55:17 2009 +0100
+
+    Fix missing include.
+
+commit c0080995f43b3e76b18b2fe06c72eeed3cf642d5
+Author: Lionel Le Folgoc <mrpouit+assembla@gmail.com>
+Date:   Tue Feb 17 12:01:03 2009 +0100
+
+    Initial import

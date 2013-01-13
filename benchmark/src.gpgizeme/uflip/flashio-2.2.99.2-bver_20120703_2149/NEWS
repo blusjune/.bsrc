@@ -1,0 +1,61 @@
+2.2.99.2
+========
+
+- Another test release.
+- Lots of simplifications related to c99 support.
+- Fix generated scripts on Linux.
+- It should work for SIGMOD. ;)
+
+2.2.99.1
+========
+
+- Set lots of private functions as static, no need to clutter the interface
+  even more.
+- Add more hints to README file.
+- Do not build libuflipwin32.a on Linux (and vice versa).
+
+2.2.99.0
+========
+
+- Experimental port to Linux.
+
+2.2.99
+======
+
+- Add a sequentialFormat option.
+- RndFormat and SeqFormat functions now output a csv file in TRACES/ (useful
+  to check that the whole drive has correctly been wiped).
+- Harmonize indent style (K&R 1TBS).
+- Fix build when WIN32_LEAN_AND_MEAN is defined (exclude APIs such as
+  Cryptography, DDE, RPC, Shell, and Windows Sockets).
+- Remove some code duplication in input.cpp (for common options).
+- Fix a possible stack overflow in output.cpp.
+- Convert headers' comments into Doxygen-style ones.
+- Fix build with MSVC++.
+- New Option FormatType for GenPrepare, to disable the format.
+- Fix segfault when argc isn't even.
+
+2.2
+===
+
+- Fix build with mingw 4.3.3.
+- Use sector-aligned offsets for SetFilePointer() in RndFormat.
+- Avoid an integer overflow in the offset calculation in RndFormat.
+- Switch to SetFilePointerEx() instead of SetFilePointer() when seeking on
+  devices.
+- Fix some warnings when building.
+- Correctly check buffering type in MicroBench.
+- Returns BOOL instead of boolean when Windows returns BOOL in its API.
+- Fix some possibly broken comparisons involving floats (use modulo instead).
+- Fix several resources and memory leaks.
+- Do not use sprintf with overlapping buffers (behavior undefined in the
+  standard).
+- Do not use FILE_FLAG_SEQUENTIAL_SCAN when opening devices, as the bench makes
+  also random IOs.
+- Fix a stack buffer overflow in GenBench when parsing the experiment plan.
+- Correctly alloc/free sector-aligned data buffers.
+
+Pre-2.2
+=======
+
+- Unknown.

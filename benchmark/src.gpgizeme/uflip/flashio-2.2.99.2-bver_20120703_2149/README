@@ -1,0 +1,31 @@
+This is an **experimental** port of uFLIP to Linux. It's not a thoroughly
+tested as the Windows version. If you need a tested benchmark, use the Windows
+tarball on uflip.org! Feedback welcome, of course. ;)
+
+In fact, this is an experimental multi-arch port of uFLIP. At the moment it
+supports Windows (XP) and GNU/Linux (with a 2.6 kernel). On other
+(POSIX-compatible) platforms, it will default to a "dummy" variant that uses a
+1G device geometry for the benchmark. Patches are welcome to support more
+platforms, or to fix bugs.
+
+You can build uFLIP like any other project using the autotools:
+./configure && make
+
+To cross-compile for Windows on Linux, pass --host="i586-mingw32msvc" to the
+configure script for example.
+
+On Linux, you do not need to find the device number; instead, please use the
+device string (e.g. /dev/sda). When you bench some USB keys or low-end SSDs,
+an error 22 (invalid parameter) might be displayed. This seems to be normal,
+as the benchmark tries to disable the device write cache, and these devices
+do not have one...
+
+At the moment, the "make install" rule is useless.
+
+You can obtain a "ready-to-use" tarball by running "make bench-tarball" (you'll
+need zip), and a developer documentation by running "make doc" (you'll need
+doxygen).
+
+If you encounter any issue with the Linux port, please mail me
+(lionel.le_folgoc@inria.fr). For other issues or requests, please contact the
+two authors (see AUTHORS file).
