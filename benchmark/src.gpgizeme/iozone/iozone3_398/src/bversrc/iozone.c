@@ -244,7 +244,9 @@ char *help[] = {
 "           -Y filename  Read  telemetry file. Contains lines with (offset reclen compute_time) in ascii",
 "           -z  Used in conjunction with -a to test all possible record sizes",
 "           -Z  Enable mixing of mmap I/O and file I/O",
-"           -+F forcing sleep between each test with the given time (in seconds)",
+"           -+F (blusjune) forcing sleep between each test with the given time (in seconds)",
+"           -+R (blusjune) random-read-test (SHOULD be used with '-i 2' option)",
+"           -+W (blusjune) random-write-test (SHOULD be used with '-i 2' option)",
 "           -+E Use existing non-Iozone file for read-only testing",
 "           -+K Sony special. Manual control of test 8.",
 "           -+m  Cluster_filename   Enable Cluster testing",
@@ -389,7 +391,6 @@ typedef long long off64_t;
 typedef off_t off64_t;
 #endif
 
-
 #ifndef solaris
 #ifndef off64_t
 #ifndef _OFF64_T
@@ -406,6 +407,10 @@ typedef long long off64_t;
 #endif
 #endif
 #endif
+#endif
+
+#if 0 /* blusjune */
+typedef long long int off64_t;
 #endif
 
 #ifdef __AIX__
@@ -872,6 +877,7 @@ struct master_neutral_command {
 
 #define USAGE  "\tUsage: For usage information type iozone -h \n\n"
 
+/* #define NO_PRINT_LLD */
 
 /* Maximum number of characters in filename */
 #define MAXNAMESIZE 1000                
@@ -1042,15 +1048,15 @@ void fwrite_perf_test();	/* fwrite/refwrite test		  */
 void fread_perf_test();		/* fread/refread test		  */
 void read_perf_test();		/* read/reread test		  */
 void mix_perf_test();		/* read/reread test		  */
-void random_perf_test();	/* random read/write test	  */
+void random_perf_test();	/* random read/write test (blusjune)	  */
 
 #undef BLUSJUNE_USE_DUPLICATED_FUNCTIONS
 #ifdef BLUSJUNE_USE_DUPLICATED_FUNCTIONS
 void random_read_perf_test();	/* blusjune random read test	  */
 void random_write_perf_test();	/* blusjune random write test	  */
 #else
-void (* random_read_perf_test)() = random_perf_test;	/* blusjune random read test	  */
-void (* random_write_perf_test)() = random_perf_test;	/* blusjune random write test	  */
+const void (* random_read_perf_test)() = (const void (*)())random_perf_test;	/* blusjune random read test	  */
+const void (* random_write_perf_test)() = (const void (*)())random_perf_test;	/* blusjune random write test	  */
 #endif
 
 void reverse_perf_test();	/* reverse read test		  */
@@ -1273,8 +1279,9 @@ void (*func[])() = {
 			preadv_perf_test
 #endif /* HAVE_PREADV */
 #endif /* HAVE_PREAD */
-			random_read_perf_test,
-			random_write_perf_test,
+			,
+			random_perf_test,
+			random_perf_test,
 	};
 
 /*
@@ -1460,6 +1467,7 @@ int client_error;
 char pit_hostname[40];
 char pit_service[8];
 int junk;
+int blusjune_test_randrw;
 
 /* 
  * Host ports used to listen, and handle errors.
@@ -1949,7 +1957,7 @@ char **argv;
 #ifdef NO_PRINT_LLD
 			sscanf(optarg,"%ld",&kilobytes64);
 #else
-			sscanf(optarg,"%lld",&kilobytes64);
+			sscanf(optarg,"%ld",&kilobytes64);
 #endif
 			if(optarg[strlen(optarg)-1]=='k' ||
 				optarg[strlen(optarg)-1]=='K'){
@@ -1973,7 +1981,7 @@ char **argv;
 #ifdef NO_PRINT_LLD
 	    		sprintf(splash[splash_line++],"\tFile size set to %ld KB\n",kilobytes64);
 #else
-	    		sprintf(splash[splash_line++],"\tFile size set to %lld KB\n",kilobytes64);
+	    		sprintf(splash[splash_line++],"\tFile size set to %ld KB\n",kilobytes64);
 #endif
 			sflag++;
 			break;
@@ -2243,6 +2251,9 @@ char **argv;
 			break;
 		case 'i':	/* Specify specific tests */
 			tval=(long long)(atoi(optarg));
+
+			printf("\nDEBUG: tval: %lld\n", tval);
+
 			if(tval < 0) tval=0;
 #ifndef HAVE_PREAD
 			if(tval > RANDOM_MIX_TEST)
@@ -2260,9 +2271,11 @@ char **argv;
 			include_tflag++;
 			switch (tval) { /* blusjune */
 				case BLUSJUNE_RANDREAD_TEST:
+					printf("\n -i 13: rand-read test\n");
 	     				blusjune_test_randrw = BLUSJUNE_RANDREAD_TEST;
 					break;
 				case BLUSJUNE_RANDWRITE_TEST:
+					printf("\n -i 14: rand-write test\n");
 	     				blusjune_test_randrw = BLUSJUNE_RANDWRITE_TEST;
 					break;
 				default:
@@ -2350,7 +2363,7 @@ char **argv;
 #ifdef NO_PRINT_LLD
 			sprintf(splash[splash_line++],"\tUsing minimum file size of %ld kilobytes.\n",minimum_file_size);
 #else
-			sprintf(splash[splash_line++],"\tUsing minimum file size of %lld kilobytes.\n",minimum_file_size);
+			sprintf(splash[splash_line++],"\tUsing minimum file size of %ld kilobytes.\n",minimum_file_size);
 #endif
 			break;
 		case 'g':	/* Set maximum file size for auto mode */
@@ -2373,7 +2386,7 @@ char **argv;
 #ifdef NO_PRINT_LLD
 			sprintf(splash[splash_line++],"\tUsing maximum file size of %ld kilobytes.\n",maximum_file_size);
 #else
-			sprintf(splash[splash_line++],"\tUsing maximum file size of %lld kilobytes.\n",maximum_file_size);
+			sprintf(splash[splash_line++],"\tUsing maximum file size of %ld kilobytes.\n",maximum_file_size);
 #endif
 			break;
 		case 'z':	/* Set no cross over */
@@ -2451,6 +2464,14 @@ char **argv;
 				case 'F':  /* Time stamps on */
 					sleep_time_between_test=atoi(argv[optind++]);
 					printf("sleep_time_between_test is set to %d\n", sleep_time_between_test);
+					break;
+				case 'R': /* blusjune-random-read test */
+					printf("\nDEBUG: -+R -i 2: rand-read test\n");
+	     				blusjune_test_randrw = BLUSJUNE_RANDREAD_TEST;
+					break;
+				case 'W': /* blusjune-random-write test */
+					printf("\nDEBUG: -+W -i 2: rand-write test\n");
+	     				blusjune_test_randrw = BLUSJUNE_RANDWRITE_TEST;
 					break;
 				case 'a':  /* Example: Has argument */
 					subarg=argv[optind++];
@@ -3312,7 +3333,7 @@ long long reclength;
 		if(!silent) printf("%8ld",reclen/1024);
 	}
 #else
-	if(!silent) printf("%16lld",kilobytes64);
+	if(!silent) printf("%16ld",kilobytes64);
 	if(r_traj_flag || w_traj_flag)
 	{
 		if(!silent) printf("%8lld",(long long )0);
@@ -3322,15 +3343,27 @@ long long reclength;
 		if(!silent) printf("%8lld",reclen/1024);
 	}
 #endif
+
+#if 0 /* blusjune : DEBUG */
+	printf("\nDEBUG: include_tflag: %d", include_tflag);
+	printf("\nDEBUG: num_tests: %lld", num_tests);
+	printf("\nDEBUG: include_mask: %llx", include_mask);
+#endif
+
+
 	if(include_tflag)
 	{
 		for(i=0;i<num_tests;i++)
 		{
 			if(include_mask & (long long)(1<<i)) {
-				printf(">>> begin(): func[%d] will be executed\n", i);	/* blusjune */
+#if 0
+				printf("\n>>> begin():1: func[%lld] will be executed\n", i);	/* blusjune */
+#endif
 				func[i](kilobytes64,reclen,&data1[i],&data2[i]);
 				if (sleep_time_between_test != 0) {	/* blusjune */
-					printf(">>> begin(): [T.y] sleep_time_between_test: %d\n", sleep_time_between_test);
+#if 0
+					printf("\n>>> begin(): [T.y] sleep_time_between_test: %d\n", sleep_time_between_test);
+#endif
 					sleep(sleep_time_between_test);
 				}
 			}
@@ -3347,10 +3380,14 @@ long long reclength;
 	{
 		for(test_num=0;test_num < num_tests;test_num++)
 		{
-			printf(">>> begin(): func[%d] will be executed\n", test_num);	/* blusjune */
+#if 0
+			printf("\n>>> begin():2: func[%lld] will be executed\n", test_num);	/* blusjune */
+#endif
 			func[test_num](kilobytes64,reclen,&data1[test_num],&data2[test_num]);
 			if (sleep_time_between_test != 0) {	/* blusjune */
-				printf(">>> begin(): [T.n] sleep_time_between_test: %d\n", sleep_time_between_test);
+#if 0
+				printf("\n>>> begin(): [T.n] sleep_time_between_test: %d\n", sleep_time_between_test);
+#endif
 				sleep(sleep_time_between_test);
 			}
 		};
@@ -3381,7 +3418,7 @@ long long reclength;
 	    	printf("\n\tiozone %ld %ld ", kilobytes64,  goodrecl);
 	    	printf("\t(i.e. record size = %ld bytes)\n",  goodrecl);
 #else
-	    	printf("\n\tiozone %lld %lld ", kilobytes64,  goodrecl);
+	    	printf("\n\tiozone %ld %lld ", kilobytes64,  goodrecl);
 	    	printf("\t(i.e. record size = %lld bytes)\n",  goodrecl);
 #endif
 	   }
@@ -3521,7 +3558,7 @@ void auto_test()
             printf("Error: record length %ld is greater than filesize %ld KB\n ",
                                 min_rec_size,min_file_size);
 #else
-            printf("Error: record length %lld is greater than filesize %lld KB\n ",
+            printf("Error: record length %lld is greater than filesize %ld KB\n ",
                                 min_rec_size,min_file_size);
 #endif
                 exit(23);
@@ -3697,7 +3734,7 @@ throughput_test()
 	if(!silent) printf("\tEach %s writes a %ld Kbyte file in telemetry controlled records\n",
 		port,kilobytes64);
 #else
-	if(!silent) printf("\tEach %s writes a %lld Kbyte file in telemetry controlled records\n",
+	if(!silent) printf("\tEach %s writes a %ld Kbyte file in telemetry controlled records\n",
 		port,kilobytes64);
 #endif
 	}
@@ -3707,7 +3744,7 @@ throughput_test()
 	if(!silent) printf("\tEach %s writes a %ld Kbyte file in %ld Kbyte records\n",
 		port,kilobytes64,reclen/1024);
 #else
-	if(!silent) printf("\tEach %s writes a %lld Kbyte file in %lld Kbyte records\n",
+	if(!silent) printf("\tEach %s writes a %ld Kbyte file in %lld Kbyte records\n",
 		port,kilobytes64,reclen/1024);
 #endif
 	}
@@ -7231,8 +7268,8 @@ char sverify;
 	printf("where %8.8llx loop %ld\n",where,i);
 #else
 	printf("Error in file: Found ?%llx? Expecting ?%llx? addr %lx\n",*where, (long long)((pattern_buf<<32)|pattern_buf),((long)where));
-	printf("Error in file: Position %lld \n",file_position);
-	printf("Record # %lld Record size %lld kb \n",recnum,recsize/1024);
+	printf("Error in file: Position %ld \n",file_position);
+	printf("Record # %ld Record size %lld kb \n",recnum,recsize/1024);
 	printf("where %8.8lx loop %lld\n",(long)where,(long long)i);
 #endif
 		   return(1);
@@ -7275,9 +7312,9 @@ char sverify;
 	printf("Error in file: Position %ld \n",file_position);
 	printf("Record # %ld Record size %ld kb \n",recnum,recsize/1024);
 #else
-	printf("Error in file: Position %lld %lld %lld \n",i,j,k);
-	printf("Error in file: Position %lld \n",file_position);
-	printf("Record # %lld Record size %lld kb \n",recnum,recsize/1024);
+	printf("Error in file: Position %ld %lld %lld \n",i,j,k);
+	printf("Error in file: Position %ld \n",file_position);
+	printf("Record # %ld Record size %lld kb \n",recnum,recsize/1024);
 #endif
 	printf("Found pattern: Char >>%c<< Expecting >>%c<<\n", *where2,*pattern_ptr);
 	printf("Found pattern: Hex >>%x<< Expecting >>%x<<\n", *where2,*pattern_ptr);
@@ -7449,6 +7486,9 @@ long long *data1;
 long long *data2;
 #endif
 {
+#if 0
+	printf("\nDEBUG: ----- write_perf_test() -----\n");
+#endif
 	double starttime1;
 	double writetime[2];
 	double walltime[2], cputime[2];
@@ -7868,9 +7908,9 @@ long long *data2;
 				else
 				fprintf(rwqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((qtime_stop-qtime_start-time_res))*1000000,reclen);
 #else
-				fprintf(wqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((qtime_stop-qtime_start-time_res))*1000000,reclen);
+				fprintf(wqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((qtime_stop-qtime_start-time_res))*1000000,reclen);
 				else
-				fprintf(rwqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((qtime_stop-qtime_start-time_res))*1000000,reclen);
+				fprintf(rwqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((qtime_stop-qtime_start-time_res))*1000000,reclen);
 #endif
 			}
 			w_traj_ops_completed++;
@@ -8036,6 +8076,7 @@ long long *data2;
 	if(!silent) fflush(stdout);
 #endif
 }
+
 /************************************************************************/
 /* fwrite_perf_test ()				        		*/
 /* fWrite and fre-write test						*/
@@ -8050,6 +8091,9 @@ long long *data1;
 long long *data2;
 #endif
 {
+#if 0
+	printf("\nDEBUG: ----- fwrite_perf_test() -----\n");
+#endif
 	double starttime1;
 	double writetime[2];
 	double walltime[2], cputime[2];
@@ -8273,6 +8317,9 @@ long long reclen;
 long long *data1,*data2;
 #endif
 {
+#if 0
+	printf("\nDEBUG: ----- fread_perf_test() -----\n");
+#endif
 	double starttime2;
 	double readtime[2];
 	double walltime[2], cputime[2];
@@ -8355,7 +8402,7 @@ long long *data1,*data2;
 				printf("\nError freading block %lu %lx\n", i,
 					(unsigned long long)buffer);
 #else
-				printf("\nError freading block %llu %llx\n", i,
+				printf("\nError freading block %ld %llx\n", i,
 					(unsigned long long)buffer);
 #endif
 #else
@@ -8472,6 +8519,9 @@ long long reclen;
 long long *data1,*data2;
 #endif
 {
+#if 0
+	printf("\nDEBUG: ----- read_perf_test() -----\n");
+#endif
 	double starttime2;
 	double compute_val = (double)0;
 	double readtime[2];
@@ -8770,7 +8820,7 @@ long long *data1,*data2;
 				printf("\nError reading block %ld %lx\n", i,
 					(unsigned long long)nbuff);
 #else
-				printf("\nError reading block %lld %llx\n", i,
+				printf("\nError reading block %ld %llx\n", i,
 					(unsigned long long)nbuff);
 #endif
 #else
@@ -8819,9 +8869,9 @@ long long *data1,*data2;
 				else
 				fprintf(rrqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,(qtime_stop-qtime_start-time_res)*1000000,reclen);
 #else
-				fprintf(rqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,(qtime_stop-qtime_start-time_res)*1000000,reclen);
+				fprintf(rqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,(qtime_stop-qtime_start-time_res)*1000000,reclen);
 				else
-				fprintf(rrqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,(qtime_stop-qtime_start-time_res)*1000000,reclen);
+				fprintf(rrqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,(qtime_stop-qtime_start-time_res)*1000000,reclen);
 #endif
 			}
 			r_traj_ops_completed++;
@@ -8969,7 +9019,7 @@ long long *data1,*data2;
 
 
 /************************************************************************/
-/* random_perf_test				        		*/
+/* random_perf_test (blusjune)			        		*/
 /* Random read and write test						*/
 /************************************************************************/
 #ifdef HAVE_ANSIC_C
@@ -8981,9 +9031,13 @@ long long reclen;
 long long *data1, *data2;
 #endif
 {
-	double randreadtime[2];
+#if 0
+	printf("\nDEBUG: ----- random_perf_test() -----\n");
+#endif
+	double randrw_time[2] = {0,};
 	double starttime2;
-	double walltime[2], cputime[2];
+	double walltime[2] = {0,}; 
+	double cputime[2] = {0,};
 	double compute_val = (double)0;
 #if defined (bsd4_2) || defined(Windows)
 	long long rand1,rand2,rand3;
@@ -8993,7 +9047,7 @@ long long *data1, *data2;
 	off64_t i,numrecs64;
 	long long Index=0;
 	int flags;
-	unsigned long long randreadrate[2];
+	unsigned long long randrw_rate[2] = {0,};
 	off64_t filebytes64;
 	off64_t lock_offset=0;
 	volatile char *buffer1;
@@ -9090,12 +9144,36 @@ long long *data1, *data2;
 		flags |=O_RSYNC|O_SYNC;
 #endif
 	filebytes64 = numrecs64*reclen;
+
+
+
+
+#if 0
 	for( j=0; j<2; j++ )
-	{
+#endif
+
+	{ // MAIN LOOP: BEGIN
+
+		switch ( blusjune_test_randrw )
+		{
+			case BLUSJUNE_RANDREAD_TEST:
+				j = 0;
+				flags |=O_CREAT;
+				break;
+			case BLUSJUNE_RANDWRITE_TEST:
+				j = 1;
+				break;
+			default:
+				break;
+		}
+
+#if 0
 		if(j==0)
 			flags |=O_CREAT;
 		if (no_write && (j == 1))
 			continue;
+#endif
+
 		if(cpuutilflag)
 		{
 		     walltime[j] = time_so_far();
@@ -9162,12 +9240,20 @@ long long *data1, *data2;
 #endif
 	     compute_val=(double)0;
 	     starttime2 = time_so_far();
+
+
+
+
 #if 0 /* original */
 	     if ( j==0 )
 #else /* blusjune randread test */
 	     if ( blusjune_test_randrw == BLUSJUNE_RANDREAD_TEST )
 #endif
 	     {
+		     j = 0;
+#if 0
+		     printf("\nBLUSJUNE_RANDREAD_TEST >>\n");
+#endif
 		for(i=0; i<numrecs64; i++) {
 			if(compute_flag)
 				compute_val+=do_compute(compute_time);
@@ -9248,7 +9334,7 @@ long long *data1, *data2;
 				 printf("\nError reading block at %ld\n",
 					 offset64); 
 #else
-				 printf("\nError reading block at %lld\n",
+				 printf("\nError reading block at %ld\n",
 					 offset64); 
 #endif
 				 perror("read");
@@ -9286,6 +9372,10 @@ long long *data1, *data2;
 	     else if ( blusjune_test_randrw == BLUSJUNE_RANDWRITE_TEST )
 #endif
 	     {
+		     j = 1;
+#if 0
+		     printf("\nBLUSJUNE_RANDWRITE_TEST >>\n");
+#endif
 			if(verify || dedup || dedup_interior)
 				fill_buffer(nbuff,reclen,(long long)pattern,sverify,(long long)0);
 			for(i=0; i<numrecs64; i++) 
@@ -9376,552 +9466,8 @@ long long *data1, *data2;
 						printf("\nError writing block at %ld\n",
 							offset64); 
 #else
-						printf("\nError writing block at %lld\n",
-							offset64); 
-#endif
-						if(wval==-1)
-							perror("write");
-						signal_handler();
-			 		  }
-					}
-				}
-				if(rlocking)
-				{
-					mylockr((int) fd, (int) 0, (int)0,
-					  lock_offset, reclen);
-				}
-			}
-	     } 	/* end of modifications	*kcollins:2-5-96 */
-#ifdef ASYNC_IO
-	     if(async_flag)
-	     {
-		end_async(gc);
-	        gc=0;
-             }	
-#endif
-	     if(include_flush)
-	     {
-		if(mmapflag)
-			msync(maddr,(size_t)filebytes64,MS_SYNC);/* Clean up before read starts running */
-		else
-		{
-	     		wval=fsync(fd);
-			if(wval==-1){
-				perror("fsync");
-				signal_handler();
-			}
-		}
-	     }
-	     if(include_close)
-	     {
-		if(mmapflag)
-		{
-			mmap_end(maddr,(unsigned long long)filebytes64);
-		}
-		wval=close(fd);
-		if(wval==-1){
-			perror("close");
-			signal_handler();
-		}
-	     }
-	     randreadtime[j] = ((time_so_far() - starttime2)-time_res)-
-			compute_val;
-	     if(randreadtime[j] < (double).000001) 
-	     {
-			randreadtime[j]=time_res;
-			if(rec_prob < reclen)
-				rec_prob = reclen;
-			res_prob=1;
-	     }
-	    if(!include_close)
-	    {
-		if(mmapflag)
-		{
-			msync(maddr,(size_t)filebytes64,MS_SYNC);/* Clean up before read starts running */
-		}
-		else
-		{
-	     		wval=fsync(fd);
-			if(wval==-1){
-				perror("fsync");
-				signal_handler();
-			}
-		}
-		if(mmapflag)
-			mmap_end(maddr,(unsigned long long)filebytes64);
-		wval=close(fd);
-		if(wval==-1){
-			perror("close");
-			signal_handler();
-		}
- 	    }
-            if(cpuutilflag)
-	    {
-	    	cputime[j]  = cputime_so_far() - cputime[j];
-	    	if (cputime[j] < cputime_res)
-			cputime[j] = 0.0;
-	    	walltime[j] = time_so_far() - walltime[j];
-		if (walltime[j] < cputime[j])
-		   walltime[j] = cputime[j];
-	    }
-	    if(restf)
-		sleep((int)rest_val);
-    	}
-	if(OPS_flag || MS_flag){
-	   filebytes64=filebytes64/reclen;
-	}
-        for(j=0;j<2;j++)
-        {
-	    if(no_write && (j==1))
-	    {
-	        randreadrate[1] = 0.0;
-		continue;
-	    }
-	    if(MS_flag)
-	    {
-		randreadrate[j]=1000000.0*(randreadtime[j] / (double)filebytes64);
-		continue;
-	    }
-            else
-            {
-                  randreadrate[j] = 
-		      (unsigned long long) ((double) filebytes64 / randreadtime[j]);
-            }
-	    if(!(OPS_flag || MS_flag))
-		randreadrate[j] >>= 10;
-	}
-	/* Must save walltime & cputime before calling store_value() for each/any cell.*/
-        if(cpuutilflag)
-		store_times(walltime[0], cputime[0]);
-	store_value((off64_t)randreadrate[0]);
-        if(cpuutilflag)
-		store_times(walltime[1], cputime[1]);
-	store_value((off64_t)randreadrate[1]);
-#ifdef NO_PRINT_LLD
-	if(!silent) printf("%8ld",randreadrate[0]);
-	if(!silent) printf("%8ld",randreadrate[1]);
-	if(!silent) fflush(stdout);
-#else
-	if(!silent) printf("%8lld",randreadrate[0]);
-	if(!silent) printf("%8lld",randreadrate[1]);
-	if(!silent) fflush(stdout);
-#endif
-	if(recnum)
-		free(recnum);
-}
-
-
-#ifdef BLUSJUNE_USE_DUPLICATED_FUNCTIONS 
-/************************************************************************/
-/* random_read_perf_test (blusjune)			        	*/
-/* Random read test							*/
-/************************************************************************/
-#ifdef HAVE_ANSIC_C
-void random_read_perf_test(off64_t kilo64,long long reclen,long long *data1,long long *data2)
-#else
-void random_read_perf_test(kilo64,reclen,data1,data2)
-off64_t kilo64;
-long long reclen;
-long long *data1, *data2;
-#endif
-{
-	double randreadtime[2];
-	double starttime2;
-	double walltime[2], cputime[2];
-	double compute_val = (double)0;
-#if defined (bsd4_2) || defined(Windows)
-	long long rand1,rand2,rand3;
-#endif
-	unsigned long long big_rand;
-	long long j;
-	off64_t i,numrecs64;
-	long long Index=0;
-	int flags;
-	unsigned long long randreadrate[2];
-	off64_t filebytes64;
-	off64_t lock_offset=0;
-	volatile char *buffer1;
-	char *wmaddr,*nbuff;
-	char *maddr,*free_addr;
-	int fd,wval;
-	long long *recnum= 0;
-#if defined(VXFS) || defined(solaris)
-	int test_foo=0;
-#endif
-#ifdef ASYNC_IO
-	struct cache *gc=0;
-#else
-	long long *gc=0;
-#endif
-#ifdef MERSENNE
-    unsigned long long init[4]={0x12345ULL, 0x23456ULL, 0x34567ULL, 0x45678ULL};
-    unsigned long long length=4;
-#endif
-
-	maddr=free_addr=0;
-	numrecs64 = (kilo64*1024)/reclen;
-#ifdef MERSENNE
-       init_by_array64(init, length);
-#else
-#ifdef bsd4_2
-        srand(0);
-#else
-#ifdef Windows
-        srand(0);
-#else
-        srand48(0);
-#endif
-#endif
-#endif
-        recnum = (long long *)malloc(sizeof(*recnum)*numrecs64);
-        if (recnum){
-             /* pre-compute random sequence based on 
-		Fischer-Yates (Knuth) card shuffle */
-            for(i = 0; i < numrecs64; i++){
-                recnum[i] = i;
-            }
-            for(i = 0; i < numrecs64; i++) {
-                long long tmp;
-#ifdef MERSENNE
-      	       big_rand=genrand64_int64();
-#else
-#ifdef bsd4_2
-               rand1=(long long)rand();
-               rand2=(long long)rand();
-               rand3=(long long)rand();
-               big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-#else
-#ifdef Windows
-               rand1=(long long)rand();
-               rand2=(long long)rand();
-               rand3=(long long)rand();
-               big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-#else
-               big_rand = lrand48();
-#endif
-#endif
-#endif
-               big_rand = big_rand%numrecs64;
-               tmp = recnum[i];
-               recnum[i] = recnum[big_rand];
-               recnum[big_rand] = tmp;
-            }
-        }
-	else
-	{
-		fprintf(stderr,"Random uniqueness fallback.\n");
-	}
-	flags = O_RDWR;
-#if ! defined(DONT_HAVE_O_DIRECT)
-#if defined(linux) || defined(__AIX__) || defined(IRIX) || defined(IRIX64) || defined(Windows) || defined (__FreeBSD__)
-	if(direct_flag)
-		flags |=O_DIRECT;
-#endif
-#if defined(TRU64)
-	if(direct_flag)
-		flags |=O_DIRECTIO;
-#endif
-#endif
-	fd=0;
-	if(oflag)
-		flags |= O_SYNC;
-#if defined(O_DSYNC)
-	if(odsync)
-		flags |= O_DSYNC;
-#endif
-#if defined(_HPUX_SOURCE) || defined(linux)
-	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
-#endif
-	filebytes64 = numrecs64*reclen;
-	for( j=0; j<2; j++ )
-	{
-		if(j==0)
-			flags |=O_CREAT;
-		if (no_write && (j == 1))
-			continue;
-		if(cpuutilflag)
-		{
-		     walltime[j] = time_so_far();
-		     cputime[j]  = cputime_so_far();
-	     }
-	     if(Uflag) /* Unmount and re-mount the mountpoint */
-	     {
-			purge_buffer_cache();
-	     }
-	     if((fd = I_OPEN(filename, ((int)flags),0640))<0){
-			printf("\nCan not open temporary file for read/write\n");
-			perror("open");
-			exit(66);
-	     }
-#ifdef ASYNC_IO
-		if(async_flag)
-			async_init(&gc,fd,direct_flag);
-#endif
-
-#ifdef VXFS
-		if(direct_flag)
-		{
-			ioctl(fd,VX_SETCACHE,VX_DIRECT);
-			ioctl(fd,VX_GETCACHE,&test_foo);
-			if(test_foo == 0)
-			{
-				if(!client_iozone)
-				  printf("\nVxFS advanced setcache feature not available.\n");
-				exit(3);
-			}
-		}
-#endif
-#if defined(solaris)
-               if(direct_flag)
-               {
-                       test_foo = directio(fd, DIRECTIO_ON);
-                       if(test_foo != 0)
-                       {
-                               if(!client_iozone)
-                                 printf("\ndirectio not available.\n");
-                               exit(3);
-                       }
-               }
-#endif
-	     if(mmapflag)
-	     {
-			maddr=(char *)initfile(fd,filebytes64,0,PROT_READ|PROT_WRITE);
-	     }
-	     nbuff=mainbuffer;
-	     if(fetchon)
-		   fetchit(nbuff,reclen);
-#ifdef MERSENNE
-    	    init_by_array64(init, length);
-#else
-#ifdef bsd4_2
-	     srand(0);
-#else
-#ifdef Windows
-             srand(0);
-#else
-             srand48(0);
-#endif
-#endif
-#endif
-	     compute_val=(double)0;
-	     starttime2 = time_so_far();
-#if 0 /* original */
-	     if ( j==0 )
-#else /* blusjune randread test */
-	     if ( blusjune_test_randrw == BLUSJUNE_RANDREAD_TEST )
-#endif
-	     {
-		for(i=0; i<numrecs64; i++) {
-			if(compute_flag)
-				compute_val+=do_compute(compute_time);
-                        if(multi_buffer)
-                        {
-                                Index +=reclen;
-                                if(Index > (MAXBUFFERSIZE-reclen))
-                                        Index=0;
-                                nbuff = mbuffer + Index;
-                        }
-			if(purge)
-				purgeit(nbuff,reclen);
-                        if (recnum) {
-				offset64 = reclen * (long long)recnum[i];
-                        }
-			else
-			{
-
-#ifdef MERSENNE
-      			   big_rand =genrand64_int64();
-			   offset64 = reclen * (big_rand%numrecs64);
-#else
-#ifdef bsd4_2
-			   rand1=(long long)rand();
-			   rand2=(long long)rand();
-			   rand3=(long long)rand();
-			   big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-                           offset64 = reclen * (big_rand%numrecs64);
-#else
-#ifdef Windows
-			   rand1=(long long)rand();
-			   rand2=(long long)rand();
-			   rand3=(long long)rand();
-			   big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-                           offset64 = reclen * (big_rand%numrecs64);
-#else
-			   offset64 = reclen * (lrand48()%numrecs64);
-#endif
-#endif
-#endif
-			}
-
-			if( !(h_flag || k_flag || mmapflag))
-			{
-			   if(I_LSEEK( fd, offset64, SEEK_SET )<0)
-			   {
-				perror("lseek");
-				exit(68);
-			   };
-			}
-			if(rlocking)
-			{
-				lock_offset=I_LSEEK(fd,0,SEEK_CUR);
-				mylockr((int) fd, (int) 1, (int)1,
-				  lock_offset, reclen);
-			}
-			if(mmapflag)
-			{
-				wmaddr=&maddr[offset64];
-				fill_area((long long*)wmaddr,(long long*)nbuff,(long long)reclen);
-			}
-			else
-			{
-			  if(async_flag)
-			  {
-			     if(no_copy_flag)
-			        async_read_no_copy(gc, (long long)fd, &buffer1, offset64,reclen,
-			    	  0LL,(numrecs64*reclen),depth);
-			     else
-				 async_read(gc, (long long)fd, nbuff, (offset64),reclen,
-					    	0LL,(numrecs64*reclen),0LL);
-			  }
-			  else
-			  {
-		  	     if(read(fd, (void *)nbuff, (size_t)reclen) != reclen)
-		  	     {
-#ifdef NO_PRINT_LLD
-				 printf("\nError reading block at %ld\n",
-					 offset64); 
-#else
-				 printf("\nError reading block at %lld\n",
-					 offset64); 
-#endif
-				 perror("read");
-				 exit(70);
-		 	     }
-			  }
-			}
-			if(verify){
-			  if(async_flag && no_copy_flag)
-			  {
-				if(verify_buffer(buffer1,reclen,(off64_t)offset64/reclen,reclen,(long long)pattern,sverify)){
-					exit(71);
-				}
-			  }
-			  else
-			  {
-				if(verify_buffer(nbuff,reclen,(off64_t)offset64/reclen,reclen,(long long)pattern,sverify)){
-					exit(72);
-				}
-			  }
-			}
-			if(async_flag && no_copy_flag)
-				async_release(gc);
-			if(rlocking)
-			{
-				lock_offset=I_LSEEK(fd,0,SEEK_CUR);
-				mylockr((int) fd, (int) 1, (int)1,
-				  lock_offset, reclen);
-			}
-		}
-	     }
-#if 0
-	     else
-#else /* blusjune randwrite test */
-	     else if ( blusjune_test_randrw == BLUSJUNE_RANDWRITE_TEST )
-#endif
-	     {
-			if(verify || dedup || dedup_interior)
-				fill_buffer(nbuff,reclen,(long long)pattern,sverify,(long long)0);
-			for(i=0; i<numrecs64; i++) 
-			{
-				if(compute_flag)
-					compute_val+=do_compute(compute_time);
-                        	if(multi_buffer)
-                        	{
-                               	    Index +=reclen;
-                               	    if(Index > (MAXBUFFERSIZE-reclen))
-                               	         Index=0;
-                               	    nbuff = mbuffer + Index;
-                        	}
-                                if (recnum) {
-				  offset64 = reclen * (long long)recnum[i];
-                                }
-			        else
-			        {
-#ifdef bsd4_2
-				  rand1=(long long)rand();
-				  rand2=(long long)rand();
-				  rand3=(long long)rand();
-				  big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-				  offset64 = reclen * (big_rand%numrecs64);
-#else
-#ifdef Windows
-				  rand1=(long long)rand();
-				  rand2=(long long)rand();
-				  rand3=(long long)rand();
-				  big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-				  offset64 = reclen * (big_rand%numrecs64);
-#else
-				  offset64 = reclen * (lrand48()%numrecs64);
-#endif
-#endif
-				}
-				if(async_flag && no_copy_flag)
-				{
-					free_addr=nbuff=(char *)malloc((size_t)reclen+page_size);
-					nbuff=(char *)(((long)nbuff+(long)page_size) & (long)~(page_size-1));
-					if(verify || dedup || dedup_interior)
-						fill_buffer(nbuff,reclen,(long long)pattern,sverify,offset64/reclen);
-				}
-				if(purge)
-					purgeit(nbuff,reclen);
-
-				if((verify & diag_v) || dedup || dedup_interior)
-					fill_buffer(nbuff,reclen,(long long)pattern,sverify,offset64/reclen);
-
-				if (!(h_flag || k_flag || mmapflag))
-				{
-				  I_LSEEK( fd, offset64, SEEK_SET );
-				}
-				if(rlocking)
-				{
-					lock_offset=I_LSEEK(fd,0,SEEK_CUR);
-					mylockr((int) fd, (int) 1, (int)0,
-					  lock_offset, reclen);
-				}
-				if(mmapflag)
-				{
-					wmaddr=&maddr[offset64];
-					fill_area((long long*)nbuff,(long long*)wmaddr,(long long)reclen);
-					if(!mmapnsflag)
-					{
-					  	if(mmapasflag)
-						    	msync(wmaddr,(size_t)reclen,MS_ASYNC);
-					  	if(mmapssflag)
-					    		msync(wmaddr,(size_t)reclen,MS_SYNC);
-					}
-				}
-				else
-				{
-			  		if(async_flag)
-					{
-			     		   if(no_copy_flag)
-			       		      async_write_no_copy(gc, (long long)fd, nbuff, reclen, offset64, 
-					   	depth,free_addr);
-					   else
-			      			async_write(gc, (long long)fd, nbuff, reclen, offset64, depth);
-			  		}
-			  		else
-			  		{
-			  		  wval=write(fd, nbuff,(size_t)reclen);
-			  		  if(wval != reclen)
-			  		  {
-#ifdef NO_PRINT_LLD
 						printf("\nError writing block at %ld\n",
 							offset64); 
-#else
-						printf("\nError writing block at %lld\n",
-							offset64); 
 #endif
 						if(wval==-1)
 							perror("write");
@@ -9936,6 +9482,9 @@ long long *data1, *data2;
 				}
 			}
 	     } 	/* end of modifications	*kcollins:2-5-96 */
+	     else {
+		     printf("\nDO NOTHING! please specify one of the following options: '-+R' (random-read test) or '-+W' (random-write test)\n");
+	     }
 #ifdef ASYNC_IO
 	     if(async_flag)
 	     {
@@ -9968,11 +9517,10 @@ long long *data1, *data2;
 			signal_handler();
 		}
 	     }
-	     randreadtime[j] = ((time_so_far() - starttime2)-time_res)-
-			compute_val;
-	     if(randreadtime[j] < (double).000001) 
+	     randrw_time[j] = ((time_so_far() - starttime2)-time_res) - compute_val;
+	     if(randrw_time[j] < (double).000001) 
 	     {
-			randreadtime[j]=time_res;
+			randrw_time[j]=time_res;
 			if(rec_prob < reclen)
 				rec_prob = reclen;
 			res_prob=1;
@@ -10010,7 +9558,11 @@ long long *data1, *data2;
 	    }
 	    if(restf)
 		sleep((int)rest_val);
-    	}
+    	} // MAIN LOOP: END
+
+
+
+
 	if(OPS_flag || MS_flag){
 	   filebytes64=filebytes64/reclen;
 	}
@@ -10018,585 +9570,41 @@ long long *data1, *data2;
         {
 	    if(no_write && (j==1))
 	    {
-	        randreadrate[1] = 0.0;
+	        randrw_rate[1] = 0.0;
 		continue;
 	    }
 	    if(MS_flag)
 	    {
-		randreadrate[j]=1000000.0*(randreadtime[j] / (double)filebytes64);
+		randrw_rate[j]=1000000.0*(randrw_time[j] / (double)filebytes64);
 		continue;
 	    }
             else
             {
-                  randreadrate[j] = 
-		      (unsigned long long) ((double) filebytes64 / randreadtime[j]);
+                  randrw_rate[j] = 
+		      (unsigned long long) ((double) filebytes64 / randrw_time[j]);
             }
 	    if(!(OPS_flag || MS_flag))
-		randreadrate[j] >>= 10;
+		randrw_rate[j] >>= 10;
 	}
 	/* Must save walltime & cputime before calling store_value() for each/any cell.*/
         if(cpuutilflag)
 		store_times(walltime[0], cputime[0]);
-	store_value((off64_t)randreadrate[0]);
+	store_value((off64_t)randrw_rate[0]);
         if(cpuutilflag)
 		store_times(walltime[1], cputime[1]);
-	store_value((off64_t)randreadrate[1]);
+	store_value((off64_t)randrw_rate[1]);
 #ifdef NO_PRINT_LLD
-	if(!silent) printf("%8ld",randreadrate[0]);
-	if(!silent) printf("%8ld",randreadrate[1]);
+	if(!silent) printf("%8ld",randrw_rate[0]);
+	if(!silent) printf("%8ld",randrw_rate[1]);
 	if(!silent) fflush(stdout);
 #else
-	if(!silent) printf("%8lld",randreadrate[0]);
-	if(!silent) printf("%8lld",randreadrate[1]);
+	if(!silent) printf("%8lld",randrw_rate[0]);
+	if(!silent) printf("%8lld",randrw_rate[1]);
 	if(!silent) fflush(stdout);
 #endif
 	if(recnum)
 		free(recnum);
 }
-
-
-/************************************************************************/
-/* random_write_perf_test (blusjune)			        	*/
-/* Random write test							*/
-/************************************************************************/
-#ifdef HAVE_ANSIC_C
-void random_write_perf_test(off64_t kilo64,long long reclen,long long *data1,long long *data2)
-#else
-void random_write_perf_test(kilo64,reclen,data1,data2)
-off64_t kilo64;
-long long reclen;
-long long *data1, *data2;
-#endif
-{
-	double randreadtime[2];
-	double starttime2;
-	double walltime[2], cputime[2];
-	double compute_val = (double)0;
-#if defined (bsd4_2) || defined(Windows)
-	long long rand1,rand2,rand3;
-#endif
-	unsigned long long big_rand;
-	long long j;
-	off64_t i,numrecs64;
-	long long Index=0;
-	int flags;
-	unsigned long long randreadrate[2];
-	off64_t filebytes64;
-	off64_t lock_offset=0;
-	volatile char *buffer1;
-	char *wmaddr,*nbuff;
-	char *maddr,*free_addr;
-	int fd,wval;
-	long long *recnum= 0;
-#if defined(VXFS) || defined(solaris)
-	int test_foo=0;
-#endif
-#ifdef ASYNC_IO
-	struct cache *gc=0;
-#else
-	long long *gc=0;
-#endif
-#ifdef MERSENNE
-    unsigned long long init[4]={0x12345ULL, 0x23456ULL, 0x34567ULL, 0x45678ULL};
-    unsigned long long length=4;
-#endif
-
-	maddr=free_addr=0;
-	numrecs64 = (kilo64*1024)/reclen;
-#ifdef MERSENNE
-       init_by_array64(init, length);
-#else
-#ifdef bsd4_2
-        srand(0);
-#else
-#ifdef Windows
-        srand(0);
-#else
-        srand48(0);
-#endif
-#endif
-#endif
-        recnum = (long long *)malloc(sizeof(*recnum)*numrecs64);
-        if (recnum){
-             /* pre-compute random sequence based on 
-		Fischer-Yates (Knuth) card shuffle */
-            for(i = 0; i < numrecs64; i++){
-                recnum[i] = i;
-            }
-            for(i = 0; i < numrecs64; i++) {
-                long long tmp;
-#ifdef MERSENNE
-      	       big_rand=genrand64_int64();
-#else
-#ifdef bsd4_2
-               rand1=(long long)rand();
-               rand2=(long long)rand();
-               rand3=(long long)rand();
-               big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-#else
-#ifdef Windows
-               rand1=(long long)rand();
-               rand2=(long long)rand();
-               rand3=(long long)rand();
-               big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-#else
-               big_rand = lrand48();
-#endif
-#endif
-#endif
-               big_rand = big_rand%numrecs64;
-               tmp = recnum[i];
-               recnum[i] = recnum[big_rand];
-               recnum[big_rand] = tmp;
-            }
-        }
-	else
-	{
-		fprintf(stderr,"Random uniqueness fallback.\n");
-	}
-	flags = O_RDWR;
-#if ! defined(DONT_HAVE_O_DIRECT)
-#if defined(linux) || defined(__AIX__) || defined(IRIX) || defined(IRIX64) || defined(Windows) || defined (__FreeBSD__)
-	if(direct_flag)
-		flags |=O_DIRECT;
-#endif
-#if defined(TRU64)
-	if(direct_flag)
-		flags |=O_DIRECTIO;
-#endif
-#endif
-	fd=0;
-	if(oflag)
-		flags |= O_SYNC;
-#if defined(O_DSYNC)
-	if(odsync)
-		flags |= O_DSYNC;
-#endif
-#if defined(_HPUX_SOURCE) || defined(linux)
-	if(read_sync)
-		flags |=O_RSYNC|O_SYNC;
-#endif
-	filebytes64 = numrecs64*reclen;
-	for( j=0; j<2; j++ )
-	{
-		if(j==0)
-			flags |=O_CREAT;
-		if (no_write && (j == 1))
-			continue;
-		if(cpuutilflag)
-		{
-		     walltime[j] = time_so_far();
-		     cputime[j]  = cputime_so_far();
-	     }
-	     if(Uflag) /* Unmount and re-mount the mountpoint */
-	     {
-			purge_buffer_cache();
-	     }
-	     if((fd = I_OPEN(filename, ((int)flags),0640))<0){
-			printf("\nCan not open temporary file for read/write\n");
-			perror("open");
-			exit(66);
-	     }
-#ifdef ASYNC_IO
-		if(async_flag)
-			async_init(&gc,fd,direct_flag);
-#endif
-
-#ifdef VXFS
-		if(direct_flag)
-		{
-			ioctl(fd,VX_SETCACHE,VX_DIRECT);
-			ioctl(fd,VX_GETCACHE,&test_foo);
-			if(test_foo == 0)
-			{
-				if(!client_iozone)
-				  printf("\nVxFS advanced setcache feature not available.\n");
-				exit(3);
-			}
-		}
-#endif
-#if defined(solaris)
-               if(direct_flag)
-               {
-                       test_foo = directio(fd, DIRECTIO_ON);
-                       if(test_foo != 0)
-                       {
-                               if(!client_iozone)
-                                 printf("\ndirectio not available.\n");
-                               exit(3);
-                       }
-               }
-#endif
-	     if(mmapflag)
-	     {
-			maddr=(char *)initfile(fd,filebytes64,0,PROT_READ|PROT_WRITE);
-	     }
-	     nbuff=mainbuffer;
-	     if(fetchon)
-		   fetchit(nbuff,reclen);
-#ifdef MERSENNE
-    	    init_by_array64(init, length);
-#else
-#ifdef bsd4_2
-	     srand(0);
-#else
-#ifdef Windows
-             srand(0);
-#else
-             srand48(0);
-#endif
-#endif
-#endif
-	     compute_val=(double)0;
-	     starttime2 = time_so_far();
-#if 0 /* original */
-	     if ( j==0 )
-#else /* blusjune randread test */
-	     if ( blusjune_test_randrw == BLUSJUNE_RANDREAD_TEST )
-#endif
-	     {
-		for(i=0; i<numrecs64; i++) {
-			if(compute_flag)
-				compute_val+=do_compute(compute_time);
-                        if(multi_buffer)
-                        {
-                                Index +=reclen;
-                                if(Index > (MAXBUFFERSIZE-reclen))
-                                        Index=0;
-                                nbuff = mbuffer + Index;
-                        }
-			if(purge)
-				purgeit(nbuff,reclen);
-                        if (recnum) {
-				offset64 = reclen * (long long)recnum[i];
-                        }
-			else
-			{
-
-#ifdef MERSENNE
-      			   big_rand =genrand64_int64();
-			   offset64 = reclen * (big_rand%numrecs64);
-#else
-#ifdef bsd4_2
-			   rand1=(long long)rand();
-			   rand2=(long long)rand();
-			   rand3=(long long)rand();
-			   big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-                           offset64 = reclen * (big_rand%numrecs64);
-#else
-#ifdef Windows
-			   rand1=(long long)rand();
-			   rand2=(long long)rand();
-			   rand3=(long long)rand();
-			   big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-                           offset64 = reclen * (big_rand%numrecs64);
-#else
-			   offset64 = reclen * (lrand48()%numrecs64);
-#endif
-#endif
-#endif
-			}
-
-			if( !(h_flag || k_flag || mmapflag))
-			{
-			   if(I_LSEEK( fd, offset64, SEEK_SET )<0)
-			   {
-				perror("lseek");
-				exit(68);
-			   };
-			}
-			if(rlocking)
-			{
-				lock_offset=I_LSEEK(fd,0,SEEK_CUR);
-				mylockr((int) fd, (int) 1, (int)1,
-				  lock_offset, reclen);
-			}
-			if(mmapflag)
-			{
-				wmaddr=&maddr[offset64];
-				fill_area((long long*)wmaddr,(long long*)nbuff,(long long)reclen);
-			}
-			else
-			{
-			  if(async_flag)
-			  {
-			     if(no_copy_flag)
-			        async_read_no_copy(gc, (long long)fd, &buffer1, offset64,reclen,
-			    	  0LL,(numrecs64*reclen),depth);
-			     else
-				 async_read(gc, (long long)fd, nbuff, (offset64),reclen,
-					    	0LL,(numrecs64*reclen),0LL);
-			  }
-			  else
-			  {
-		  	     if(read(fd, (void *)nbuff, (size_t)reclen) != reclen)
-		  	     {
-#ifdef NO_PRINT_LLD
-				 printf("\nError reading block at %ld\n",
-					 offset64); 
-#else
-				 printf("\nError reading block at %lld\n",
-					 offset64); 
-#endif
-				 perror("read");
-				 exit(70);
-		 	     }
-			  }
-			}
-			if(verify){
-			  if(async_flag && no_copy_flag)
-			  {
-				if(verify_buffer(buffer1,reclen,(off64_t)offset64/reclen,reclen,(long long)pattern,sverify)){
-					exit(71);
-				}
-			  }
-			  else
-			  {
-				if(verify_buffer(nbuff,reclen,(off64_t)offset64/reclen,reclen,(long long)pattern,sverify)){
-					exit(72);
-				}
-			  }
-			}
-			if(async_flag && no_copy_flag)
-				async_release(gc);
-			if(rlocking)
-			{
-				lock_offset=I_LSEEK(fd,0,SEEK_CUR);
-				mylockr((int) fd, (int) 1, (int)1,
-				  lock_offset, reclen);
-			}
-		}
-	     }
-#if 0
-	     else
-#else /* blusjune randwrite test */
-	     else if ( blusjune_test_randrw == BLUSJUNE_RANDWRITE_TEST )
-#endif
-	     {
-			if(verify || dedup || dedup_interior)
-				fill_buffer(nbuff,reclen,(long long)pattern,sverify,(long long)0);
-			for(i=0; i<numrecs64; i++) 
-			{
-				if(compute_flag)
-					compute_val+=do_compute(compute_time);
-                        	if(multi_buffer)
-                        	{
-                               	    Index +=reclen;
-                               	    if(Index > (MAXBUFFERSIZE-reclen))
-                               	         Index=0;
-                               	    nbuff = mbuffer + Index;
-                        	}
-                                if (recnum) {
-				  offset64 = reclen * (long long)recnum[i];
-                                }
-			        else
-			        {
-#ifdef bsd4_2
-				  rand1=(long long)rand();
-				  rand2=(long long)rand();
-				  rand3=(long long)rand();
-				  big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-				  offset64 = reclen * (big_rand%numrecs64);
-#else
-#ifdef Windows
-				  rand1=(long long)rand();
-				  rand2=(long long)rand();
-				  rand3=(long long)rand();
-				  big_rand=(rand1<<32)|(rand2<<16)|(rand3);
-				  offset64 = reclen * (big_rand%numrecs64);
-#else
-				  offset64 = reclen * (lrand48()%numrecs64);
-#endif
-#endif
-				}
-				if(async_flag && no_copy_flag)
-				{
-					free_addr=nbuff=(char *)malloc((size_t)reclen+page_size);
-					nbuff=(char *)(((long)nbuff+(long)page_size) & (long)~(page_size-1));
-					if(verify || dedup || dedup_interior)
-						fill_buffer(nbuff,reclen,(long long)pattern,sverify,offset64/reclen);
-				}
-				if(purge)
-					purgeit(nbuff,reclen);
-
-				if((verify & diag_v) || dedup || dedup_interior)
-					fill_buffer(nbuff,reclen,(long long)pattern,sverify,offset64/reclen);
-
-				if (!(h_flag || k_flag || mmapflag))
-				{
-				  I_LSEEK( fd, offset64, SEEK_SET );
-				}
-				if(rlocking)
-				{
-					lock_offset=I_LSEEK(fd,0,SEEK_CUR);
-					mylockr((int) fd, (int) 1, (int)0,
-					  lock_offset, reclen);
-				}
-				if(mmapflag)
-				{
-					wmaddr=&maddr[offset64];
-					fill_area((long long*)nbuff,(long long*)wmaddr,(long long)reclen);
-					if(!mmapnsflag)
-					{
-					  	if(mmapasflag)
-						    	msync(wmaddr,(size_t)reclen,MS_ASYNC);
-					  	if(mmapssflag)
-					    		msync(wmaddr,(size_t)reclen,MS_SYNC);
-					}
-				}
-				else
-				{
-			  		if(async_flag)
-					{
-			     		   if(no_copy_flag)
-			       		      async_write_no_copy(gc, (long long)fd, nbuff, reclen, offset64, 
-					   	depth,free_addr);
-					   else
-			      			async_write(gc, (long long)fd, nbuff, reclen, offset64, depth);
-			  		}
-			  		else
-			  		{
-			  		  wval=write(fd, nbuff,(size_t)reclen);
-			  		  if(wval != reclen)
-			  		  {
-#ifdef NO_PRINT_LLD
-						printf("\nError writing block at %ld\n",
-							offset64); 
-#else
-						printf("\nError writing block at %lld\n",
-							offset64); 
-#endif
-						if(wval==-1)
-							perror("write");
-						signal_handler();
-			 		  }
-					}
-				}
-				if(rlocking)
-				{
-					mylockr((int) fd, (int) 0, (int)0,
-					  lock_offset, reclen);
-				}
-			}
-	     } 	/* end of modifications	*kcollins:2-5-96 */
-#ifdef ASYNC_IO
-	     if(async_flag)
-	     {
-		end_async(gc);
-	        gc=0;
-             }	
-#endif
-	     if(include_flush)
-	     {
-		if(mmapflag)
-			msync(maddr,(size_t)filebytes64,MS_SYNC);/* Clean up before read starts running */
-		else
-		{
-	     		wval=fsync(fd);
-			if(wval==-1){
-				perror("fsync");
-				signal_handler();
-			}
-		}
-	     }
-	     if(include_close)
-	     {
-		if(mmapflag)
-		{
-			mmap_end(maddr,(unsigned long long)filebytes64);
-		}
-		wval=close(fd);
-		if(wval==-1){
-			perror("close");
-			signal_handler();
-		}
-	     }
-	     randreadtime[j] = ((time_so_far() - starttime2)-time_res)-
-			compute_val;
-	     if(randreadtime[j] < (double).000001) 
-	     {
-			randreadtime[j]=time_res;
-			if(rec_prob < reclen)
-				rec_prob = reclen;
-			res_prob=1;
-	     }
-	    if(!include_close)
-	    {
-		if(mmapflag)
-		{
-			msync(maddr,(size_t)filebytes64,MS_SYNC);/* Clean up before read starts running */
-		}
-		else
-		{
-	     		wval=fsync(fd);
-			if(wval==-1){
-				perror("fsync");
-				signal_handler();
-			}
-		}
-		if(mmapflag)
-			mmap_end(maddr,(unsigned long long)filebytes64);
-		wval=close(fd);
-		if(wval==-1){
-			perror("close");
-			signal_handler();
-		}
- 	    }
-            if(cpuutilflag)
-	    {
-	    	cputime[j]  = cputime_so_far() - cputime[j];
-	    	if (cputime[j] < cputime_res)
-			cputime[j] = 0.0;
-	    	walltime[j] = time_so_far() - walltime[j];
-		if (walltime[j] < cputime[j])
-		   walltime[j] = cputime[j];
-	    }
-	    if(restf)
-		sleep((int)rest_val);
-    	}
-	if(OPS_flag || MS_flag){
-	   filebytes64=filebytes64/reclen;
-	}
-        for(j=0;j<2;j++)
-        {
-	    if(no_write && (j==1))
-	    {
-	        randreadrate[1] = 0.0;
-		continue;
-	    }
-	    if(MS_flag)
-	    {
-		randreadrate[j]=1000000.0*(randreadtime[j] / (double)filebytes64);
-		continue;
-	    }
-            else
-            {
-                  randreadrate[j] = 
-		      (unsigned long long) ((double) filebytes64 / randreadtime[j]);
-            }
-	    if(!(OPS_flag || MS_flag))
-		randreadrate[j] >>= 10;
-	}
-	/* Must save walltime & cputime before calling store_value() for each/any cell.*/
-        if(cpuutilflag)
-		store_times(walltime[0], cputime[0]);
-	store_value((off64_t)randreadrate[0]);
-        if(cpuutilflag)
-		store_times(walltime[1], cputime[1]);
-	store_value((off64_t)randreadrate[1]);
-#ifdef NO_PRINT_LLD
-	if(!silent) printf("%8ld",randreadrate[0]);
-	if(!silent) printf("%8ld",randreadrate[1]);
-	if(!silent) fflush(stdout);
-#else
-	if(!silent) printf("%8lld",randreadrate[0]);
-	if(!silent) printf("%8lld",randreadrate[1]);
-	if(!silent) fflush(stdout);
-#endif
-	if(recnum)
-		free(recnum);
-}
-#endif /* BLUSJUNE_USE_DUPLICATED_FUNCTIONS */
 
 
 /************************************************************************/
@@ -10776,7 +9784,7 @@ long long *data1,*data2;
 #ifdef NO_PRINT_LLD
 					printf("\nError reading block %ld\n", i); 
 #else
-					printf("\nError reading block %lld\n", i); 
+					printf("\nError reading block %ld\n", i); 
 #endif
 					perror("read");
 					exit(79);
@@ -11369,8 +10377,8 @@ long long *data1, *data2;
 		    		printf("\nError reading block %ld, fd= %d Filename %s Read returned %ld\n", i, fd,filename,uu);
 		    		printf("\nSeeked to %ld Reclen = %ld\n", savepos64,reclen);
 #else
-		    		printf("\nError reading block %lld, fd= %d Filename %s Read returned %lld\n", i, fd,filename,uu);
-		    		printf("\nSeeked to %lld Reclen = %lld\n", savepos64,reclen);
+		    		printf("\nError reading block %ld, fd= %d Filename %s Read returned %lld\n", i, fd,filename,uu);
+		    		printf("\nSeeked to %ld Reclen = %lld\n", savepos64,reclen);
 #endif
 				perror("read");
 		    		exit(88);
@@ -12877,7 +11885,7 @@ long long who;
 #ifdef NO_PRINT_LLD
 		if(!silent) printf("  %c%ld%c",'"',rec_size/1024,'"');
 #else
-		if(!silent) printf("  %c%lld%c",'"',rec_size/1024,'"');
+		if(!silent) printf("  %c%ld%c",'"',rec_size/1024,'"');
 #endif
 	}
 	if(!silent) printf("\n");
@@ -12895,7 +11903,7 @@ long long who;
 #ifdef NO_PRINT_LLD
 	if(!silent) printf("%c%ld%c  ",'"',current_file_size,'"');
 #else
-	if(!silent) printf("%c%lld%c  ",'"',current_file_size,'"');
+	if(!silent) printf("%c%ld%c  ",'"',current_file_size,'"');
 #endif
 	for(i=0;i<=max_y;i++){
 		if(report_array[0][i] != current_file_size){
@@ -12910,7 +11918,7 @@ long long who;
 #ifdef NO_PRINT_LLD
 			if(!silent) printf("%c%ld%c  ",'"',current_file_size,'"');
 #else
-			if(!silent) printf("%c%lld%c  ",'"',current_file_size,'"');
+			if(!silent) printf("%c%ld%c  ",'"',current_file_size,'"');
 #endif
 		}
 		if(bif_flag)
@@ -12918,7 +11926,7 @@ long long who;
 #ifdef NO_PRINT_LLD
 		if(!silent) printf(" %ld ",report_array[who][i]);
 #else
-		if(!silent) printf(" %lld ",report_array[who][i]);
+		if(!silent) printf(" %ld ",report_array[who][i]);
 #endif
 	}
 	if(bif_flag)
@@ -13107,7 +12115,7 @@ long long who;
 #ifdef NO_PRINT_LLD
 		if(!silent) printf("  %c%ld%c",'"',rec_size/1024,'"');
 #else
-		if(!silent) printf("  %c%lld%c",'"',rec_size/1024,'"');
+		if(!silent) printf("  %c%ld%c",'"',rec_size/1024,'"');
 #endif
 	}
 	if(!silent) printf("\n");
@@ -13125,7 +12133,7 @@ long long who;
 #ifdef NO_PRINT_LLD
 	if(!silent) printf("%c%ld%c  ",'"',current_file_size,'"');
 #else
-	if(!silent) printf("%c%lld%c  ",'"',current_file_size,'"');
+	if(!silent) printf("%c%ld%c  ",'"',current_file_size,'"');
 #endif
 	for (i = 0; i <= max_y; i++) {
 		if (report_array[0][i] != current_file_size) {
@@ -13140,7 +12148,7 @@ long long who;
 #ifdef NO_PRINT_LLD
 			if(!silent) printf("%c%ld%c  ",'"',current_file_size,'"');
 #else
-			if(!silent) printf("%c%lld%c  ",'"',current_file_size,'"');
+			if(!silent) printf("%c%ld%c  ",'"',current_file_size,'"');
 #endif
 		}
 		if (bif_flag)
@@ -14131,7 +13139,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
 			fprintf(thread_wqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-			fprintf(thread_wqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+			fprintf(thread_wqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
 		}
 		w_traj_ops_completed++;
@@ -14774,7 +13782,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
 			fprintf(thread_wqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-			fprintf(thread_wqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+			fprintf(thread_wqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
 		}
 		w_traj_ops_completed++;
@@ -15366,7 +14374,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
 			fprintf(thread_rwqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-			fprintf(thread_rwqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+			fprintf(thread_rwqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
 		}
 		if(rlocking)
@@ -15878,7 +14886,7 @@ thread_read_test(x)
 		    		printf("\nError reading block %ld, fd= %d\n", i,
 					 fd);
 #else
-		    		printf("\nError reading block %lld, fd= %d\n", i,
+		    		printf("\nError reading block %ld, fd= %d\n", i,
 					 fd);
 #endif
 				perror("read");
@@ -15952,7 +14960,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
                         fprintf(thread_rqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-                        fprintf(thread_rqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+                        fprintf(thread_rqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
                 }
 
@@ -16410,7 +15418,7 @@ thread_pread_test(x)
 		    		printf("\nError preading block %ld, fd= %d\n", i,
 					 fd);
 #else
-		    		printf("\nError preading block %lld, fd= %d\n", i,
+		    		printf("\nError preading block %ld, fd= %d\n", i,
 					 fd);
 #endif
 				perror("pread");
@@ -16484,7 +15492,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
                         fprintf(thread_rqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-                        fprintf(thread_rqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+                        fprintf(thread_rqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
                 }
 
@@ -16985,7 +15993,7 @@ thread_rread_test(x)
 		    		printf("\nError writing block %ld, fd= %d\n", i,
 					 fd);
 #else
-		    		printf("\nError writing block %lld, fd= %d\n", i,
+		    		printf("\nError writing block %ld, fd= %d\n", i,
 					 fd);
 #endif
 				perror("read");
@@ -17059,7 +16067,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
                         fprintf(thread_rrqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-                        fprintf(thread_rrqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+                        fprintf(thread_rrqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
                 }
 
@@ -17532,7 +16540,7 @@ thread_reverse_read_test(x)
 #ifdef NO_PRINT_LLD
 				printf("\nError reading block %ld\n", i); 
 #else
-				printf("\nError reading block %lld\n", i); 
+				printf("\nError reading block %ld\n", i); 
 #endif
 				perror("read");
 				if (!no_unlink)
@@ -17614,7 +16622,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
                         fprintf(thread_revqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-                        fprintf(thread_revqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+                        fprintf(thread_revqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
                 }
 	}
@@ -18039,7 +17047,7 @@ thread_stride_read_test(x)
 #ifdef NO_PRINT_LLD
 		    		printf("\nError reading block %ld, fd= %d\n", i, fd);
 #else
-		    		printf("\nError reading block %lld, fd= %d\n", i, fd);
+		    		printf("\nError reading block %ld, fd= %d\n", i, fd);
 #endif
 				perror("read");
 				if (!no_unlink)
@@ -18156,7 +17164,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
                         fprintf(thread_strqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-                        fprintf(thread_strqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+                        fprintf(thread_strqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
                 }
 	}
@@ -18758,7 +17766,7 @@ thread_ranread_test(x)
 				printf("\nError reading block at %ld\n",
 					 offset); 
 #else
-				printf("\nError reading block at %lld\n",
+				printf("\nError reading block at %ld\n",
 					 offset); 
 #endif
 				perror("ranread");
@@ -18836,7 +17844,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
                         fprintf(thread_randrfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-                        fprintf(thread_randrfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+                        fprintf(thread_randrfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
                 }
 	}
@@ -19504,7 +18512,7 @@ printf("Desired rate %g  Actual rate %g Nap %g microseconds\n",desired_op_rate_t
 #ifdef NO_PRINT_LLD
 			fprintf(thread_randwqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-			fprintf(thread_randwqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+			fprintf(thread_randwqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
 		}
 		w_traj_ops_completed++;
@@ -19780,7 +18788,7 @@ void *x;
 	if(debug1 )
 	{
 		printf("\nthread created has an id of %lx\n",ts);
-		printf("meme %ld\n",meme);
+		printf("meme %lld\n",meme);
 	}
 
 	if (sleep_time_between_test != 0) {	/* blusjune */
@@ -26015,7 +25023,7 @@ void * thread_fwrite_test( x)
 #ifdef NO_PRINT_LLD
 			fprintf(thread_wqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-			fprintf(thread_wqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+			fprintf(thread_wqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
 		}
                 w_traj_ops_completed++;
@@ -26464,7 +25472,7 @@ void * thread_fread_test( x)
 #ifdef NO_PRINT_LLD
 			fprintf(thread_wqfd,"%10.1ld %10.0f %10.1ld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #else
-			fprintf(thread_wqfd,"%10.1lld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
+			fprintf(thread_wqfd,"%10.1ld %10.0f %10.1lld\n",(traj_offset)/1024,((thread_qtime_stop-thread_qtime_start-time_res))*1000000,reclen);
 #endif
 		}
                 w_traj_ops_completed++;

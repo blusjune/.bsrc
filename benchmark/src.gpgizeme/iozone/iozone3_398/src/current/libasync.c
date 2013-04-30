@@ -367,7 +367,7 @@ long long depth;
 #endif
 		if(ret)
 		{
-			printf("aio_error 1: ret %d %d\n",ret,errno);
+			printf("aio_error 1: ret %ld %d\n",ret,errno);
 		}
 #ifdef _LARGEFILE64_SOURCE 
 #ifdef __LP64__
@@ -405,17 +405,17 @@ long long depth;
 		if(retval < ce->myaiocb.aio_nbytes)
 #endif
 		{
-			printf("aio_return error1: ret %d %d\n",retval,errno);
+			printf("aio_return error1: ret %ld %d\n",retval,errno);
 #ifdef _LARGEFILE64_SOURCE 
 #ifdef __LP64__
-			printf("aio_return error1: fd %d offset %ld buffer %lx size %d Opcode %d\n",
+			printf("aio_return error1: fd %d offset %ld buffer %lx size %u Opcode %d\n",
 				ce->myaiocb.aio_fildes,
 				ce->myaiocb.aio_offset,
 				(long)(ce->myaiocb.aio_buf),
 				ce->myaiocb.aio_nbytes,
 				ce->myaiocb.aio_lio_opcode
 #else
-			printf("aio_return error1: fd %d offset %lld buffer %lx size %d Opcode %d\n",
+			printf("aio_return error1: fd %d offset %lld buffer %lx size %u Opcode %d\n",
 				ce->myaiocb64.aio_fildes,
 				ce->myaiocb64.aio_offset,
 				(long)(ce->myaiocb64.aio_buf),
@@ -423,7 +423,7 @@ long long depth;
 				ce->myaiocb64.aio_lio_opcode
 #endif
 #else
-			printf("aio_return error1: fd %d offset %d buffer %lx size %d Opcode %d\n",
+			printf("aio_return error1: fd %d offset %u buffer %lx size %u Opcode %d\n",
 				ce->myaiocb.aio_fildes,
 				ce->myaiocb.aio_offset,
 				(long)(ce->myaiocb.aio_buf),
