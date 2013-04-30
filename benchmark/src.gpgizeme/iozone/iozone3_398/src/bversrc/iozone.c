@@ -58,6 +58,47 @@
 /* 									*/
 /************************************************************************/
 
+/*
+ * 20130430_205843
+ * -i 13 : blusjune-random-read test
+ * -i 14 : blusjune-random-write test
+ *
+ * THREAD_WRITE_TEST :: thread_write_test()
+ * THREAD_READ_TEST :: thread_read_test()
+ *
+ * assert{
+ * async_flag = 0;
+ * num_child = 1;
+ * OPS_flag = 1;
+ * }
+ *
+ * random_perf_test() : 8931 ~ 9450
+ * random_read_perf_test()
+ * random_write_perf_test()
+ *
+ * #if 0
+ * if (j == 0) { // random read // 9115 ~ 9227
+ * #else
+ * if ( blusjune_test_randrw == BLUSJUNE_RANDREAD_TEST ) {
+ * #endif
+ * 	for (i=0; i<numrecs64; i++) {
+ * 		// random seek and read;
+ * 	}
+ * }
+ * #if 0
+ * if (j == 1) { // random write // 9229 ~ 9335
+ * #else
+ * if ( blusjune_test_randrw == BLUSJUNE_RANDWRITE_TEST )
+ * #endif
+ *	for (i=0; i<numrecs64; i++) {
+ * 		// random seek and write;
+ *	}
+ * }
+ *
+ *
+ *
+ */
+
 
 /* The version number */
 #define THISVERSION "        Version $Revision: 3.398 $"
@@ -160,7 +201,8 @@ char *help[] = {
 "           -i #  Test to run (0=write/rewrite, 1=read/re-read, 2=random-read/write",
 "                 3=Read-backwards, 4=Re-write-record, 5=stride-read, 6=fwrite/re-fwrite",
 "                 7=fread/Re-fread, 8=random_mix, 9=pwrite/Re-pwrite, 10=pread/Re-pread",
-"                 11=pwritev/Re-pwritev, 12=preadv/Re-preadv)",
+"                 11=pwritev/Re-pwritev, 12=preadv/Re-preadv",
+"                 13=blusjune-random-read, 14=blusjune-random-write)",
 "           -I  Use VxFS VX_DIRECT, O_DIRECT,or O_DIRECTIO for all file operations",
 "           -j #  Set stride of file accesses to (# * record size)",
 "           -J #  milliseconds of compute cycle before each I/O operation",
@@ -918,6 +960,8 @@ struct master_neutral_command {
 #define PWRITEV_TEST		11
 #define PREADV_TEST		12
 #endif /* HAVE_PREADV */
+#define BLUSJUNE_RANDREAD_TEST	13
+#define BLUSJUNE_RANDWRITE_TEST	14
 
 #define WRITER_MASK		(1 << WRITER_TEST)
 #define READER_MASK		(1 << READER_TEST)
@@ -936,6 +980,8 @@ struct master_neutral_command {
 #define PWRITEV_MASK		(1 << PWRITEV_TEST)
 #define PREADV_MASK		(1 << PREADV_TEST)
 #endif /* HAVE_PREADV */
+#define BLUSJUNE_RANDREAD_MASK		(1 << BLUSJUNE_RANDREAD_TEST)
+#define BLUSJUNE_RANDWRITE_MASK		(1 << BLUSJUNE_RANDWRITE_TEST)
 
 /*
  * child_stat->flag values and transitions
@@ -997,6 +1043,16 @@ void fread_perf_test();		/* fread/refread test		  */
 void read_perf_test();		/* read/reread test		  */
 void mix_perf_test();		/* read/reread test		  */
 void random_perf_test();	/* random read/write test	  */
+
+#undef BLUSJUNE_USE_DUPLICATED_FUNCTIONS
+#ifdef BLUSJUNE_USE_DUPLICATED_FUNCTIONS
+void random_read_perf_test();	/* blusjune random read test	  */
+void random_write_perf_test();	/* blusjune random write test	  */
+#else
+void (* random_read_perf_test)() = random_perf_test;	/* blusjune random read test	  */
+void (* random_write_perf_test)() = random_perf_test;	/* blusjune random write test	  */
+#endif
+
 void reverse_perf_test();	/* reverse read test		  */
 void rewriterec_perf_test();	/* rewrite record test		  */
 void read_stride_perf_test();	/* read with stride test	  */
@@ -1217,6 +1273,8 @@ void (*func[])() = {
 			preadv_perf_test
 #endif /* HAVE_PREADV */
 #endif /* HAVE_PREAD */
+			random_read_perf_test,
+			random_write_perf_test,
 	};
 
 /*
@@ -2200,6 +2258,17 @@ char **argv;
 			}
 			include_test[tval]++;
 			include_tflag++;
+			switch (tval) { /* blusjune */
+				case BLUSJUNE_RANDREAD_TEST:
+	     				blusjune_test_randrw = BLUSJUNE_RANDREAD_TEST;
+					break;
+				case BLUSJUNE_RANDWRITE_TEST:
+	     				blusjune_test_randrw = BLUSJUNE_RANDWRITE_TEST;
+					break;
+				default:
+	     				blusjune_test_randrw = BLUSJUNE_RANDWRITE_TEST;
+					break;
+			}
 			break;
 		case 'v':	/* Show version information */
     			for(ind=0; strlen(head1[ind]); ind++)
@@ -9093,7 +9162,12 @@ long long *data1, *data2;
 #endif
 	     compute_val=(double)0;
 	     starttime2 = time_so_far();
-	     if ( j==0 ){
+#if 0 /* original */
+	     if ( j==0 )
+#else /* blusjune randread test */
+	     if ( blusjune_test_randrw == BLUSJUNE_RANDREAD_TEST )
+#endif
+	     {
 		for(i=0; i<numrecs64; i++) {
 			if(compute_flag)
 				compute_val+=do_compute(compute_time);
@@ -9206,7 +9280,11 @@ long long *data1, *data2;
 			}
 		}
 	     }
+#if 0
 	     else
+#else /* blusjune randwrite test */
+	     else if ( blusjune_test_randrw == BLUSJUNE_RANDWRITE_TEST )
+#endif
 	     {
 			if(verify || dedup || dedup_interior)
 				fill_buffer(nbuff,reclen,(long long)pattern,sverify,(long long)0);
@@ -9431,6 +9509,1095 @@ long long *data1, *data2;
 	if(recnum)
 		free(recnum);
 }
+
+
+#ifdef BLUSJUNE_USE_DUPLICATED_FUNCTIONS 
+/************************************************************************/
+/* random_read_perf_test (blusjune)			        	*/
+/* Random read test							*/
+/************************************************************************/
+#ifdef HAVE_ANSIC_C
+void random_read_perf_test(off64_t kilo64,long long reclen,long long *data1,long long *data2)
+#else
+void random_read_perf_test(kilo64,reclen,data1,data2)
+off64_t kilo64;
+long long reclen;
+long long *data1, *data2;
+#endif
+{
+	double randreadtime[2];
+	double starttime2;
+	double walltime[2], cputime[2];
+	double compute_val = (double)0;
+#if defined (bsd4_2) || defined(Windows)
+	long long rand1,rand2,rand3;
+#endif
+	unsigned long long big_rand;
+	long long j;
+	off64_t i,numrecs64;
+	long long Index=0;
+	int flags;
+	unsigned long long randreadrate[2];
+	off64_t filebytes64;
+	off64_t lock_offset=0;
+	volatile char *buffer1;
+	char *wmaddr,*nbuff;
+	char *maddr,*free_addr;
+	int fd,wval;
+	long long *recnum= 0;
+#if defined(VXFS) || defined(solaris)
+	int test_foo=0;
+#endif
+#ifdef ASYNC_IO
+	struct cache *gc=0;
+#else
+	long long *gc=0;
+#endif
+#ifdef MERSENNE
+    unsigned long long init[4]={0x12345ULL, 0x23456ULL, 0x34567ULL, 0x45678ULL};
+    unsigned long long length=4;
+#endif
+
+	maddr=free_addr=0;
+	numrecs64 = (kilo64*1024)/reclen;
+#ifdef MERSENNE
+       init_by_array64(init, length);
+#else
+#ifdef bsd4_2
+        srand(0);
+#else
+#ifdef Windows
+        srand(0);
+#else
+        srand48(0);
+#endif
+#endif
+#endif
+        recnum = (long long *)malloc(sizeof(*recnum)*numrecs64);
+        if (recnum){
+             /* pre-compute random sequence based on 
+		Fischer-Yates (Knuth) card shuffle */
+            for(i = 0; i < numrecs64; i++){
+                recnum[i] = i;
+            }
+            for(i = 0; i < numrecs64; i++) {
+                long long tmp;
+#ifdef MERSENNE
+      	       big_rand=genrand64_int64();
+#else
+#ifdef bsd4_2
+               rand1=(long long)rand();
+               rand2=(long long)rand();
+               rand3=(long long)rand();
+               big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+#else
+#ifdef Windows
+               rand1=(long long)rand();
+               rand2=(long long)rand();
+               rand3=(long long)rand();
+               big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+#else
+               big_rand = lrand48();
+#endif
+#endif
+#endif
+               big_rand = big_rand%numrecs64;
+               tmp = recnum[i];
+               recnum[i] = recnum[big_rand];
+               recnum[big_rand] = tmp;
+            }
+        }
+	else
+	{
+		fprintf(stderr,"Random uniqueness fallback.\n");
+	}
+	flags = O_RDWR;
+#if ! defined(DONT_HAVE_O_DIRECT)
+#if defined(linux) || defined(__AIX__) || defined(IRIX) || defined(IRIX64) || defined(Windows) || defined (__FreeBSD__)
+	if(direct_flag)
+		flags |=O_DIRECT;
+#endif
+#if defined(TRU64)
+	if(direct_flag)
+		flags |=O_DIRECTIO;
+#endif
+#endif
+	fd=0;
+	if(oflag)
+		flags |= O_SYNC;
+#if defined(O_DSYNC)
+	if(odsync)
+		flags |= O_DSYNC;
+#endif
+#if defined(_HPUX_SOURCE) || defined(linux)
+	if(read_sync)
+		flags |=O_RSYNC|O_SYNC;
+#endif
+	filebytes64 = numrecs64*reclen;
+	for( j=0; j<2; j++ )
+	{
+		if(j==0)
+			flags |=O_CREAT;
+		if (no_write && (j == 1))
+			continue;
+		if(cpuutilflag)
+		{
+		     walltime[j] = time_so_far();
+		     cputime[j]  = cputime_so_far();
+	     }
+	     if(Uflag) /* Unmount and re-mount the mountpoint */
+	     {
+			purge_buffer_cache();
+	     }
+	     if((fd = I_OPEN(filename, ((int)flags),0640))<0){
+			printf("\nCan not open temporary file for read/write\n");
+			perror("open");
+			exit(66);
+	     }
+#ifdef ASYNC_IO
+		if(async_flag)
+			async_init(&gc,fd,direct_flag);
+#endif
+
+#ifdef VXFS
+		if(direct_flag)
+		{
+			ioctl(fd,VX_SETCACHE,VX_DIRECT);
+			ioctl(fd,VX_GETCACHE,&test_foo);
+			if(test_foo == 0)
+			{
+				if(!client_iozone)
+				  printf("\nVxFS advanced setcache feature not available.\n");
+				exit(3);
+			}
+		}
+#endif
+#if defined(solaris)
+               if(direct_flag)
+               {
+                       test_foo = directio(fd, DIRECTIO_ON);
+                       if(test_foo != 0)
+                       {
+                               if(!client_iozone)
+                                 printf("\ndirectio not available.\n");
+                               exit(3);
+                       }
+               }
+#endif
+	     if(mmapflag)
+	     {
+			maddr=(char *)initfile(fd,filebytes64,0,PROT_READ|PROT_WRITE);
+	     }
+	     nbuff=mainbuffer;
+	     if(fetchon)
+		   fetchit(nbuff,reclen);
+#ifdef MERSENNE
+    	    init_by_array64(init, length);
+#else
+#ifdef bsd4_2
+	     srand(0);
+#else
+#ifdef Windows
+             srand(0);
+#else
+             srand48(0);
+#endif
+#endif
+#endif
+	     compute_val=(double)0;
+	     starttime2 = time_so_far();
+#if 0 /* original */
+	     if ( j==0 )
+#else /* blusjune randread test */
+	     if ( blusjune_test_randrw == BLUSJUNE_RANDREAD_TEST )
+#endif
+	     {
+		for(i=0; i<numrecs64; i++) {
+			if(compute_flag)
+				compute_val+=do_compute(compute_time);
+                        if(multi_buffer)
+                        {
+                                Index +=reclen;
+                                if(Index > (MAXBUFFERSIZE-reclen))
+                                        Index=0;
+                                nbuff = mbuffer + Index;
+                        }
+			if(purge)
+				purgeit(nbuff,reclen);
+                        if (recnum) {
+				offset64 = reclen * (long long)recnum[i];
+                        }
+			else
+			{
+
+#ifdef MERSENNE
+      			   big_rand =genrand64_int64();
+			   offset64 = reclen * (big_rand%numrecs64);
+#else
+#ifdef bsd4_2
+			   rand1=(long long)rand();
+			   rand2=(long long)rand();
+			   rand3=(long long)rand();
+			   big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+                           offset64 = reclen * (big_rand%numrecs64);
+#else
+#ifdef Windows
+			   rand1=(long long)rand();
+			   rand2=(long long)rand();
+			   rand3=(long long)rand();
+			   big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+                           offset64 = reclen * (big_rand%numrecs64);
+#else
+			   offset64 = reclen * (lrand48()%numrecs64);
+#endif
+#endif
+#endif
+			}
+
+			if( !(h_flag || k_flag || mmapflag))
+			{
+			   if(I_LSEEK( fd, offset64, SEEK_SET )<0)
+			   {
+				perror("lseek");
+				exit(68);
+			   };
+			}
+			if(rlocking)
+			{
+				lock_offset=I_LSEEK(fd,0,SEEK_CUR);
+				mylockr((int) fd, (int) 1, (int)1,
+				  lock_offset, reclen);
+			}
+			if(mmapflag)
+			{
+				wmaddr=&maddr[offset64];
+				fill_area((long long*)wmaddr,(long long*)nbuff,(long long)reclen);
+			}
+			else
+			{
+			  if(async_flag)
+			  {
+			     if(no_copy_flag)
+			        async_read_no_copy(gc, (long long)fd, &buffer1, offset64,reclen,
+			    	  0LL,(numrecs64*reclen),depth);
+			     else
+				 async_read(gc, (long long)fd, nbuff, (offset64),reclen,
+					    	0LL,(numrecs64*reclen),0LL);
+			  }
+			  else
+			  {
+		  	     if(read(fd, (void *)nbuff, (size_t)reclen) != reclen)
+		  	     {
+#ifdef NO_PRINT_LLD
+				 printf("\nError reading block at %ld\n",
+					 offset64); 
+#else
+				 printf("\nError reading block at %lld\n",
+					 offset64); 
+#endif
+				 perror("read");
+				 exit(70);
+		 	     }
+			  }
+			}
+			if(verify){
+			  if(async_flag && no_copy_flag)
+			  {
+				if(verify_buffer(buffer1,reclen,(off64_t)offset64/reclen,reclen,(long long)pattern,sverify)){
+					exit(71);
+				}
+			  }
+			  else
+			  {
+				if(verify_buffer(nbuff,reclen,(off64_t)offset64/reclen,reclen,(long long)pattern,sverify)){
+					exit(72);
+				}
+			  }
+			}
+			if(async_flag && no_copy_flag)
+				async_release(gc);
+			if(rlocking)
+			{
+				lock_offset=I_LSEEK(fd,0,SEEK_CUR);
+				mylockr((int) fd, (int) 1, (int)1,
+				  lock_offset, reclen);
+			}
+		}
+	     }
+#if 0
+	     else
+#else /* blusjune randwrite test */
+	     else if ( blusjune_test_randrw == BLUSJUNE_RANDWRITE_TEST )
+#endif
+	     {
+			if(verify || dedup || dedup_interior)
+				fill_buffer(nbuff,reclen,(long long)pattern,sverify,(long long)0);
+			for(i=0; i<numrecs64; i++) 
+			{
+				if(compute_flag)
+					compute_val+=do_compute(compute_time);
+                        	if(multi_buffer)
+                        	{
+                               	    Index +=reclen;
+                               	    if(Index > (MAXBUFFERSIZE-reclen))
+                               	         Index=0;
+                               	    nbuff = mbuffer + Index;
+                        	}
+                                if (recnum) {
+				  offset64 = reclen * (long long)recnum[i];
+                                }
+			        else
+			        {
+#ifdef bsd4_2
+				  rand1=(long long)rand();
+				  rand2=(long long)rand();
+				  rand3=(long long)rand();
+				  big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+				  offset64 = reclen * (big_rand%numrecs64);
+#else
+#ifdef Windows
+				  rand1=(long long)rand();
+				  rand2=(long long)rand();
+				  rand3=(long long)rand();
+				  big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+				  offset64 = reclen * (big_rand%numrecs64);
+#else
+				  offset64 = reclen * (lrand48()%numrecs64);
+#endif
+#endif
+				}
+				if(async_flag && no_copy_flag)
+				{
+					free_addr=nbuff=(char *)malloc((size_t)reclen+page_size);
+					nbuff=(char *)(((long)nbuff+(long)page_size) & (long)~(page_size-1));
+					if(verify || dedup || dedup_interior)
+						fill_buffer(nbuff,reclen,(long long)pattern,sverify,offset64/reclen);
+				}
+				if(purge)
+					purgeit(nbuff,reclen);
+
+				if((verify & diag_v) || dedup || dedup_interior)
+					fill_buffer(nbuff,reclen,(long long)pattern,sverify,offset64/reclen);
+
+				if (!(h_flag || k_flag || mmapflag))
+				{
+				  I_LSEEK( fd, offset64, SEEK_SET );
+				}
+				if(rlocking)
+				{
+					lock_offset=I_LSEEK(fd,0,SEEK_CUR);
+					mylockr((int) fd, (int) 1, (int)0,
+					  lock_offset, reclen);
+				}
+				if(mmapflag)
+				{
+					wmaddr=&maddr[offset64];
+					fill_area((long long*)nbuff,(long long*)wmaddr,(long long)reclen);
+					if(!mmapnsflag)
+					{
+					  	if(mmapasflag)
+						    	msync(wmaddr,(size_t)reclen,MS_ASYNC);
+					  	if(mmapssflag)
+					    		msync(wmaddr,(size_t)reclen,MS_SYNC);
+					}
+				}
+				else
+				{
+			  		if(async_flag)
+					{
+			     		   if(no_copy_flag)
+			       		      async_write_no_copy(gc, (long long)fd, nbuff, reclen, offset64, 
+					   	depth,free_addr);
+					   else
+			      			async_write(gc, (long long)fd, nbuff, reclen, offset64, depth);
+			  		}
+			  		else
+			  		{
+			  		  wval=write(fd, nbuff,(size_t)reclen);
+			  		  if(wval != reclen)
+			  		  {
+#ifdef NO_PRINT_LLD
+						printf("\nError writing block at %ld\n",
+							offset64); 
+#else
+						printf("\nError writing block at %lld\n",
+							offset64); 
+#endif
+						if(wval==-1)
+							perror("write");
+						signal_handler();
+			 		  }
+					}
+				}
+				if(rlocking)
+				{
+					mylockr((int) fd, (int) 0, (int)0,
+					  lock_offset, reclen);
+				}
+			}
+	     } 	/* end of modifications	*kcollins:2-5-96 */
+#ifdef ASYNC_IO
+	     if(async_flag)
+	     {
+		end_async(gc);
+	        gc=0;
+             }	
+#endif
+	     if(include_flush)
+	     {
+		if(mmapflag)
+			msync(maddr,(size_t)filebytes64,MS_SYNC);/* Clean up before read starts running */
+		else
+		{
+	     		wval=fsync(fd);
+			if(wval==-1){
+				perror("fsync");
+				signal_handler();
+			}
+		}
+	     }
+	     if(include_close)
+	     {
+		if(mmapflag)
+		{
+			mmap_end(maddr,(unsigned long long)filebytes64);
+		}
+		wval=close(fd);
+		if(wval==-1){
+			perror("close");
+			signal_handler();
+		}
+	     }
+	     randreadtime[j] = ((time_so_far() - starttime2)-time_res)-
+			compute_val;
+	     if(randreadtime[j] < (double).000001) 
+	     {
+			randreadtime[j]=time_res;
+			if(rec_prob < reclen)
+				rec_prob = reclen;
+			res_prob=1;
+	     }
+	    if(!include_close)
+	    {
+		if(mmapflag)
+		{
+			msync(maddr,(size_t)filebytes64,MS_SYNC);/* Clean up before read starts running */
+		}
+		else
+		{
+	     		wval=fsync(fd);
+			if(wval==-1){
+				perror("fsync");
+				signal_handler();
+			}
+		}
+		if(mmapflag)
+			mmap_end(maddr,(unsigned long long)filebytes64);
+		wval=close(fd);
+		if(wval==-1){
+			perror("close");
+			signal_handler();
+		}
+ 	    }
+            if(cpuutilflag)
+	    {
+	    	cputime[j]  = cputime_so_far() - cputime[j];
+	    	if (cputime[j] < cputime_res)
+			cputime[j] = 0.0;
+	    	walltime[j] = time_so_far() - walltime[j];
+		if (walltime[j] < cputime[j])
+		   walltime[j] = cputime[j];
+	    }
+	    if(restf)
+		sleep((int)rest_val);
+    	}
+	if(OPS_flag || MS_flag){
+	   filebytes64=filebytes64/reclen;
+	}
+        for(j=0;j<2;j++)
+        {
+	    if(no_write && (j==1))
+	    {
+	        randreadrate[1] = 0.0;
+		continue;
+	    }
+	    if(MS_flag)
+	    {
+		randreadrate[j]=1000000.0*(randreadtime[j] / (double)filebytes64);
+		continue;
+	    }
+            else
+            {
+                  randreadrate[j] = 
+		      (unsigned long long) ((double) filebytes64 / randreadtime[j]);
+            }
+	    if(!(OPS_flag || MS_flag))
+		randreadrate[j] >>= 10;
+	}
+	/* Must save walltime & cputime before calling store_value() for each/any cell.*/
+        if(cpuutilflag)
+		store_times(walltime[0], cputime[0]);
+	store_value((off64_t)randreadrate[0]);
+        if(cpuutilflag)
+		store_times(walltime[1], cputime[1]);
+	store_value((off64_t)randreadrate[1]);
+#ifdef NO_PRINT_LLD
+	if(!silent) printf("%8ld",randreadrate[0]);
+	if(!silent) printf("%8ld",randreadrate[1]);
+	if(!silent) fflush(stdout);
+#else
+	if(!silent) printf("%8lld",randreadrate[0]);
+	if(!silent) printf("%8lld",randreadrate[1]);
+	if(!silent) fflush(stdout);
+#endif
+	if(recnum)
+		free(recnum);
+}
+
+
+/************************************************************************/
+/* random_write_perf_test (blusjune)			        	*/
+/* Random write test							*/
+/************************************************************************/
+#ifdef HAVE_ANSIC_C
+void random_write_perf_test(off64_t kilo64,long long reclen,long long *data1,long long *data2)
+#else
+void random_write_perf_test(kilo64,reclen,data1,data2)
+off64_t kilo64;
+long long reclen;
+long long *data1, *data2;
+#endif
+{
+	double randreadtime[2];
+	double starttime2;
+	double walltime[2], cputime[2];
+	double compute_val = (double)0;
+#if defined (bsd4_2) || defined(Windows)
+	long long rand1,rand2,rand3;
+#endif
+	unsigned long long big_rand;
+	long long j;
+	off64_t i,numrecs64;
+	long long Index=0;
+	int flags;
+	unsigned long long randreadrate[2];
+	off64_t filebytes64;
+	off64_t lock_offset=0;
+	volatile char *buffer1;
+	char *wmaddr,*nbuff;
+	char *maddr,*free_addr;
+	int fd,wval;
+	long long *recnum= 0;
+#if defined(VXFS) || defined(solaris)
+	int test_foo=0;
+#endif
+#ifdef ASYNC_IO
+	struct cache *gc=0;
+#else
+	long long *gc=0;
+#endif
+#ifdef MERSENNE
+    unsigned long long init[4]={0x12345ULL, 0x23456ULL, 0x34567ULL, 0x45678ULL};
+    unsigned long long length=4;
+#endif
+
+	maddr=free_addr=0;
+	numrecs64 = (kilo64*1024)/reclen;
+#ifdef MERSENNE
+       init_by_array64(init, length);
+#else
+#ifdef bsd4_2
+        srand(0);
+#else
+#ifdef Windows
+        srand(0);
+#else
+        srand48(0);
+#endif
+#endif
+#endif
+        recnum = (long long *)malloc(sizeof(*recnum)*numrecs64);
+        if (recnum){
+             /* pre-compute random sequence based on 
+		Fischer-Yates (Knuth) card shuffle */
+            for(i = 0; i < numrecs64; i++){
+                recnum[i] = i;
+            }
+            for(i = 0; i < numrecs64; i++) {
+                long long tmp;
+#ifdef MERSENNE
+      	       big_rand=genrand64_int64();
+#else
+#ifdef bsd4_2
+               rand1=(long long)rand();
+               rand2=(long long)rand();
+               rand3=(long long)rand();
+               big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+#else
+#ifdef Windows
+               rand1=(long long)rand();
+               rand2=(long long)rand();
+               rand3=(long long)rand();
+               big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+#else
+               big_rand = lrand48();
+#endif
+#endif
+#endif
+               big_rand = big_rand%numrecs64;
+               tmp = recnum[i];
+               recnum[i] = recnum[big_rand];
+               recnum[big_rand] = tmp;
+            }
+        }
+	else
+	{
+		fprintf(stderr,"Random uniqueness fallback.\n");
+	}
+	flags = O_RDWR;
+#if ! defined(DONT_HAVE_O_DIRECT)
+#if defined(linux) || defined(__AIX__) || defined(IRIX) || defined(IRIX64) || defined(Windows) || defined (__FreeBSD__)
+	if(direct_flag)
+		flags |=O_DIRECT;
+#endif
+#if defined(TRU64)
+	if(direct_flag)
+		flags |=O_DIRECTIO;
+#endif
+#endif
+	fd=0;
+	if(oflag)
+		flags |= O_SYNC;
+#if defined(O_DSYNC)
+	if(odsync)
+		flags |= O_DSYNC;
+#endif
+#if defined(_HPUX_SOURCE) || defined(linux)
+	if(read_sync)
+		flags |=O_RSYNC|O_SYNC;
+#endif
+	filebytes64 = numrecs64*reclen;
+	for( j=0; j<2; j++ )
+	{
+		if(j==0)
+			flags |=O_CREAT;
+		if (no_write && (j == 1))
+			continue;
+		if(cpuutilflag)
+		{
+		     walltime[j] = time_so_far();
+		     cputime[j]  = cputime_so_far();
+	     }
+	     if(Uflag) /* Unmount and re-mount the mountpoint */
+	     {
+			purge_buffer_cache();
+	     }
+	     if((fd = I_OPEN(filename, ((int)flags),0640))<0){
+			printf("\nCan not open temporary file for read/write\n");
+			perror("open");
+			exit(66);
+	     }
+#ifdef ASYNC_IO
+		if(async_flag)
+			async_init(&gc,fd,direct_flag);
+#endif
+
+#ifdef VXFS
+		if(direct_flag)
+		{
+			ioctl(fd,VX_SETCACHE,VX_DIRECT);
+			ioctl(fd,VX_GETCACHE,&test_foo);
+			if(test_foo == 0)
+			{
+				if(!client_iozone)
+				  printf("\nVxFS advanced setcache feature not available.\n");
+				exit(3);
+			}
+		}
+#endif
+#if defined(solaris)
+               if(direct_flag)
+               {
+                       test_foo = directio(fd, DIRECTIO_ON);
+                       if(test_foo != 0)
+                       {
+                               if(!client_iozone)
+                                 printf("\ndirectio not available.\n");
+                               exit(3);
+                       }
+               }
+#endif
+	     if(mmapflag)
+	     {
+			maddr=(char *)initfile(fd,filebytes64,0,PROT_READ|PROT_WRITE);
+	     }
+	     nbuff=mainbuffer;
+	     if(fetchon)
+		   fetchit(nbuff,reclen);
+#ifdef MERSENNE
+    	    init_by_array64(init, length);
+#else
+#ifdef bsd4_2
+	     srand(0);
+#else
+#ifdef Windows
+             srand(0);
+#else
+             srand48(0);
+#endif
+#endif
+#endif
+	     compute_val=(double)0;
+	     starttime2 = time_so_far();
+#if 0 /* original */
+	     if ( j==0 )
+#else /* blusjune randread test */
+	     if ( blusjune_test_randrw == BLUSJUNE_RANDREAD_TEST )
+#endif
+	     {
+		for(i=0; i<numrecs64; i++) {
+			if(compute_flag)
+				compute_val+=do_compute(compute_time);
+                        if(multi_buffer)
+                        {
+                                Index +=reclen;
+                                if(Index > (MAXBUFFERSIZE-reclen))
+                                        Index=0;
+                                nbuff = mbuffer + Index;
+                        }
+			if(purge)
+				purgeit(nbuff,reclen);
+                        if (recnum) {
+				offset64 = reclen * (long long)recnum[i];
+                        }
+			else
+			{
+
+#ifdef MERSENNE
+      			   big_rand =genrand64_int64();
+			   offset64 = reclen * (big_rand%numrecs64);
+#else
+#ifdef bsd4_2
+			   rand1=(long long)rand();
+			   rand2=(long long)rand();
+			   rand3=(long long)rand();
+			   big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+                           offset64 = reclen * (big_rand%numrecs64);
+#else
+#ifdef Windows
+			   rand1=(long long)rand();
+			   rand2=(long long)rand();
+			   rand3=(long long)rand();
+			   big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+                           offset64 = reclen * (big_rand%numrecs64);
+#else
+			   offset64 = reclen * (lrand48()%numrecs64);
+#endif
+#endif
+#endif
+			}
+
+			if( !(h_flag || k_flag || mmapflag))
+			{
+			   if(I_LSEEK( fd, offset64, SEEK_SET )<0)
+			   {
+				perror("lseek");
+				exit(68);
+			   };
+			}
+			if(rlocking)
+			{
+				lock_offset=I_LSEEK(fd,0,SEEK_CUR);
+				mylockr((int) fd, (int) 1, (int)1,
+				  lock_offset, reclen);
+			}
+			if(mmapflag)
+			{
+				wmaddr=&maddr[offset64];
+				fill_area((long long*)wmaddr,(long long*)nbuff,(long long)reclen);
+			}
+			else
+			{
+			  if(async_flag)
+			  {
+			     if(no_copy_flag)
+			        async_read_no_copy(gc, (long long)fd, &buffer1, offset64,reclen,
+			    	  0LL,(numrecs64*reclen),depth);
+			     else
+				 async_read(gc, (long long)fd, nbuff, (offset64),reclen,
+					    	0LL,(numrecs64*reclen),0LL);
+			  }
+			  else
+			  {
+		  	     if(read(fd, (void *)nbuff, (size_t)reclen) != reclen)
+		  	     {
+#ifdef NO_PRINT_LLD
+				 printf("\nError reading block at %ld\n",
+					 offset64); 
+#else
+				 printf("\nError reading block at %lld\n",
+					 offset64); 
+#endif
+				 perror("read");
+				 exit(70);
+		 	     }
+			  }
+			}
+			if(verify){
+			  if(async_flag && no_copy_flag)
+			  {
+				if(verify_buffer(buffer1,reclen,(off64_t)offset64/reclen,reclen,(long long)pattern,sverify)){
+					exit(71);
+				}
+			  }
+			  else
+			  {
+				if(verify_buffer(nbuff,reclen,(off64_t)offset64/reclen,reclen,(long long)pattern,sverify)){
+					exit(72);
+				}
+			  }
+			}
+			if(async_flag && no_copy_flag)
+				async_release(gc);
+			if(rlocking)
+			{
+				lock_offset=I_LSEEK(fd,0,SEEK_CUR);
+				mylockr((int) fd, (int) 1, (int)1,
+				  lock_offset, reclen);
+			}
+		}
+	     }
+#if 0
+	     else
+#else /* blusjune randwrite test */
+	     else if ( blusjune_test_randrw == BLUSJUNE_RANDWRITE_TEST )
+#endif
+	     {
+			if(verify || dedup || dedup_interior)
+				fill_buffer(nbuff,reclen,(long long)pattern,sverify,(long long)0);
+			for(i=0; i<numrecs64; i++) 
+			{
+				if(compute_flag)
+					compute_val+=do_compute(compute_time);
+                        	if(multi_buffer)
+                        	{
+                               	    Index +=reclen;
+                               	    if(Index > (MAXBUFFERSIZE-reclen))
+                               	         Index=0;
+                               	    nbuff = mbuffer + Index;
+                        	}
+                                if (recnum) {
+				  offset64 = reclen * (long long)recnum[i];
+                                }
+			        else
+			        {
+#ifdef bsd4_2
+				  rand1=(long long)rand();
+				  rand2=(long long)rand();
+				  rand3=(long long)rand();
+				  big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+				  offset64 = reclen * (big_rand%numrecs64);
+#else
+#ifdef Windows
+				  rand1=(long long)rand();
+				  rand2=(long long)rand();
+				  rand3=(long long)rand();
+				  big_rand=(rand1<<32)|(rand2<<16)|(rand3);
+				  offset64 = reclen * (big_rand%numrecs64);
+#else
+				  offset64 = reclen * (lrand48()%numrecs64);
+#endif
+#endif
+				}
+				if(async_flag && no_copy_flag)
+				{
+					free_addr=nbuff=(char *)malloc((size_t)reclen+page_size);
+					nbuff=(char *)(((long)nbuff+(long)page_size) & (long)~(page_size-1));
+					if(verify || dedup || dedup_interior)
+						fill_buffer(nbuff,reclen,(long long)pattern,sverify,offset64/reclen);
+				}
+				if(purge)
+					purgeit(nbuff,reclen);
+
+				if((verify & diag_v) || dedup || dedup_interior)
+					fill_buffer(nbuff,reclen,(long long)pattern,sverify,offset64/reclen);
+
+				if (!(h_flag || k_flag || mmapflag))
+				{
+				  I_LSEEK( fd, offset64, SEEK_SET );
+				}
+				if(rlocking)
+				{
+					lock_offset=I_LSEEK(fd,0,SEEK_CUR);
+					mylockr((int) fd, (int) 1, (int)0,
+					  lock_offset, reclen);
+				}
+				if(mmapflag)
+				{
+					wmaddr=&maddr[offset64];
+					fill_area((long long*)nbuff,(long long*)wmaddr,(long long)reclen);
+					if(!mmapnsflag)
+					{
+					  	if(mmapasflag)
+						    	msync(wmaddr,(size_t)reclen,MS_ASYNC);
+					  	if(mmapssflag)
+					    		msync(wmaddr,(size_t)reclen,MS_SYNC);
+					}
+				}
+				else
+				{
+			  		if(async_flag)
+					{
+			     		   if(no_copy_flag)
+			       		      async_write_no_copy(gc, (long long)fd, nbuff, reclen, offset64, 
+					   	depth,free_addr);
+					   else
+			      			async_write(gc, (long long)fd, nbuff, reclen, offset64, depth);
+			  		}
+			  		else
+			  		{
+			  		  wval=write(fd, nbuff,(size_t)reclen);
+			  		  if(wval != reclen)
+			  		  {
+#ifdef NO_PRINT_LLD
+						printf("\nError writing block at %ld\n",
+							offset64); 
+#else
+						printf("\nError writing block at %lld\n",
+							offset64); 
+#endif
+						if(wval==-1)
+							perror("write");
+						signal_handler();
+			 		  }
+					}
+				}
+				if(rlocking)
+				{
+					mylockr((int) fd, (int) 0, (int)0,
+					  lock_offset, reclen);
+				}
+			}
+	     } 	/* end of modifications	*kcollins:2-5-96 */
+#ifdef ASYNC_IO
+	     if(async_flag)
+	     {
+		end_async(gc);
+	        gc=0;
+             }	
+#endif
+	     if(include_flush)
+	     {
+		if(mmapflag)
+			msync(maddr,(size_t)filebytes64,MS_SYNC);/* Clean up before read starts running */
+		else
+		{
+	     		wval=fsync(fd);
+			if(wval==-1){
+				perror("fsync");
+				signal_handler();
+			}
+		}
+	     }
+	     if(include_close)
+	     {
+		if(mmapflag)
+		{
+			mmap_end(maddr,(unsigned long long)filebytes64);
+		}
+		wval=close(fd);
+		if(wval==-1){
+			perror("close");
+			signal_handler();
+		}
+	     }
+	     randreadtime[j] = ((time_so_far() - starttime2)-time_res)-
+			compute_val;
+	     if(randreadtime[j] < (double).000001) 
+	     {
+			randreadtime[j]=time_res;
+			if(rec_prob < reclen)
+				rec_prob = reclen;
+			res_prob=1;
+	     }
+	    if(!include_close)
+	    {
+		if(mmapflag)
+		{
+			msync(maddr,(size_t)filebytes64,MS_SYNC);/* Clean up before read starts running */
+		}
+		else
+		{
+	     		wval=fsync(fd);
+			if(wval==-1){
+				perror("fsync");
+				signal_handler();
+			}
+		}
+		if(mmapflag)
+			mmap_end(maddr,(unsigned long long)filebytes64);
+		wval=close(fd);
+		if(wval==-1){
+			perror("close");
+			signal_handler();
+		}
+ 	    }
+            if(cpuutilflag)
+	    {
+	    	cputime[j]  = cputime_so_far() - cputime[j];
+	    	if (cputime[j] < cputime_res)
+			cputime[j] = 0.0;
+	    	walltime[j] = time_so_far() - walltime[j];
+		if (walltime[j] < cputime[j])
+		   walltime[j] = cputime[j];
+	    }
+	    if(restf)
+		sleep((int)rest_val);
+    	}
+	if(OPS_flag || MS_flag){
+	   filebytes64=filebytes64/reclen;
+	}
+        for(j=0;j<2;j++)
+        {
+	    if(no_write && (j==1))
+	    {
+	        randreadrate[1] = 0.0;
+		continue;
+	    }
+	    if(MS_flag)
+	    {
+		randreadrate[j]=1000000.0*(randreadtime[j] / (double)filebytes64);
+		continue;
+	    }
+            else
+            {
+                  randreadrate[j] = 
+		      (unsigned long long) ((double) filebytes64 / randreadtime[j]);
+            }
+	    if(!(OPS_flag || MS_flag))
+		randreadrate[j] >>= 10;
+	}
+	/* Must save walltime & cputime before calling store_value() for each/any cell.*/
+        if(cpuutilflag)
+		store_times(walltime[0], cputime[0]);
+	store_value((off64_t)randreadrate[0]);
+        if(cpuutilflag)
+		store_times(walltime[1], cputime[1]);
+	store_value((off64_t)randreadrate[1]);
+#ifdef NO_PRINT_LLD
+	if(!silent) printf("%8ld",randreadrate[0]);
+	if(!silent) printf("%8ld",randreadrate[1]);
+	if(!silent) fflush(stdout);
+#else
+	if(!silent) printf("%8lld",randreadrate[0]);
+	if(!silent) printf("%8lld",randreadrate[1]);
+	if(!silent) fflush(stdout);
+#endif
+	if(recnum)
+		free(recnum);
+}
+#endif /* BLUSJUNE_USE_DUPLICATED_FUNCTIONS */
+
 
 /************************************************************************/
 /* reverse_perf_test				        		*/
