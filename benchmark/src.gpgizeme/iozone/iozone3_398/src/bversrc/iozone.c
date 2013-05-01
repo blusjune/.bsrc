@@ -184,8 +184,8 @@ char *help[] = {
 "                  [-Y read_telemetry_filename] [-y minrecsize_Kb] [-q maxrecsize_Kb]",
 "                  [-+u] [-+m cluster_filename] [-+d] [-+x multiplier] [-+p # ]",
 "                  [-+r] [-+t] [-+X] [-+Z] [-+w percent dedupable] [-+y percent_interior_dedup]",
-"                  [-+C percent_dedup_within]"
-"                  ------------ options added by blusjune ------------"
+"                  [-+C percent_dedup_within]",
+"                  ------------ options added by blusjune ------------",
 "                  [-+F sleep_time_between_test_in_seconds]",
 "                  [-+R] [-+W]",
 " ",
