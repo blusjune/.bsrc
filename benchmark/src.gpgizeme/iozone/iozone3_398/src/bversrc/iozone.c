@@ -99,6 +99,10 @@
  *
  */
 
+/*
+ * 20130501_112320
+ * blusjune
+ */
 
 /* The version number */
 #define THISVERSION "        Version $Revision: 3.398 $"
@@ -168,7 +172,7 @@ unsigned long long genrand64_int64(void);
 #include <fcntl.h>
 
 char *help[] = {
-"iozone.bver ( 20120403_040332 )",
+"iozone.bver (20130501_112140, 20120403_040332 )",
 "    Usage: iozone [-s filesize_Kb] [-r record_size_Kb] [-f [path]filename] [-h]",
 "                  [-i test] [-E] [-p] [-a] [-A] [-z] [-Z] [-m] [-M] [-t children]",
 "                  [-l min_number_procs] [-u max_number_procs] [-v] [-R] [-x] [-o]",
@@ -180,7 +184,10 @@ char *help[] = {
 "                  [-Y read_telemetry_filename] [-y minrecsize_Kb] [-q maxrecsize_Kb]",
 "                  [-+u] [-+m cluster_filename] [-+d] [-+x multiplier] [-+p # ]",
 "                  [-+r] [-+t] [-+X] [-+Z] [-+w percent dedupable] [-+y percent_interior_dedup]",
-"                  [-+C percent_dedup_within] [-+F sleep_time_between_test_in_seconds]",
+"                  [-+C percent_dedup_within]"
+"                  ------------ options added by blusjune ------------"
+"                  [-+F sleep_time_between_test_in_seconds]",
+"                  [-+R] [-+W]",
 " ",
 "           -a  Auto mode",
 "           -A  Auto2 mode",
@@ -198,7 +205,8 @@ char *help[] = {
 "           -G  Use msync(MS_SYNC) on mmap files",
 "           -h  help",
 "           -H #  Use POSIX async I/O with # async operations",
-"           -i #  Test to run (0=write/rewrite, 1=read/re-read, 2=random-read/write",
+"           -i #  Test to run (0=write/rewrite, 1=read/re-read",
+"                 2=random-read/write (should be used with -+R, -+W // blusjune)",
 "                 3=Read-backwards, 4=Re-write-record, 5=stride-read, 6=fwrite/re-fwrite",
 "                 7=fread/Re-fread, 8=random_mix, 9=pwrite/Re-pwrite, 10=pread/Re-pread",
 "                 11=pwritev/Re-pwritev, 12=preadv/Re-preadv",

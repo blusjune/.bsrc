@@ -1379,7 +1379,7 @@ validate(char *buffer, int size, char value)
 	v1=value;
 	cp = buffer;
 	size1=size;
-	for(i=0;i<size;i++)
+	for(i=0;i<size1;i++)
 	{
 		if(*cp++ != v1)
 			return(1);
