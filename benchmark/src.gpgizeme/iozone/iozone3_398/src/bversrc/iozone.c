@@ -299,7 +299,7 @@ char *help[] =
 	"           -+P Service     Service  of the PIT server.",
 	"           -+z Enable latency histogram logging.",
 	"    ----------------------------------------------------------------------------------------------",
-	"    Quick Example:",
+	"    Quick Examples:",
 	"        $ iozone -i 2 -+W -w -s 400000 -r 4 -f /x/bmt_iozone/test/hdd_test/400m.1",
 	"            # random-write test with: 4KB record; 400,000KB data file; no-unlink data file option;",
 	"        $ iozone -i 2 -+R -w -s 400000 -r 4 -f /x/bmt_iozone/test/hdd_test/400m.1",
