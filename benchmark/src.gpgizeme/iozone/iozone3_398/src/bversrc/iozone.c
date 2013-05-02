@@ -106,7 +106,8 @@
 
 /* The version number */
 /* #define THISVERSION "        Version $Revision: 3.398 $" */
-#define THISVERSION "        Version $Revision: 3.398 $ -- blusjune 20130502_023327"
+#define THISVERSION "        Version $Revision: 3.398 $ -- blusjune 20130502_110038"
+
 
 #if defined(linux)
 #define _GNU_SOURCE
@@ -174,7 +175,7 @@ unsigned long long genrand64_int64(void);
 
 char *help[] =
 {
-	"iozone.bver (20130502_023327, 20120403_040332 )",
+	"iozone 3.398 blusjune edition (20130502_110038, 20120403_040332 )",
 	"    Usage: iozone [-s filesize_Kb] [-r record_size_Kb] [-f [path]filename] [-h]",
 	"                  [-i test] [-E] [-p] [-a] [-A] [-z] [-Z] [-m] [-M] [-t children]",
 	"                  [-l min_number_procs] [-u max_number_procs] [-v] [-R] [-x] [-o]",
@@ -297,6 +298,12 @@ char *help[] =
 	"           -+H Hostname    Hostname of the PIT server.",
 	"           -+P Service     Service  of the PIT server.",
 	"           -+z Enable latency histogram logging.",
+	"    ----------------------------------------------------------------------------------------------",
+	"    Quick Example:",
+	"        $ iozone -i 2 -+W -w -s 400000 -r 4 -f /x/bmt_iozone/test/hdd_test/400m.1",
+	"            # random-write test with: 4KB record; 400,000KB data file; no-unlink data file option;",
+	"        $ iozone -i 2 -+R -w -s 400000 -r 4 -f /x/bmt_iozone/test/hdd_test/400m.1",
+	"            # random-read test with: 4KB record; 400,000KB data file; no-unlink data file option;",
 	""
 };
 
@@ -3342,7 +3349,7 @@ out:
 		printf("\nblusjune__latency_per_io (usecs) : %g", blusjune__latency_per_io_in_usec);
 		printf("\nblusjune__iops                   : %ld", blusjune__iops);
 		printf("\nblusjune__throughput (bytes/sec) : %ld", blusjune__throughput);
-		printf("\n==================================================");
+		printf("\n==================================================\n");
 		break;
 	default:
 		break;
