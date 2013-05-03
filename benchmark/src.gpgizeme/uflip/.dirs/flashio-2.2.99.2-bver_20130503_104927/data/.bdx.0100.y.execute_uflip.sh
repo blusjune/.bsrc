@@ -20,19 +20,42 @@ echo ">>> Now start 'setup.py' script ...";
 ./setup.py
 
 
+
+
 _timestamp="$(date +%Y%m%d_%H%M%S)";
 _execlog="log.uflip_exec.$_timestamp";
 touch $_execlog;
 
 
+
+
 echo "-----";
 echo ">>> Step 1. 'Prepare.sh'";
-read -p "type the name of directory you just have created: " _bmtdir;
-read -p "type the device name of flash device (e.g., '/dev/sdb1'): " _dev;
+
+_bmtdir_default="$(cat /tmp/.uflip.bmt_path)"; # data/setup.py wrote this information
+read -p "type the name of directory you just have created [$_bmtdir_default]: " _bmtdir;
+if [ "X$_bmtdir" = "X" ]; then
+	_bmtdir="$_bmtdir_default";
+fi
+
+_dev_default="$(df -h $_bmtdir | grep '/dev/sd' | awk '{print $1}')";
+read -p "type the device name of flash device [$_dev_default]: " _dev;
+if [ "X$_dev" = "X" ]; then
+	_dev="$_dev_default";
+fi
+
+_ios_default="8";
+read -p "IO request size in (512-byte) sectors [$_ios_default]: " _ios;
+if [ "X$_ios" = "X" ]; then
+	_ios="$_ios_default";
+fi
+
+
+
 
 (
 cd $_bmtdir;
-_cmd_gen_prepare="./FlashIO GenPrepare Dev $_dev IOS 64 IOC 10000 IOC2 50000";
+_cmd_gen_prepare="./FlashIO GenPrepare Dev $_dev IOS $_ios IOC 10000 IOC2 50000";
 echo $_cmd_gen_prepare;
 $_cmd_gen_prepare;
 
@@ -69,7 +92,6 @@ fi
 echo "-----";
 echo ">>> Step 2. 'Bench.sh'";
 read -p "Number of Runs [3]: " _runs;
-read -p "IO request size in (512-byte) sectors [64]: " _ios;
 read -p "Pause time in microseconds [1000]: " _pause;
 _cmd_gen_bench="./FlashIO GenBench Dev $_dev NbRun $_runs IOS $_ios Pause $_pause";
 echo $_cmd_gen_bench;

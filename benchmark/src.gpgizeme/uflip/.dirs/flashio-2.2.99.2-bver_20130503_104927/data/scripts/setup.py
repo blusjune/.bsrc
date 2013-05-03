@@ -39,13 +39,16 @@ if platform.system() == "Windows":
 
 # a directory name is needed
 print(u"Directory name for running the benchmark?")
-path = raw_input(u"-->")
+path = raw_input(u"--> ")
+tmpf = open("/tmp/.uflip.bmt_path", "w")
+tmpf.write(path)
+tmpf.close()
 if len(path) == 0:
     exit(1)
 
 # ask confirmation
 print(u"All files will be created in directory %s - confirm (y/n)" % path)
-resp = raw_input(u"-->")
+resp = raw_input(u"--> ")
 if resp != u"y":
     exit(1)
 
