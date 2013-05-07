@@ -82,8 +82,11 @@ if [ "X$_ans" = "Xy" -o "X$_ans" = "XY" ]; then
 	echo "uFLIP prepare finish time: $(date +%Y%m%d_%H%M%S)" >> $_execlog;
 else
 	echo ">>> You chose not to run 'Prepare.sh' this time";
-	echo ">>> Exit this program";
-	exit 0;
+	read -p "Do you want to create and run 'Bench.sh' without executing 'Prepare.sh'? [y|n] " _ans;
+	if [ "X$_ans" != "Xy" ]; then
+		echo ">>> Exit this program";
+		exit 0;
+	fi
 fi
 
 
@@ -91,8 +94,16 @@ fi
 
 echo "-----";
 echo ">>> Step 2. 'Bench.sh'";
-read -p "Number of Runs [3]: " _runs;
-read -p "Pause time in microseconds [1000]: " _pause;
+_runs_default="3";
+read -p "Number of Runs [$_runs_default]: " _runs;
+if [ "X$_runs" = "X" ]; then
+	_runs=$_runs_default;
+fi
+_pause_default="1000";
+read -p "Pause time in microseconds [$_pause_default]: " _pause;
+if [ "X$_pause" = "X" ]; then
+	_pause=$_pause_default;
+fi
 _cmd_gen_bench="./FlashIO GenBench Dev $_dev NbRun $_runs IOS $_ios Pause $_pause";
 echo $_cmd_gen_bench;
 $_cmd_gen_bench;
