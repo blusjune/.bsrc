@@ -1,6 +1,8 @@
 #!/bin/sh
 ## 20120607_142713 ## 'number of runs' to '3' (from 10)
 ## 20120607_143438 ## 'pause time' to '1000' (from 5000)
+## 20130508_221234 ## give a chance to correct 'ALL_RESULTS.csv' file before executing process.py
+
 
 if [ "X$(id -u)" != "X0" ]; then
 	echo ">>> ERROR: You SHOULD have root privilege to execute uFLIP properly!!!";
@@ -136,7 +138,8 @@ else
 fi
 
 
-( cd RESULTS; cat RES_*.csv > ALL_RESULTS.csv; ./process.py; )
+#( cd RESULTS; cat RES_*.csv > ALL_RESULTS.csv; ./process.py; )
+( cd RESULTS; cat RES_*.csv > ALL_RESULTS.csv; echo "please correct the erroneous 'ALL_RESULTS.csv' file and then execute './process.py'"; PS1="uFLIP> " export PS1; sh; ./process.py )
 
 
 )
